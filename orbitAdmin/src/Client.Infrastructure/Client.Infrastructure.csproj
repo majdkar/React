@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>SchoolV01.Client.Infrastructure</RootNamespace>
+		<AssemblyName>SchoolV01.Client.Infrastructure</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Managers\Forms\**" />
+	  <Compile Remove="Managers\StudentsEnrollments\**" />
+	  <Compile Remove="Routes\Forms\**" />
+	  <EmbeddedResource Remove="Managers\Forms\**" />
+	  <EmbeddedResource Remove="Managers\StudentsEnrollments\**" />
+	  <EmbeddedResource Remove="Routes\Forms\**" />
+	  <None Remove="Managers\Forms\**" />
+	  <None Remove="Managers\StudentsEnrollments\**" />
+	  <None Remove="Routes\Forms\**" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.10" />
+		<PackageReference Include="MudBlazor" Version="8.13.0" />
+		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+		<PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="10.2.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+	</ItemGroup>
+</Project>

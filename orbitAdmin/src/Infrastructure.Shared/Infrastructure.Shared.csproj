@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>SchoolV01.Infrastructure.Shared</RootNamespace>
+		<AssemblyName>SchoolV01.Infrastructure.Shared</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MailKit" Version="4.14.1" />
+	</ItemGroup>
+</Project>

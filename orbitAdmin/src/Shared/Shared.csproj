@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>SchoolV01.Shared</RootNamespace>
+		<AssemblyName>SchoolV01.Shared</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Constants\Project\**" />
+	  <EmbeddedResource Remove="Constants\Project\**" />
+	  <None Remove="Constants\Project\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="12.0.0" />
+	</ItemGroup>
+
+</Project>

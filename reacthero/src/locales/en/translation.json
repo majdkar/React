@@ -1,0 +1,46 @@
+{
+  "home": "Home",
+  "settings": "Settings",
+  "logout": "Logout",
+  "welcome": "Hello! You can switch between Arabic and English.",
+  "arabic": "Arabic",
+  "english": "English",
+  "id": "ID",
+  "nameEn": "Name (EN)",
+  "nameAr": "Name (AR)",
+  "actions": "Actions",
+  "edit": "Edit",
+  "delete": "Delete",
+  "refresh": "Refresh",
+  "addCity": "Add City",
+  "editCity": "Edit City",
+  "WebsiteManagment": "Website Managment",
+  "addCountry": "Add Country",
+  "editCountry": "Edit Country",
+  "countries": "Countries",
+  "cities": "Cities",
+  "cancel": "Cancel",
+  "Blocks": "Blocks",
+  "Menus": "Menus",
+  "Pages": "Pages",
+  "selectCountry": "Select Country",
+  "CountryCode": "Country Code",
+  "isActive": "Is Active?",
+  "save": "Save",
+  "saveChanges": "Save Changes",
+  "confirmDelete": "Confirm Delete",
+  "deleteSuccess": "✅ Deleted Successffuly",
+  "deleteMessage": "Are you sure you want to delete this country?",
+
+
+  "addBlockCategory": "Add Block Category",
+  "blockType": "Block Type",
+  "editBlockCategory": "Edit Block Category",
+  "selectBlockType": "Select Block Type",
+  "blockCategories": "Block Categories",
+  "blocksManagment": "Blocks Managment",
+  "blocksList": "Blocks List"
+
+
+
+}

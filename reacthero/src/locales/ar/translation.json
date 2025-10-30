@@ -1,0 +1,46 @@
+{
+  "home": "الرئيسية",
+  "settings": "الإعدادات",
+  "logout": "تسجيل الخروج",
+  "welcome": "مرحباً! يمكنك التبديل بين العربية والإنجليزية.",
+  "arabic": "العربية",
+  "english": "الإنجليزية",
+  "id": "المعرف",
+  "nameEn": "الاسم (EN)",
+  "nameAr": "الاسم (AR)",
+  "actions": "الإجراءات",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "cancel": "الغاء",
+  "refresh": "تحديث",
+  "countries": "البلدان",
+  "addCity": "اضافة مدينة",
+  "addCountry": "اضافة دولة",
+  "editCountry": "تعديل دولة",
+  "editCity": "تعديل المدن",
+  "cities": "المدن",
+  "Blocks": "الكتل",
+  "Menus": "القوائم",
+  "Pages": "الصفحات",
+  "selectCountry": "اختر البلد",
+  "WebsiteManagment": "إدارة الموقع",
+  "CountryCode": "رمز البلد",
+  "isActive": "هل فعال؟",
+  "save": "حفظ",
+  "saveChanges": "حفظ التعديلات",
+
+
+  "confirmDelete": "تأكيد الحذف",
+  "deleteSuccess": "✅ تم حذف الدولة بنجاح!",
+  "deleteMessage": "هل أنت متأكد أنك تريد حذف هذا البلد؟",
+
+
+
+  "addBlockCategory": "اضافة صنف كتلة",
+  "blockType": "نوع الكتلة",
+  "editBlockCategory": "تعديل صنف الكتلة",
+  "selectBlockType": "اختر نوع الكتلة",
+  "blockCategories": "أصناف الكتل",
+  "blocksManagment": "ادارة الكتل",
+  "blocksList": "قائمة الكتل"
+}

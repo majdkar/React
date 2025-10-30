@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>SchoolV01.Application</RootNamespace>
+		<AssemblyName>SchoolV01.Application</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Features\Archive\**" />
+	  <Compile Remove="Services\**" />
+	  <Compile Remove="Validators\Features\Services\**" />
+	  <Compile Remove="Xslt\**" />
+	  <EmbeddedResource Remove="Features\Archive\**" />
+	  <EmbeddedResource Remove="Services\**" />
+	  <EmbeddedResource Remove="Validators\Features\Services\**" />
+	  <EmbeddedResource Remove="Xslt\**" />
+	  <None Remove="Features\Archive\**" />
+	  <None Remove="Services\**" />
+	  <None Remove="Validators\Features\Services\**" />
+	  <None Remove="Xslt\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="15.0.1" />
+		<PackageReference Include="LazyCache" Version="2.4.0" />
+		<PackageReference Include="MediatR" Version="13.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+		<!--<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.32" />-->
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.10" />
+
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.9" />
+		<PackageReference Include="System.Net.Http.Json" Version="9.0.10" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+		<ProjectReference Include="..\Shared\Shared.csproj" />
+	</ItemGroup>
+</Project>

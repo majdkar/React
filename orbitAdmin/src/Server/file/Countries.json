@@ -1,0 +1,1752 @@
+﻿[
+  {
+    "NameEn": "Afghanistan",
+    "NameAr": "أفغانستان",
+    "Alpha2Code": "AF",
+    "Alpha3Code": "AFG",
+    "PhoneCode": "93"
+  },
+  {
+    "NameEn": "Åland Islands",
+    "NameAr": "جزر أولاند",
+    "Alpha2Code": "AX",
+    "Alpha3Code": "ALA",
+    "PhoneCode": "358"
+  },
+  {
+    "NameEn": "Albania",
+    "NameAr": "ألبانيا",
+    "Alpha2Code": "AL",
+    "Alpha3Code": "ALB",
+    "PhoneCode": "355"
+  },
+  {
+    "NameEn": "Algeria",
+    "NameAr": "الجزائر",
+    "Alpha2Code": "DZ",
+    "Alpha3Code": "DZA",
+    "PhoneCode": "213"
+  },
+  {
+    "NameEn": "American Samoa",
+    "NameAr": "ساموا الأمريكية",
+    "Alpha2Code": "AS",
+    "Alpha3Code": "ASM",
+    "PhoneCode": "684"
+  },
+  {
+    "NameEn": "Andorra",
+    "NameAr": "أندورا",
+    "Alpha2Code": "AD",
+    "Alpha3Code": "AND",
+    "PhoneCode": "376"
+  },
+  {
+    "NameEn": "Angola",
+    "NameAr": "أنغولا",
+    "Alpha2Code": "AO",
+    "Alpha3Code": "AGO",
+    "PhoneCode": "244"
+  },
+  {
+    "NameEn": "Anguilla",
+    "NameAr": "أنغويلا",
+    "Alpha2Code": "AI",
+    "Alpha3Code": "AIA",
+    "PhoneCode": "264"
+  },
+  {
+    "NameEn": "Antarctica",
+    "NameAr": "القارة القطبية الجنوبية",
+    "Alpha2Code": "AQ",
+    "Alpha3Code": "ATA",
+    "PhoneCode": "672"
+  },
+  {
+    "NameEn": "Antigua and Barbuda",
+    "NameAr": "أنتيغوا وبربودا",
+    "Alpha2Code": "AG",
+    "Alpha3Code": "ATG",
+    "PhoneCode": "268"
+  },
+  {
+    "NameEn": "Argentina",
+    "NameAr": "الأرجنتين",
+    "Alpha2Code": "AR",
+    "Alpha3Code": "ARG",
+    "PhoneCode": "54"
+  },
+  {
+    "NameEn": "Armenia",
+    "NameAr": "أرمينيا",
+    "Alpha2Code": "AM",
+    "Alpha3Code": "ARM",
+    "PhoneCode": "374"
+  },
+  {
+    "NameEn": "Aruba",
+    "NameAr": "أروبا",
+    "Alpha2Code": "AW",
+    "Alpha3Code": "ABW",
+    "PhoneCode": "297"
+  },
+  {
+    "NameEn": "Australia",
+    "NameAr": "أستراليا",
+    "Alpha2Code": "AU",
+    "Alpha3Code": "AUS",
+    "PhoneCode": "61"
+  },
+  {
+    "NameEn": "Austria",
+    "NameAr": "النمسا",
+    "Alpha2Code": "AT",
+    "Alpha3Code": "AUT",
+    "PhoneCode": "43"
+  },
+  {
+    "NameEn": "Azerbaijan",
+    "NameAr": "أذربيجان",
+    "Alpha2Code": "AZ",
+    "Alpha3Code": "AZE",
+    "PhoneCode": "994"
+  },
+  {
+    "NameEn": "Bahamas",
+    "NameAr": "باهاماس",
+    "Alpha2Code": "BS",
+    "Alpha3Code": "BHS",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Bahrain",
+    "NameAr": "البحرين",
+    "Alpha2Code": "BH",
+    "Alpha3Code": "BHR",
+    "PhoneCode": "973"
+  },
+  {
+    "NameEn": "Bangladesh",
+    "NameAr": "بنغلاديش",
+    "Alpha2Code": "BD",
+    "Alpha3Code": "BGD",
+    "PhoneCode": "880"
+  },
+  {
+    "NameEn": "Barbados",
+    "NameAr": "بربادوس",
+    "Alpha2Code": "BB",
+    "Alpha3Code": "BRB",
+    "PhoneCode": "246"
+  },
+  {
+    "NameEn": "Belarus",
+    "NameAr": "بيلاروسيا",
+    "Alpha2Code": "BY",
+    "Alpha3Code": "BLR",
+    "PhoneCode": "375"
+  },
+  {
+    "NameEn": "Belgium",
+    "NameAr": "بلجيكا",
+    "Alpha2Code": "BE",
+    "Alpha3Code": "BEL",
+    "PhoneCode": "32"
+  },
+  {
+    "NameEn": "Belize",
+    "NameAr": "بليز",
+    "Alpha2Code": "BZ",
+    "Alpha3Code": "BLZ",
+    "PhoneCode": "501"
+  },
+  {
+    "NameEn": "Benin",
+    "NameAr": "بنين",
+    "Alpha2Code": "BJ",
+    "Alpha3Code": "BEN",
+    "PhoneCode": "229"
+  },
+  {
+    "NameEn": "Bermuda",
+    "NameAr": "برمودا",
+    "Alpha2Code": "BM",
+    "Alpha3Code": "BMU",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Bhutan",
+    "NameAr": "بوتان",
+    "Alpha2Code": "BT",
+    "Alpha3Code": "BTN",
+    "PhoneCode": "975"
+  },
+  {
+    "NameEn": "Bolivia",
+    "NameAr": "بوليفيا",
+    "Alpha2Code": "BO",
+    "Alpha3Code": "BOL",
+    "PhoneCode": "591"
+  },
+  {
+    "NameEn": "Bosnia and Herzegovina",
+    "NameAr": "البوسنة والهرسك",
+    "Alpha2Code": "BA",
+    "Alpha3Code": "BIH",
+    "PhoneCode": "387"
+  },
+  {
+    "NameEn": "Botswana",
+    "NameAr": "بوتسوانا",
+    "Alpha2Code": "BW",
+    "Alpha3Code": "BWA",
+    "PhoneCode": "267"
+  },
+  {
+    "NameEn": "Bouvet Island",
+    "NameAr": "جزيرة بوفيه",
+    "Alpha2Code": "BV",
+    "Alpha3Code": "BVT",
+    "PhoneCode": "47"
+  },
+  {
+    "NameEn": "Brazil",
+    "NameAr": "البرازيل",
+    "Alpha2Code": "BR",
+    "Alpha3Code": "BRA",
+    "PhoneCode": "55"
+  },
+  {
+    "NameEn": "British Indian Ocean Territory",
+    "NameAr": "إقليم المحيط الهندي البريطاني",
+    "Alpha2Code": "IO",
+    "Alpha3Code": "IOT",
+    "PhoneCode": "246"
+  },
+  {
+    "NameEn": "British Virgin Islands",
+    "NameAr": "جزر العذراء البريطانية",
+    "Alpha2Code": "VG",
+    "Alpha3Code": "VGB",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Brunei",
+    "NameAr": "بروناي",
+    "Alpha2Code": "BN",
+    "Alpha3Code": "BRN",
+    "PhoneCode": "673"
+  },
+  {
+    "NameEn": "Bulgaria",
+    "NameAr": "بلغاريا",
+    "Alpha2Code": "BG",
+    "Alpha3Code": "BGR",
+    "PhoneCode": "359"
+  },
+  {
+    "NameEn": "Burkina Faso",
+    "NameAr": "بوركينا فاسو",
+    "Alpha2Code": "BF",
+    "Alpha3Code": "BFA",
+    "PhoneCode": "226"
+  },
+  {
+    "NameEn": "Burundi",
+    "NameAr": "بوروندي",
+    "Alpha2Code": "BI",
+    "Alpha3Code": "BDI",
+    "PhoneCode": "257"
+  },
+  {
+    "NameEn": "Cabo Verde",
+    "NameAr": "كابو فيردي",
+    "Alpha2Code": "CV",
+    "Alpha3Code": "CPV",
+    "PhoneCode": "238"
+  },
+  {
+    "NameEn": "Cambodia",
+    "NameAr": "كمبوديا",
+    "Alpha2Code": "KH",
+    "Alpha3Code": "KHM",
+    "PhoneCode": "855"
+  },
+  {
+    "NameEn": "Cameroon",
+    "NameAr": "الكاميرون",
+    "Alpha2Code": "CM",
+    "Alpha3Code": "CMR",
+    "PhoneCode": "237"
+  },
+  {
+    "NameEn": "Canada",
+    "NameAr": "كندا",
+    "Alpha2Code": "CA",
+    "Alpha3Code": "CAN",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Caribbean Netherlands",
+    "NameAr": "الجزر الكاريبية الهولندية",
+    "Alpha2Code": "BQ",
+    "Alpha3Code": "BES",
+    "PhoneCode": "599"
+  },
+  {
+    "NameEn": "Cayman Islands",
+    "NameAr": "جزر كايمان",
+    "Alpha2Code": "KY",
+    "Alpha3Code": "CYM",
+    "PhoneCode": "1345"
+  },
+  {
+    "NameEn": "Central African Republic",
+    "NameAr": "جمهورية أفريقيا الوسطى",
+    "Alpha2Code": "CF",
+    "Alpha3Code": "CAF",
+    "PhoneCode": "236"
+  },
+  {
+    "NameEn": "Chad",
+    "NameAr": "تشاد",
+    "Alpha2Code": "TD",
+    "Alpha3Code": "TCD",
+    "PhoneCode": "235"
+  },
+  {
+    "NameEn": "Chile",
+    "NameAr": "تشيلي",
+    "Alpha2Code": "CL",
+    "Alpha3Code": "CHL",
+    "PhoneCode": "56"
+  },
+  {
+    "NameEn": "China",
+    "NameAr": "الصين",
+    "Alpha2Code": "CN",
+    "Alpha3Code": "CHN",
+    "PhoneCode": "86"
+  },
+  {
+    "NameEn": "Christmas Island",
+    "NameAr": "جزيرة الكريسماس",
+    "Alpha2Code": "CX",
+    "Alpha3Code": "CXR",
+    "PhoneCode": "61"
+  },
+  {
+    "NameEn": "Cocos (Keeling) Islands",
+    "NameAr": "جزر كوكوس",
+    "Alpha2Code": "CC",
+    "Alpha3Code": "CCK",
+    "PhoneCode": "61"
+  },
+  {
+    "NameEn": "Colombia",
+    "NameAr": "كولومبيا",
+    "Alpha2Code": "CO",
+    "Alpha3Code": "COL",
+    "PhoneCode": "57"
+  },
+  {
+    "NameEn": "Comoros",
+    "NameAr": "جزر القمر",
+    "Alpha2Code": "KM",
+    "Alpha3Code": "COM",
+    "PhoneCode": "269"
+  },
+  {
+    "NameEn": "Congo Republic",
+    "NameAr": "جمهورية الكونغو",
+    "Alpha2Code": "CG",
+    "Alpha3Code": "COG",
+    "PhoneCode": "242"
+  },
+  {
+    "NameEn": "Cook Islands",
+    "NameAr": "جزر كوك",
+    "Alpha2Code": "CK",
+    "Alpha3Code": "COK",
+    "PhoneCode": "682"
+  },
+  {
+    "NameEn": "Costa Rica",
+    "NameAr": "كوستاريكا",
+    "Alpha2Code": "CR",
+    "Alpha3Code": "CRI",
+    "PhoneCode": "506"
+  },
+  {
+    "NameEn": "Croatia",
+    "NameAr": "كرواتيا",
+    "Alpha2Code": "HR",
+    "Alpha3Code": "HRV",
+    "PhoneCode": "385"
+  },
+  {
+    "NameEn": "Cuba",
+    "NameAr": "كوبا",
+    "Alpha2Code": "CU",
+    "Alpha3Code": "CUB",
+    "PhoneCode": "53"
+  },
+  {
+    "NameEn": "Curaçao",
+    "NameAr": "كوراساو",
+    "Alpha2Code": "CW",
+    "Alpha3Code": "CUW",
+    "PhoneCode": "599"
+  },
+  {
+    "NameEn": "Cyprus",
+    "NameAr": "قبرص",
+    "Alpha2Code": "CY",
+    "Alpha3Code": "CYP",
+    "PhoneCode": "357"
+  },
+  {
+    "NameEn": "Czechia",
+    "NameAr": "التشيك",
+    "Alpha2Code": "CZ",
+    "Alpha3Code": "CZE",
+    "PhoneCode": "420"
+  },
+  {
+    "NameEn": "Denmark",
+    "NameAr": "الدنمارك",
+    "Alpha2Code": "DK",
+    "Alpha3Code": "DNK",
+    "PhoneCode": "45"
+  },
+  {
+    "NameEn": "Djibouti",
+    "NameAr": "جيبوتي",
+    "Alpha2Code": "DJ",
+    "Alpha3Code": "DJI",
+    "PhoneCode": "253"
+  },
+  {
+    "NameEn": "Dominica",
+    "NameAr": "دومينيكا",
+    "Alpha2Code": "DM",
+    "Alpha3Code": "DMA",
+    "PhoneCode": "767"
+  },
+  {
+    "NameEn": "Dominican Republic",
+    "NameAr": "جمهورية الدومينيكان",
+    "Alpha2Code": "DO",
+    "Alpha3Code": "DOM",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "DR Congo",
+    "NameAr": "جمهورية الكونغو الديمقراطية",
+    "Alpha2Code": "CD",
+    "Alpha3Code": "COD",
+    "PhoneCode": "243"
+  },
+  {
+    "NameEn": "Ecuador",
+    "NameAr": "الاكوادور",
+    "Alpha2Code": "EC",
+    "Alpha3Code": "ECU",
+    "PhoneCode": "593"
+  },
+  {
+    "NameEn": "Egypt",
+    "NameAr": "مصر",
+    "Alpha2Code": "EG",
+    "Alpha3Code": "EGY",
+    "PhoneCode": "20"
+  },
+  {
+    "NameEn": "El Salvador",
+    "NameAr": "السلفادور",
+    "Alpha2Code": "SV",
+    "Alpha3Code": "SLV",
+    "PhoneCode": "503"
+  },
+  {
+    "NameEn": "Equatorial Guinea",
+    "NameAr": "غينيا الاستوائية",
+    "Alpha2Code": "GQ",
+    "Alpha3Code": "GNQ",
+    "PhoneCode": "240"
+  },
+  {
+    "NameEn": "Eritrea",
+    "NameAr": "إريتريا",
+    "Alpha2Code": "ER",
+    "Alpha3Code": "ERI",
+    "PhoneCode": "291"
+  },
+  {
+    "NameEn": "Estonia",
+    "NameAr": "إستونيا",
+    "Alpha2Code": "EE",
+    "Alpha3Code": "EST",
+    "PhoneCode": "372"
+  },
+  {
+    "NameEn": "Eswatini",
+    "NameAr": "إسواتيني",
+    "Alpha2Code": "SZ",
+    "Alpha3Code": "SWZ",
+    "PhoneCode": "268"
+  },
+  {
+    "NameEn": "Ethiopia",
+    "NameAr": "إثيوبيا",
+    "Alpha2Code": "ET",
+    "Alpha3Code": "ETH",
+    "PhoneCode": "251"
+  },
+  {
+    "NameEn": "Falkland Islands",
+    "NameAr": "جزر فوكلاند",
+    "Alpha2Code": "FK",
+    "Alpha3Code": "FLK",
+    "PhoneCode": "500"
+  },
+  {
+    "NameEn": "Faroe Islands",
+    "NameAr": "جزر فارو",
+    "Alpha2Code": "FO",
+    "Alpha3Code": "FRO",
+    "PhoneCode": "298"
+  },
+  {
+    "NameEn": "Fiji",
+    "NameAr": "فيجي",
+    "Alpha2Code": "FJ",
+    "Alpha3Code": "FJI",
+    "PhoneCode": "679"
+  },
+  {
+    "NameEn": "Finland",
+    "NameAr": "فنلندا",
+    "Alpha2Code": "FI",
+    "Alpha3Code": "FIN",
+    "PhoneCode": "358"
+  },
+  {
+    "NameEn": "France",
+    "NameAr": "فرنسا",
+    "Alpha2Code": "FR",
+    "Alpha3Code": "FRA",
+    "PhoneCode": "33"
+  },
+  {
+    "NameEn": "French Guiana",
+    "NameAr": "غويانا الفرنسية",
+    "Alpha2Code": "GF",
+    "Alpha3Code": "GUF",
+    "PhoneCode": "594"
+  },
+  {
+    "NameEn": "French Polynesia",
+    "NameAr": "بولينزيا الفرنسية",
+    "Alpha2Code": "PF",
+    "Alpha3Code": "PYF",
+    "PhoneCode": "689"
+  },
+  {
+    "NameEn": "French Southern Territories",
+    "NameAr": "أراض فرنسية جنوبية",
+    "Alpha2Code": "TF",
+    "Alpha3Code": "ATF",
+    "PhoneCode": "262"
+  },
+  {
+    "NameEn": "Gabon",
+    "NameAr": "الجابون",
+    "Alpha2Code": "GA",
+    "Alpha3Code": "GAB",
+    "PhoneCode": "241"
+  },
+  {
+    "NameEn": "Gambia",
+    "NameAr": "غامبيا",
+    "Alpha2Code": "GM",
+    "Alpha3Code": "GMB",
+    "PhoneCode": "220"
+  },
+  {
+    "NameEn": "Georgia",
+    "NameAr": "‫جورجيا",
+    "Alpha2Code": "GE",
+    "Alpha3Code": "GEO",
+    "PhoneCode": "995"
+  },
+  {
+    "NameEn": "Germany",
+    "NameAr": "ألمانيا",
+    "Alpha2Code": "DE",
+    "Alpha3Code": "DEU",
+    "PhoneCode": "49"
+  },
+  {
+    "NameEn": "Ghana",
+    "NameAr": "غانا",
+    "Alpha2Code": "GH",
+    "Alpha3Code": "GHA",
+    "PhoneCode": "233"
+  },
+  {
+    "NameEn": "Gibraltar",
+    "NameAr": "جبل طارق",
+    "Alpha2Code": "GI",
+    "Alpha3Code": "GIB",
+    "PhoneCode": "350"
+  },
+  {
+    "NameEn": "Greece",
+    "NameAr": "اليونان",
+    "Alpha2Code": "GR",
+    "Alpha3Code": "GRC",
+    "PhoneCode": "30"
+  },
+  {
+    "NameEn": "Greenland",
+    "NameAr": "جرينلاند",
+    "Alpha2Code": "GL",
+    "Alpha3Code": "GRL",
+    "PhoneCode": "299"
+  },
+  {
+    "NameEn": "Grenada",
+    "NameAr": "غرينادا",
+    "Alpha2Code": "GD",
+    "Alpha3Code": "GRD",
+    "PhoneCode": "473"
+  },
+  {
+    "NameEn": "Guadeloupe",
+    "NameAr": "غوادلوب",
+    "Alpha2Code": "GP",
+    "Alpha3Code": "GLP",
+    "PhoneCode": "590"
+  },
+  {
+    "NameEn": "Guam",
+    "NameAr": "غوام",
+    "Alpha2Code": "GU",
+    "Alpha3Code": "GUM",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Guatemala",
+    "NameAr": "غواتيمالا",
+    "Alpha2Code": "GT",
+    "Alpha3Code": "GTM",
+    "PhoneCode": "502"
+  },
+  {
+    "NameEn": "Guernsey",
+    "NameAr": "غيرنزي",
+    "Alpha2Code": "GG",
+    "Alpha3Code": "GGY",
+    "PhoneCode": "44"
+  },
+  {
+    "NameEn": "Guinea",
+    "NameAr": "غينيا",
+    "Alpha2Code": "GN",
+    "Alpha3Code": "GIN",
+    "PhoneCode": "224"
+  },
+  {
+    "NameEn": "Guinea-Bissau",
+    "NameAr": "غينيا بيساو",
+    "Alpha2Code": "GW",
+    "Alpha3Code": "GNB",
+    "PhoneCode": "245"
+  },
+  {
+    "NameEn": "Guyana",
+    "NameAr": "غيانا",
+    "Alpha2Code": "GY",
+    "Alpha3Code": "GUY",
+    "PhoneCode": "592"
+  },
+  {
+    "NameEn": "Haiti",
+    "NameAr": "هايتي",
+    "Alpha2Code": "HT",
+    "Alpha3Code": "HTI",
+    "PhoneCode": "509"
+  },
+  {
+    "NameEn": "Heard Island and McDonald Islands",
+    "NameAr": "جزيرة هيرد وجزر ماكدونالد",
+    "Alpha2Code": "HM",
+    "Alpha3Code": "HMD",
+    "PhoneCode": "672"
+  },
+  {
+    "NameEn": "Honduras",
+    "NameAr": "هندوراس",
+    "Alpha2Code": "HN",
+    "Alpha3Code": "HND",
+    "PhoneCode": "504"
+  },
+  {
+    "NameEn": "Hong Kong",
+    "NameAr": "هونج كونج",
+    "Alpha2Code": "HK",
+    "Alpha3Code": "HKG",
+    "PhoneCode": "852"
+  },
+  {
+    "NameEn": "Hungary",
+    "NameAr": "هنجاريا",
+    "Alpha2Code": "HU",
+    "Alpha3Code": "HUN",
+    "PhoneCode": "36"
+  },
+  {
+    "NameEn": "Iceland",
+    "NameAr": "آيسلندا",
+    "Alpha2Code": "IS",
+    "Alpha3Code": "ISL",
+    "PhoneCode": "354"
+  },
+  {
+    "NameEn": "India",
+    "NameAr": "الهند",
+    "Alpha2Code": "IN",
+    "Alpha3Code": "IND",
+    "PhoneCode": "91"
+  },
+  {
+    "NameEn": "Indonesia",
+    "NameAr": "أندونيسيا",
+    "Alpha2Code": "ID",
+    "Alpha3Code": "IDN",
+    "PhoneCode": "62"
+  },
+  {
+    "NameEn": "Iran",
+    "NameAr": "إيران",
+    "Alpha2Code": "IR",
+    "Alpha3Code": "IRN",
+    "PhoneCode": "98"
+  },
+  {
+    "NameEn": "Iraq",
+    "NameAr": "العراق",
+    "Alpha2Code": "IQ",
+    "Alpha3Code": "IRQ",
+    "PhoneCode": "964"
+  },
+  {
+    "NameEn": "Ireland",
+    "NameAr": "أيرلندا",
+    "Alpha2Code": "IE",
+    "Alpha3Code": "IRL",
+    "PhoneCode": "353"
+  },
+  {
+    "NameEn": "Isle of Man",
+    "NameAr": "جزيرة مان",
+    "Alpha2Code": "IM",
+    "Alpha3Code": "IMN",
+    "PhoneCode": "44"
+  },
+  {
+    "NameEn": "Italy",
+    "NameAr": "إيطاليا",
+    "Alpha2Code": "IT",
+    "Alpha3Code": "ITA",
+    "PhoneCode": "390"
+  },
+  {
+    "NameEn": "Ivory Coast",
+    "NameAr": "ساحل العاج",
+    "Alpha2Code": "CI",
+    "Alpha3Code": "CIV",
+    "PhoneCode": "225"
+  },
+  {
+    "NameEn": "Jamaica",
+    "NameAr": "جامايكا",
+    "Alpha2Code": "JM",
+    "Alpha3Code": "JAM",
+    "PhoneCode": "1876"
+  },
+  {
+    "NameEn": "Japan",
+    "NameAr": "اليابان",
+    "Alpha2Code": "JP",
+    "Alpha3Code": "JPN",
+    "PhoneCode": "81"
+  },
+  {
+    "NameEn": "Jersey",
+    "NameAr": "جيرسي",
+    "Alpha2Code": "JE",
+    "Alpha3Code": "JEY",
+    "PhoneCode": "44"
+  },
+  {
+    "NameEn": "Jordan",
+    "NameAr": "الأردن",
+    "Alpha2Code": "JO",
+    "Alpha3Code": "JOR",
+    "PhoneCode": "962"
+  },
+  {
+    "NameEn": "Kazakhstan",
+    "NameAr": "كازاخستان",
+    "Alpha2Code": "KZ",
+    "Alpha3Code": "KAZ",
+    "PhoneCode": "7"
+  },
+  {
+    "NameEn": "Kenya",
+    "NameAr": "كينيا",
+    "Alpha2Code": "KE",
+    "Alpha3Code": "KEN",
+    "PhoneCode": "254"
+  },
+  {
+    "NameEn": "Kiribati",
+    "NameAr": "كيريباتي",
+    "Alpha2Code": "KI",
+    "Alpha3Code": "KIR",
+    "PhoneCode": "686"
+  },
+  {
+    "NameEn": "Kosovo",
+    "NameAr": "كوسوفو",
+    "Alpha2Code": "XK",
+    "Alpha3Code": "XKX",
+    "PhoneCode": "383"
+  },
+  {
+    "NameEn": "Kuwait",
+    "NameAr": "الكويت",
+    "Alpha2Code": "KW",
+    "Alpha3Code": "KWT",
+    "PhoneCode": "965"
+  },
+  {
+    "NameEn": "Kyrgyzstan",
+    "NameAr": "قيرغيزستان",
+    "Alpha2Code": "KG",
+    "Alpha3Code": "KGZ",
+    "PhoneCode": "996"
+  },
+  {
+    "NameEn": "Laos",
+    "NameAr": "لاوس",
+    "Alpha2Code": "LA",
+    "Alpha3Code": "LAO",
+    "PhoneCode": "856"
+  },
+  {
+    "NameEn": "Latvia",
+    "NameAr": "لاتفيا",
+    "Alpha2Code": "LV",
+    "Alpha3Code": "LVA",
+    "PhoneCode": "371"
+  },
+  {
+    "NameEn": "Lebanon",
+    "NameAr": "لبنان",
+    "Alpha2Code": "LB",
+    "Alpha3Code": "LBN",
+    "PhoneCode": "961"
+  },
+  {
+    "NameEn": "Lesotho",
+    "NameAr": "ليسوتو",
+    "Alpha2Code": "LS",
+    "Alpha3Code": "LSO",
+    "PhoneCode": "266"
+  },
+  {
+    "NameEn": "Liberia",
+    "NameAr": "ليبيريا",
+    "Alpha2Code": "LR",
+    "Alpha3Code": "LBR",
+    "PhoneCode": "231"
+  },
+  {
+    "NameEn": "Libya",
+    "NameAr": "ليبيا",
+    "Alpha2Code": "LY",
+    "Alpha3Code": "LBY",
+    "PhoneCode": "218"
+  },
+  {
+    "NameEn": "Liechtenstein",
+    "NameAr": "ليختنشتاين",
+    "Alpha2Code": "LI",
+    "Alpha3Code": "LIE",
+    "PhoneCode": "423"
+  },
+  {
+    "NameEn": "Lithuania",
+    "NameAr": "ليتوانيا",
+    "Alpha2Code": "LT",
+    "Alpha3Code": "LTU",
+    "PhoneCode": "370"
+  },
+  {
+    "NameEn": "Luxembourg",
+    "NameAr": "لوكسمبورغ",
+    "Alpha2Code": "LU",
+    "Alpha3Code": "LUX",
+    "PhoneCode": "352"
+  },
+  {
+    "NameEn": "Macao",
+    "NameAr": "ماكاو",
+    "Alpha2Code": "MO",
+    "Alpha3Code": "MAC",
+    "PhoneCode": "853"
+  },
+  {
+    "NameEn": "Madagascar",
+    "NameAr": "مدغشقر",
+    "Alpha2Code": "MG",
+    "Alpha3Code": "MDG",
+    "PhoneCode": "261"
+  },
+  {
+    "NameEn": "Malawi",
+    "NameAr": "مالاوي",
+    "Alpha2Code": "MW",
+    "Alpha3Code": "MWI",
+    "PhoneCode": "265"
+  },
+  {
+    "NameEn": "Malaysia",
+    "NameAr": "ماليزيا",
+    "Alpha2Code": "MY",
+    "Alpha3Code": "MYS",
+    "PhoneCode": "60"
+  },
+  {
+    "NameEn": "Maldives",
+    "NameAr": "المالديف",
+    "Alpha2Code": "MV",
+    "Alpha3Code": "MDV",
+    "PhoneCode": "960"
+  },
+  {
+    "NameEn": "Mali",
+    "NameAr": "مالي",
+    "Alpha2Code": "ML",
+    "Alpha3Code": "MLI",
+    "PhoneCode": "223"
+  },
+  {
+    "NameEn": "Malta",
+    "NameAr": "مالطا",
+    "Alpha2Code": "MT",
+    "Alpha3Code": "MLT",
+    "PhoneCode": "356"
+  },
+  {
+    "NameEn": "Marshall Islands",
+    "NameAr": "جزر مارشال",
+    "Alpha2Code": "MH",
+    "Alpha3Code": "MHL",
+    "PhoneCode": "692"
+  },
+  {
+    "NameEn": "Martinique",
+    "NameAr": "مارتينيك",
+    "Alpha2Code": "MQ",
+    "Alpha3Code": "MTQ",
+    "PhoneCode": "33"
+  },
+  {
+    "NameEn": "Mauritania",
+    "NameAr": "موريتانيا",
+    "Alpha2Code": "MR",
+    "Alpha3Code": "MRT",
+    "PhoneCode": "222"
+  },
+  {
+    "NameEn": "Mauritius",
+    "NameAr": "موريشيوس",
+    "Alpha2Code": "MU",
+    "Alpha3Code": "MUS",
+    "PhoneCode": "230"
+  },
+  {
+    "NameEn": "Mayotte",
+    "NameAr": "مايوت",
+    "Alpha2Code": "YT",
+    "Alpha3Code": "MYT",
+    "PhoneCode": "262"
+  },
+  {
+    "NameEn": "Mexico",
+    "NameAr": "المكسيك",
+    "Alpha2Code": "MX",
+    "Alpha3Code": "MEX",
+    "PhoneCode": "52"
+  },
+  {
+    "NameEn": "Micronesia",
+    "NameAr": "ولايات ميكرونيسيا المتحدة",
+    "Alpha2Code": "FM",
+    "Alpha3Code": "FSM",
+    "PhoneCode": "691"
+  },
+  {
+    "NameEn": "Moldova",
+    "NameAr": "مولدوفا",
+    "Alpha2Code": "MD",
+    "Alpha3Code": "MDA",
+    "PhoneCode": "373"
+  },
+  {
+    "NameEn": "Monaco",
+    "NameAr": "موناكو",
+    "Alpha2Code": "MC",
+    "Alpha3Code": "MCO",
+    "PhoneCode": "377"
+  },
+  {
+    "NameEn": "Mongolia",
+    "NameAr": "منغوليا",
+    "Alpha2Code": "MN",
+    "Alpha3Code": "MNG",
+    "PhoneCode": "976"
+  },
+  {
+    "NameEn": "Montenegro",
+    "NameAr": "مونتينيغرو",
+    "Alpha2Code": "ME",
+    "Alpha3Code": "MNE",
+    "PhoneCode": "382"
+  },
+  {
+    "NameEn": "Montserrat",
+    "NameAr": "مونتسرات",
+    "Alpha2Code": "MS",
+    "Alpha3Code": "MSR",
+    "PhoneCode": "1664"
+  },
+  {
+    "NameEn": "Morocco",
+    "NameAr": "المغرب",
+    "Alpha2Code": "MA",
+    "Alpha3Code": "MAR",
+    "PhoneCode": "212"
+  },
+  {
+    "NameEn": "Mozambique",
+    "NameAr": "موزمبيق",
+    "Alpha2Code": "MZ",
+    "Alpha3Code": "MOZ",
+    "PhoneCode": "258"
+  },
+  {
+    "NameEn": "Myanmar",
+    "NameAr": "ميانمار",
+    "Alpha2Code": "MM",
+    "Alpha3Code": "MMR",
+    "PhoneCode": "95"
+  },
+  {
+    "NameEn": "Namibia",
+    "NameAr": "ناميبيا",
+    "Alpha2Code": "NA",
+    "Alpha3Code": "NAM",
+    "PhoneCode": "264"
+  },
+  {
+    "NameEn": "Nauru",
+    "NameAr": "ناورو",
+    "Alpha2Code": "NR",
+    "Alpha3Code": "NRU",
+    "PhoneCode": "674"
+  },
+  {
+    "NameEn": "Nepal",
+    "NameAr": "نيبال",
+    "Alpha2Code": "NP",
+    "Alpha3Code": "NPL",
+    "PhoneCode": "977"
+  },
+  {
+    "NameEn": "Netherlands",
+    "NameAr": "هولندا",
+    "Alpha2Code": "NL",
+    "Alpha3Code": "NLD",
+    "PhoneCode": "31"
+  },
+  {
+    "NameEn": "Netherlands Antilles",
+    "NameAr": "جزر الأنتيل الهولندية",
+    "Alpha2Code": "AN",
+    "Alpha3Code": "ANT",
+    "PhoneCode": "599"
+  },
+  {
+    "NameEn": "New Caledonia",
+    "NameAr": "كاليدونيا الجديدة",
+    "Alpha2Code": "NC",
+    "Alpha3Code": "NCL",
+    "PhoneCode": "687"
+  },
+  {
+    "NameEn": "New Zealand",
+    "NameAr": "نيوزيلندا",
+    "Alpha2Code": "NZ",
+    "Alpha3Code": "NZL",
+    "PhoneCode": "64"
+  },
+  {
+    "NameEn": "Nicaragua",
+    "NameAr": "نيكاراغوا",
+    "Alpha2Code": "NI",
+    "Alpha3Code": "NIC",
+    "PhoneCode": "505"
+  },
+  {
+    "NameEn": "Niger",
+    "NameAr": "النيجر",
+    "Alpha2Code": "NE",
+    "Alpha3Code": "NER",
+    "PhoneCode": "227"
+  },
+  {
+    "NameEn": "Nigeria",
+    "NameAr": "نيجيريا",
+    "Alpha2Code": "NG",
+    "Alpha3Code": "NGA",
+    "PhoneCode": "234"
+  },
+  {
+    "NameEn": "Niue",
+    "NameAr": "نييوي",
+    "Alpha2Code": "NU",
+    "Alpha3Code": "NIU",
+    "PhoneCode": "683"
+  },
+  {
+    "NameEn": "Norfolk Island",
+    "NameAr": "جزيرة نورفولك",
+    "Alpha2Code": "NF",
+    "Alpha3Code": "NFK",
+    "PhoneCode": "6723"
+  },
+  {
+    "NameEn": "North Korea",
+    "NameAr": "كوريا الشمالية",
+    "Alpha2Code": "KP",
+    "Alpha3Code": "PRK",
+    "PhoneCode": "850"
+  },
+  {
+    "NameEn": "North Macedonia",
+    "NameAr": "مقدونيا الشمالية",
+    "Alpha2Code": "MK",
+    "Alpha3Code": "MKD",
+    "PhoneCode": "389"
+  },
+  {
+    "NameEn": "Northern Mariana Islands",
+    "NameAr": "جزر ماريانا الشمالية",
+    "Alpha2Code": "MP",
+    "Alpha3Code": "MNP",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Norway",
+    "NameAr": "النرويج",
+    "Alpha2Code": "NO",
+    "Alpha3Code": "NOR",
+    "PhoneCode": "47"
+  },
+  {
+    "NameEn": "Oman",
+    "NameAr": "سلطنة عمان",
+    "Alpha2Code": "OM",
+    "Alpha3Code": "OMN",
+    "PhoneCode": "968"
+  },
+  {
+    "NameEn": "Pakistan",
+    "NameAr": "باكستان",
+    "Alpha2Code": "PK",
+    "Alpha3Code": "PAK",
+    "PhoneCode": "92"
+  },
+  {
+    "NameEn": "Palau",
+    "NameAr": "بالاو",
+    "Alpha2Code": "PW",
+    "Alpha3Code": "PLW",
+    "PhoneCode": "680"
+  },
+  {
+    "NameEn": "Palestine",
+    "NameAr": "فلسطين",
+    "Alpha2Code": "PS",
+    "Alpha3Code": "PSE",
+    "PhoneCode": "970"
+  },
+  {
+    "NameEn": "Panama",
+    "NameAr": "بنما",
+    "Alpha2Code": "PA",
+    "Alpha3Code": "PAN",
+    "PhoneCode": "507"
+  },
+  {
+    "NameEn": "Papua New Guinea",
+    "NameAr": "بابوا غينيا الجديدة",
+    "Alpha2Code": "PG",
+    "Alpha3Code": "PNG",
+    "PhoneCode": "675"
+  },
+  {
+    "NameEn": "Paraguay",
+    "NameAr": "باراغواي",
+    "Alpha2Code": "PY",
+    "Alpha3Code": "PRY",
+    "PhoneCode": "595"
+  },
+  {
+    "NameEn": "Peru",
+    "NameAr": "بيرو",
+    "Alpha2Code": "PE",
+    "Alpha3Code": "PER",
+    "PhoneCode": "51"
+  },
+  {
+    "NameEn": "Philippines",
+    "NameAr": "الفلبين",
+    "Alpha2Code": "PH",
+    "Alpha3Code": "PHL",
+    "PhoneCode": "63"
+  },
+  {
+    "NameEn": "Pitcairn Islands",
+    "NameAr": "جزر بيتكيرن",
+    "Alpha2Code": "PN",
+    "Alpha3Code": "PCN",
+    "PhoneCode": "672"
+  },
+  {
+    "NameEn": "Poland",
+    "NameAr": "بولندا",
+    "Alpha2Code": "PL",
+    "Alpha3Code": "POL",
+    "PhoneCode": "48"
+  },
+  {
+    "NameEn": "Portugal",
+    "NameAr": "البرتغال",
+    "Alpha2Code": "PT",
+    "Alpha3Code": "PRT",
+    "PhoneCode": "351"
+  },
+  {
+    "NameEn": "Puerto Rico",
+    "NameAr": "بورتوريكو",
+    "Alpha2Code": "PR",
+    "Alpha3Code": "PRI",
+    "PhoneCode": "1787"
+  },
+  {
+    "NameEn": "Qatar",
+    "NameAr": "قطر",
+    "Alpha2Code": "QA",
+    "Alpha3Code": "QAT",
+    "PhoneCode": "974"
+  },
+  {
+    "NameEn": "Réunion",
+    "NameAr": "ريونيون",
+    "Alpha2Code": "RE",
+    "Alpha3Code": "REU",
+    "PhoneCode": "262"
+  },
+  {
+    "NameEn": "Romania",
+    "NameAr": "رومانيا",
+    "Alpha2Code": "RO",
+    "Alpha3Code": "ROU",
+    "PhoneCode": "40"
+  },
+  {
+    "NameEn": "Russia",
+    "NameAr": "روسيا",
+    "Alpha2Code": "RU",
+    "Alpha3Code": "RUS",
+    "PhoneCode": "7"
+  },
+  {
+    "NameEn": "Rwanda",
+    "NameAr": "رواندا",
+    "Alpha2Code": "RW",
+    "Alpha3Code": "RWA",
+    "PhoneCode": "250"
+  },
+  {
+    "NameEn": "Saint Barthélemy",
+    "NameAr": "سان بارتيلمي",
+    "Alpha2Code": "BL",
+    "Alpha3Code": "BLM",
+    "PhoneCode": "590"
+  },
+  {
+    "NameEn": "Saint Helena",
+    "NameAr": "سانت هيلينا",
+    "Alpha2Code": "SH",
+    "Alpha3Code": "SHN",
+    "PhoneCode": "290"
+  },
+  {
+    "NameEn": "Saint Kitts and Nevis",
+    "NameAr": "سانت كيتس ونيفيس",
+    "Alpha2Code": "KN",
+    "Alpha3Code": "KNA",
+    "PhoneCode": "1869"
+  },
+  {
+    "NameEn": "Saint Lucia",
+    "NameAr": "سانت لوسيا",
+    "Alpha2Code": "LC",
+    "Alpha3Code": "LCA",
+    "PhoneCode": "1758"
+  },
+  {
+    "NameEn": "Saint Martin",
+    "NameAr": "سانت مارتن",
+    "Alpha2Code": "MF",
+    "Alpha3Code": "MAF",
+    "PhoneCode": "590"
+  },
+  {
+    "NameEn": "Saint Pierre and Miquelon",
+    "NameAr": "سان بيير وميكلون",
+    "Alpha2Code": "PM",
+    "Alpha3Code": "SPM",
+    "PhoneCode": "508"
+  },
+  {
+    "NameEn": "Saint Vincent and the Grenadines",
+    "NameAr": "سانت فينسنت والغرينادين",
+    "Alpha2Code": "VC",
+    "Alpha3Code": "VCT",
+    "PhoneCode": "784"
+  },
+  {
+    "NameEn": "Samoa",
+    "NameAr": "ساموا",
+    "Alpha2Code": "WS",
+    "Alpha3Code": "WSM",
+    "PhoneCode": "685"
+  },
+  {
+    "NameEn": "San Marino",
+    "NameAr": "سان مارينو",
+    "Alpha2Code": "SM",
+    "Alpha3Code": "SMR",
+    "PhoneCode": "378"
+  },
+  {
+    "NameEn": "São Tomé and Príncipe",
+    "NameAr": "ساو تومي وبرينسيب",
+    "Alpha2Code": "ST",
+    "Alpha3Code": "STP",
+    "PhoneCode": "239"
+  },
+  {
+    "NameEn": "Saudi Arabia",
+    "NameAr": "السعودية",
+    "Alpha2Code": "SA",
+    "Alpha3Code": "SAU",
+    "PhoneCode": "966"
+  },
+  {
+    "NameEn": "Senegal",
+    "NameAr": "السنغال",
+    "Alpha2Code": "SN",
+    "Alpha3Code": "SEN",
+    "PhoneCode": "221"
+  },
+  {
+    "NameEn": "Serbia",
+    "NameAr": "صربيا",
+    "Alpha2Code": "RS",
+    "Alpha3Code": "SRB",
+    "PhoneCode": "381"
+  },
+  {
+    "NameEn": "Seychelles",
+    "NameAr": "سيشل",
+    "Alpha2Code": "SC",
+    "Alpha3Code": "SYC",
+    "PhoneCode": "248"
+  },
+  {
+    "NameEn": "Sierra Leone",
+    "NameAr": "سيراليون",
+    "Alpha2Code": "SL",
+    "Alpha3Code": "SLE",
+    "PhoneCode": "232"
+  },
+  {
+    "NameEn": "Singapore",
+    "NameAr": "سنغافورة",
+    "Alpha2Code": "SG",
+    "Alpha3Code": "SGP",
+    "PhoneCode": "65"
+  },
+  {
+    "NameEn": "Sint Maarten",
+    "NameAr": "سانت مارتن",
+    "Alpha2Code": "SX",
+    "Alpha3Code": "SXM",
+    "PhoneCode": "599"
+  },
+  {
+    "NameEn": "Slovakia",
+    "NameAr": "سلوفاكيا",
+    "Alpha2Code": "SK",
+    "Alpha3Code": "SVK",
+    "PhoneCode": "421"
+  },
+  {
+    "NameEn": "Slovenia",
+    "NameAr": "سلوفينيا",
+    "Alpha2Code": "SI",
+    "Alpha3Code": "SVN",
+    "PhoneCode": "386"
+  },
+  {
+    "NameEn": "Solomon Islands",
+    "NameAr": "جزر سليمان",
+    "Alpha2Code": "SB",
+    "Alpha3Code": "SLB",
+    "PhoneCode": "677"
+  },
+  {
+    "NameEn": "Somalia",
+    "NameAr": "الصومال",
+    "Alpha2Code": "SO",
+    "Alpha3Code": "SOM",
+    "PhoneCode": "252"
+  },
+  {
+    "NameEn": "South Africa",
+    "NameAr": "جنوب أفريقيا",
+    "Alpha2Code": "ZA",
+    "Alpha3Code": "ZAF",
+    "PhoneCode": "27"
+  },
+  {
+    "NameEn": "South Georgia and South Sandwich Islands",
+    "NameAr": "جورجيا الجنوبية وجزر ساندويتش الجنوبية",
+    "Alpha2Code": "GS",
+    "Alpha3Code": "SGS",
+    "PhoneCode": "500"
+  },
+  {
+    "NameEn": "South Korea",
+    "NameAr": "كوريا الجنوبية",
+    "Alpha2Code": "KR",
+    "Alpha3Code": "KOR",
+    "PhoneCode": "82"
+  },
+  {
+    "NameEn": "South Sudan",
+    "NameAr": "جنوب السودان",
+    "Alpha2Code": "SS",
+    "Alpha3Code": "SSD",
+    "PhoneCode": "211"
+  },
+  {
+    "NameEn": "Spain",
+    "NameAr": "إسبانيا",
+    "Alpha2Code": "ES",
+    "Alpha3Code": "ESP",
+    "PhoneCode": "34"
+  },
+  {
+    "NameEn": "Sri Lanka",
+    "NameAr": "سريلانكا",
+    "Alpha2Code": "LK",
+    "Alpha3Code": "LKA",
+    "PhoneCode": "94"
+  },
+  {
+    "NameEn": "Sudan",
+    "NameAr": "السودان",
+    "Alpha2Code": "SD",
+    "Alpha3Code": "SDN",
+    "PhoneCode": "249"
+  },
+  {
+    "NameEn": "Suriname",
+    "NameAr": "سورينام",
+    "Alpha2Code": "SR",
+    "Alpha3Code": "SUR",
+    "PhoneCode": "597"
+  },
+  {
+    "NameEn": "Svalbard and Jan Mayen",
+    "NameAr": "سفالبارد ويان ماين",
+    "Alpha2Code": "SJ",
+    "Alpha3Code": "SJM",
+    "PhoneCode": "47"
+  },
+  {
+    "NameEn": "Sweden",
+    "NameAr": "السويد",
+    "Alpha2Code": "SE",
+    "Alpha3Code": "SWE",
+    "PhoneCode": "46"
+  },
+  {
+    "NameEn": "Switzerland",
+    "NameAr": "سويسرا",
+    "Alpha2Code": "CH",
+    "Alpha3Code": "CHE",
+    "PhoneCode": "41"
+  },
+  {
+    "NameEn": "Syria",
+    "NameAr": "سوريا",
+    "Alpha2Code": "SY",
+    "Alpha3Code": "SYR",
+    "PhoneCode": "963"
+  },
+  {
+    "NameEn": "Taiwan",
+    "NameAr": "تايوان",
+    "Alpha2Code": "TW",
+    "Alpha3Code": "TWN",
+    "PhoneCode": "886"
+  },
+  {
+    "NameEn": "Tajikistan",
+    "NameAr": "طاجيكستان",
+    "Alpha2Code": "TJ",
+    "Alpha3Code": "TJK",
+    "PhoneCode": "992"
+  },
+  {
+    "NameEn": "Tanzania",
+    "NameAr": "تنزانيا",
+    "Alpha2Code": "TZ",
+    "Alpha3Code": "TZA",
+    "PhoneCode": "255"
+  },
+  {
+    "NameEn": "Thailand",
+    "NameAr": "تايلاند",
+    "Alpha2Code": "TH",
+    "Alpha3Code": "THA",
+    "PhoneCode": "66"
+  },
+  {
+    "NameEn": "Timor-Leste",
+    "NameAr": "تيمور الشرقية",
+    "Alpha2Code": "TL",
+    "Alpha3Code": "TLS",
+    "PhoneCode": "670"
+  },
+  {
+    "NameEn": "Togo",
+    "NameAr": "توجو",
+    "Alpha2Code": "TG",
+    "Alpha3Code": "TGO",
+    "PhoneCode": "228"
+  },
+  {
+    "NameEn": "Tokelau",
+    "NameAr": "توكيلاو",
+    "Alpha2Code": "TK",
+    "Alpha3Code": "TKL",
+    "PhoneCode": "690"
+  },
+  {
+    "NameEn": "Tonga",
+    "NameAr": "تونغا",
+    "Alpha2Code": "TO",
+    "Alpha3Code": "TON",
+    "PhoneCode": "676"
+  },
+  {
+    "NameEn": "Trinidad and Tobago",
+    "NameAr": "ترينيداد وتوباغو",
+    "Alpha2Code": "TT",
+    "Alpha3Code": "TTO",
+    "PhoneCode": "868"
+  },
+  {
+    "NameEn": "Tunisia",
+    "NameAr": "تونس",
+    "Alpha2Code": "TN",
+    "Alpha3Code": "TUN",
+    "PhoneCode": "216"
+  },
+  {
+    "NameEn": "Turkey",
+    "NameAr": "تركيا",
+    "Alpha2Code": "TR",
+    "Alpha3Code": "TUR",
+    "PhoneCode": "90"
+  },
+  {
+    "NameEn": "Turkmenistan",
+    "NameAr": "تركمانستان",
+    "Alpha2Code": "TM",
+    "Alpha3Code": "TKM",
+    "PhoneCode": "993"
+  },
+  {
+    "NameEn": "Turks and Caicos Islands",
+    "NameAr": "جزر توركس وكايكوس",
+    "Alpha2Code": "TC",
+    "Alpha3Code": "TCA",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Tuvalu",
+    "NameAr": "توفالو",
+    "Alpha2Code": "TV",
+    "Alpha3Code": "TUV",
+    "PhoneCode": "688"
+  },
+  {
+    "NameEn": "U.S. Minor Outlying Islands",
+    "NameAr": "جزر الولايات المتحدة الصغيرة النائية",
+    "Alpha2Code": "UM",
+    "Alpha3Code": "UMI",
+    "PhoneCode": "246"
+  },
+  {
+    "NameEn": "U.S. Virgin Islands",
+    "NameAr": "جزر العذراء الأمريكية",
+    "Alpha2Code": "VI",
+    "Alpha3Code": "VIR",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Uganda",
+    "NameAr": "أوغندا",
+    "Alpha2Code": "UG",
+    "Alpha3Code": "UGA",
+    "PhoneCode": "256"
+  },
+  {
+    "NameEn": "Ukraine",
+    "NameAr": "أوكرانيا",
+    "Alpha2Code": "UA",
+    "Alpha3Code": "UKR",
+    "PhoneCode": "380"
+  },
+  {
+    "NameEn": "United Arab Emirates",
+    "NameAr": "الإمارات العربية المتحدة",
+    "Alpha2Code": "AE",
+    "Alpha3Code": "ARE",
+    "PhoneCode": "971"
+  },
+  {
+    "NameEn": "United Kingdom",
+    "NameAr": "المملكة المتحدة",
+    "Alpha2Code": "GB",
+    "Alpha3Code": "GBR",
+    "PhoneCode": "44"
+  },
+  {
+    "NameEn": "United States of America",
+    "NameAr": "الولايات المتحدة الأمريكية",
+    "Alpha2Code": "US",
+    "Alpha3Code": "USA",
+    "PhoneCode": "1"
+  },
+  {
+    "NameEn": "Uruguay",
+    "NameAr": "أوروغواي",
+    "Alpha2Code": "UY",
+    "Alpha3Code": "URY",
+    "PhoneCode": "598"
+  },
+  {
+    "NameEn": "Uzbekistan",
+    "NameAr": "أوزبكستان",
+    "Alpha2Code": "UZ",
+    "Alpha3Code": "UZB",
+    "PhoneCode": "998"
+  },
+  {
+    "NameEn": "Vanuatu",
+    "NameAr": "فانواتو",
+    "Alpha2Code": "VU",
+    "Alpha3Code": "VUT",
+    "PhoneCode": "678"
+  },
+  {
+    "NameEn": "Vatican City",
+    "NameAr": "مدينة الفاتيكان",
+    "Alpha2Code": "VA",
+    "Alpha3Code": "VAT",
+    "PhoneCode": "379"
+  },
+  {
+    "NameEn": "Venezuela",
+    "NameAr": "فنزويلا",
+    "Alpha2Code": "VE",
+    "Alpha3Code": "VEN",
+    "PhoneCode": "58"
+  },
+  {
+    "NameEn": "Vietnam",
+    "NameAr": "فيتنام",
+    "Alpha2Code": "VN",
+    "Alpha3Code": "VNM",
+    "PhoneCode": "84"
+  },
+  {
+    "NameEn": "Wallis and Futuna",
+    "NameAr": "واليس وفوتونا",
+    "Alpha2Code": "WF",
+    "Alpha3Code": "WLF",
+    "PhoneCode": "681"
+  },
+  {
+    "NameEn": "Western Sahara",
+    "NameAr": "الصحراء الغربية",
+    "Alpha2Code": "EH",
+    "Alpha3Code": "ESH",
+    "PhoneCode": "212"
+  },
+  {
+    "NameEn": "Yemen",
+    "NameAr": "اليمن",
+    "Alpha2Code": "YE",
+    "Alpha3Code": "YEM",
+    "PhoneCode": "967"
+  },
+  {
+    "NameEn": "Zambia",
+    "NameAr": "زامبيا",
+    "Alpha2Code": "ZM",
+    "Alpha3Code": "ZMB",
+    "PhoneCode": "260"
+  },
+  {
+    "NameEn": "Zimbabwe",
+    "NameAr": "زيمبابوي",
+    "Alpha2Code": "ZW",
+    "Alpha3Code": "ZWE",
+    "PhoneCode": "263"
+  }
+]
