@@ -42,5 +42,16 @@
   "selectBlockType": "اختر نوع الكتلة",
   "blockCategories": "أصناف الكتل",
   "blocksManagment": "ادارة الكتل",
-  "blocksList": "قائمة الكتل"
+  "blocksList": "قائمة الكتل",
+
+
+  "isVisible": "هل مرئي?",
+  "proccesing": "جاري الحفظ",
+  "url": "الرابط",
+  "selectparentBlock": "أختر كتلة الاب",
+  "recordOrder": "ترتيب السجل",
+  "createAt": "تاريخ الأنشاء",
+  "selectCategory": "أختر الصنف",
+  "addBlock": "أضافة كتلة",
+  "blocks": "الكتل"
 }

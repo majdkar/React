@@ -38,6 +38,7 @@ import CountriesList from "../GeneralSettings/Countries/CountriesList";
 import CitiesList from "../GeneralSettings/Cities/CitiesList";
 import BlockCatgories from "../Blocks/BlockCatgories";
 import Blocks from "../Blocks/Blocks";
+import AddBlockPage from "../Blocks/AddBlockPage";
 import { API_BASE_URL } from "../../config";
 import Logout from "./Logout";
 const drawerWidth = 250;
@@ -47,7 +48,7 @@ export default function NavbarWithMiniDrawer() {
     const { t, i18n } = useTranslation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    const setcategoryId = 22;
+    
     const [drawerOpen, setDrawerOpen] = useState(!isMobile);
     const [drawerMini, setDrawerMini] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -359,8 +360,7 @@ export default function NavbarWithMiniDrawer() {
                                                     <Tooltip key={cat.id} title={cat.nameEn} placement="right">
                                                         <ListItemButton
                                                             component={Link}
-                                                            //to={`/Blocks/${cat.id}`}
-                                                            to="/blocks"
+                                                            to={`/Blocks/${cat.id}`}
                                                             onClick={() => isMobile && setDrawerOpen(false)}
                                                             sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
                                                         >
@@ -461,11 +461,11 @@ export default function NavbarWithMiniDrawer() {
                         />}
                     />
                     <Route
-                        path="/Blocks"
-                        element={<Blocks
-                            setcategoryId={setcategoryId}
-                        />}
+                        path="/Blocks/:categoryId"
+                        element={<Blocks />}
                     />
+
+                    <Route path="/blocks/:categoryId/add" element={<AddBlockPage />} />
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />
                     <Route path="/settings/security" element={<Typography>{t("securityPage")}</Typography>} />
                     <Route path="/logout" element={<Logout />} />

@@ -39,7 +39,20 @@
   "selectBlockType": "Select Block Type",
   "blockCategories": "Block Categories",
   "blocksManagment": "Blocks Managment",
-  "blocksList": "Blocks List"
+  "blocksList": "Blocks List",
+
+
+  "isVisible": "Is Visible?",
+  "proccesing": "Proccesing",
+  "url": "Url",
+  "selectparentBlock": "Select Parent Block",
+  "recordOrder": "Record Order",
+  "createAt": "Create At",
+  "selectCategory": "Select Category",
+  "addBlock": "Add Block",
+  "blocks": "Blocks"
+
+
 
 
 

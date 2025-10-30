@@ -18,14 +18,15 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
 import AddBlockCategoryDialog from "../Blocks/AddBlockCategoryDialog";
+import { useParams } from "react-router-dom"; // 👈 استيراد useParams
+import { useNavigate } from "react-router-dom";
 
-
-const Blocks = ({ setcategoryId }) => {
+const Blocks = () => {
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language === "ar";
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -37,11 +38,15 @@ const Blocks = ({ setcategoryId }) => {
     const [snackbarMsg, setSnackbarMsg] = useState("");
     const [snackbarType, setSnackbarType] = useState("success");
 
+
+    const { categoryId } = useParams(); // 👈 الحصول على رقم الفئة من الـ URL
+
     const [formDialogOpen, setFormDialogOpen] = useState(false);
     const [formMode, setFormMode] = useState("add"); // "add" أو "edit"
     const [formData, setFormData] = useState(null);
     const [formLoading, setFormLoading] = useState(false);
     const [refreshblocks, setRefreshBlocks] = useState([]);
+    const [Blocks, setBlocks] = useState([]);
     const token = localStorage.getItem("token");
 
     // 🔹 جلب الدول
@@ -49,21 +54,20 @@ const Blocks = ({ setcategoryId }) => {
         if (isInitialLoad) setLoading(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/Blocks/${setcategoryId}`,
+                `${API_BASE_URL}/Blocks/GetMaster?categoryId=${categoryId}`,
             );
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
-            setBlockCategories(data);
+            setBlocks(data.items);
         } catch (err) {
             setError(err.message);
         } finally {
             if (isInitialLoad) setLoading(false);
         }
     };
-
     useEffect(() => {
         fetchBlocks(true);
-    }, [token]);
+    }, [token, categoryId]);
 
     // 🔹 أزرار الإضافة والتعديل
     const handleAddClick = () => {
@@ -213,11 +217,17 @@ const Blocks = ({ setcategoryId }) => {
             {/* أزرار التحكم */}
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
                 <Typography variant="h5" sx={{ color: "#000", fontWeight: "bold" }}>
-                    {t("blockCategories") || "Block Categories"}
+                    {t("blocks") || "Blocks"}
                 </Typography>
                 <Stack sx={{ gap: 1 }} direction="row" spacing={1}>
-                    <Button variant="contained" color="primary" sx={{ gap: 1}} endIcon={<AddIcon />} onClick={handleAddClick}>
-                        {t("addBlockCategory") || "Add Block Category"}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ gap: 1 }}
+                        endIcon={<AddIcon />}
+                        onClick={() => navigate(`/blocks/${categoryId}/add`)}
+                    >
+                        {t("addBlock") || "Add Block"}
                     </Button>
                     <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchBlockCategories(false)}>
                         {t("refresh") || "Refresh"}
@@ -239,7 +249,7 @@ const Blocks = ({ setcategoryId }) => {
             >
                 <DataGrid
                     key={i18n.language}
-                    rows={blockCategories}
+                    rows={Blocks}
                     columns={columns}
                     getRowId={(row) => row.id || row.Id}
                     loading={loading}
