@@ -191,8 +191,8 @@ const Blocks = () => {
                         sx={{ gap: 1 }}
                         endIcon={<AddIcon />}
                         onClick={() => {
-                            // مثال: إذا أردت تمرير blockId للنسخ/إضافة فرعية
-                            const blockIdToCopy = selectedBlockId || null; // يمكن أن تختار بلوك محدد للنسخ
+                            const blockIdToCopy = selectedBlockId || null;
+                            // توجه إلى صفحة الإضافة فقط
                             navigate(`/blocks/${categoryId}/add${blockIdToCopy ? `?parentId=${blockIdToCopy}` : ""}`);
                         }}
                     >
