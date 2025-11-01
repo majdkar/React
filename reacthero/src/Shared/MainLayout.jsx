@@ -464,9 +464,20 @@ export default function NavbarWithMiniDrawer() {
                         path="/Blocks/:categoryId"
                         element={<Blocks />}
                     />
+
+                    {/* إضافة Block جديد للفئة */}
+                    <Route path="/blocks/:categoryId/add" element={<AddBlockPage />} />
+
+                    {/* إضافة Block فرعي (داخل Block آخر) */}
+                    <Route path="/blocks/:categoryId/:blockId/add" element={<AddBlockPage />} />
+
+                    {/* تعديل Block */}
                     <Route path="/blocks/:categoryId/edit/:blockId" element={<AddBlockPage />} />
 
-                    <Route path="/blocks/:categoryId/add" element={<AddBlockPage />} />
+                    {/* تعديل Block */}
+                    <Route path="/blocks/:categoryId/add/:blockId" element={<AddBlockPage />} />
+
+
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />
                     <Route path="/settings/security" element={<Typography>{t("securityPage")}</Typography>} />
                     <Route path="/logout" element={<Logout />} />

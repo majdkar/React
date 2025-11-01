@@ -1,6 +1,13 @@
 ﻿import React, { useState, useEffect } from "react";
 import {
-    Box, Typography, TextField, Button, Stack, Autocomplete, CircularProgress, FormControlLabel, Switch
+    Box,
+    Typography,
+    TextField,
+    Button,
+    Stack,
+    Autocomplete,
+    FormControlLabel,
+    Switch,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
@@ -9,13 +16,12 @@ import { useTranslation } from "react-i18next";
 import ImageUploader from "../Shared/ImageUploader";
 
 const AddBlockPage = () => {
-    const { categoryId, blockId } = useParams(); // 👈 إضافة blockId
+    const { categoryId, blockId } = useParams();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const { t, i18n } = useTranslation();
-    const isArabic = i18n.language === "ar";
+    const { t } = useTranslation();
 
-    const isEditMode = !!blockId; // 👈 نعرف إذا تعديل أو إضافة
+    const isEditMode = !!blockId;
 
     // TinyMCE states
     const [descriptionEn, setDescriptionEn] = useState("");
@@ -28,36 +34,16 @@ const AddBlockPage = () => {
     const [descriptionAr3, setDescriptionAr3] = useState("");
 
     // form data
-    const [formData, setFormData] = useState({
-        nameEn: "",
-        nameAr: "",
-        categoryId: categoryId || "",
-        CreateAt: "",
-        recordOrder: 0,
-        url: "",
-        parentId: null,
-        isActive: false,
-        isVisible: false,
-        image1: "",
-        image2: "",
-        image3: ""
-    });
+    const [formData, setFormData] = useState(null);
 
     const [categories, setCategories] = useState([]);
-    const [categoriesLoading, setCategoriesLoading] = useState(false);
-    const [categoriesError, setCategoriesError] = useState(null);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
 
     const [parentBlocks, setParentBlocks] = useState([]);
-    const [parentBlocksLoading, setParentBlocksLoading] = useState(false);
-    const [parentBlocksError, setParentBlocksError] = useState(null);
+    const [parentBlocksLoading, setParentBlocksLoading] = useState(true);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
-
-
-
-
 
     // 🔹 fetch categories
     useEffect(() => {
@@ -71,7 +57,7 @@ const AddBlockPage = () => {
                 const data = await response.json();
                 setCategories(data || []);
             } catch {
-                setCategoriesError(t("failedToLoadCategories"));
+                setError(t("failedToLoadCategories"));
             } finally {
                 setCategoriesLoading(false);
             }
@@ -91,7 +77,7 @@ const AddBlockPage = () => {
                 const data = await response.json();
                 setParentBlocks(data.items || []);
             } catch {
-                setParentBlocksError(t("failedToLoadParentBlock"));
+                setError(t("failedToLoadParentBlock"));
             } finally {
                 setParentBlocksLoading(false);
             }
@@ -99,10 +85,31 @@ const AddBlockPage = () => {
         fetchParentBlocks();
     }, [token, t]);
 
-    // 🔹 fetch block data if editing
-    useEffect(() => {
-        if (!isEditMode) return;
 
+
+    useEffect(() => {
+        if (!isEditMode) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const parentIdFromQuery = urlParams.get("parentId");
+            console.log(parentIdFromQuery)
+            setFormData({
+                nameEn: "",
+                nameAr: "",
+                category: categoryId ? { id: categoryId } : null,
+                CreateAt: "",
+                recordOrder: 0,
+                url: "",
+                parentId: parentIdFromQuery ? parseInt(parentIdFromQuery) : null, // ✅ parentId من query param
+                isActive: false,
+                isVisible: false,
+                image1: "",
+                image2: "",
+                image3: "",
+            });
+            return;
+        }
+
+        // حالة التعديل (edit)
         const fetchBlock = async () => {
             try {
                 const response = await fetch(`${API_BASE_URL}api/Blocks/${blockId}`, {
@@ -111,11 +118,10 @@ const AddBlockPage = () => {
                 if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
                 const data = await response.json();
 
-                // تعبئة البيانات
                 setFormData({
                     nameEn: data.nameEn || "",
                     nameAr: data.nameAr || "",
-                    categoryId: data.categoryId || categoryId || "",
+                    category: data.categoryId ? { id: data.categoryId } : { id: categoryId },
                     CreateAt: data.createAt ? data.createAt.split("T")[0] : "",
                     recordOrder: data.recordOrder || 0,
                     url: data.url || "",
@@ -125,7 +131,6 @@ const AddBlockPage = () => {
                     image1: data.image1 || "",
                     image2: data.image2 || "",
                     image3: data.image3 || "",
-
                 });
 
                 setDescriptionEn(data.descriptionEn || "");
@@ -143,28 +148,63 @@ const AddBlockPage = () => {
         };
 
         fetchBlock();
-    }, [isEditMode, blockId, token, t, categoryId]);
+    }, [blockId, categoryId, token, t]);
 
-    // 🔹 handle form changes
+
+
+    // 🔹 ensure category object exists in categories list
+    useEffect(() => {
+        if (!categoriesLoading && formData?.category) {
+            const selected = categories.find((c) => c.id === formData.category.id);
+            if (selected) {
+                setFormData((prev) => ({ ...prev, category: selected }));
+            }
+        }
+    }, [categoriesLoading, categories, formData?.category]);
+
+
+    // 🔹 set category from param if adding a new block
+    useEffect(() => {
+        if (!categoriesLoading && !isEditMode && categoryId && formData) {
+            const selected = categories.find(c => c.id.toString() === categoryId.toString());
+            if (selected) {
+                setFormData(prev => ({ ...prev, category: selected }));
+            }
+        }
+    }, [categoriesLoading, categories, categoryId, isEditMode, formData]);
+
+
+
+    // 🔹 ensure parent block exists in parentBlocks
+    useEffect(() => {
+        if (!parentBlocksLoading && formData?.parentId) {
+            const parent = parentBlocks.find((p) => p.id === formData.parentId);
+            if (parent) {
+                setFormData((prev) => ({ ...prev, parentId: parent.id }));
+            }
+        }
+    }, [parentBlocksLoading, parentBlocks, formData?.parentId]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleChangeValue = (name, value) => {
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    // 🔹 submit form (add or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!formData) return;
         setLoading(true);
         setError("");
 
         try {
             const payload = {
                 ...formData,
-                id: isEditMode ? blockId : 0, // 👈 إضافة الـ id فقط في حالة التعديل
+                categoryId: formData.category?.id || 0,
+                id: isEditMode ? blockId : 0,
                 descriptionEn,
                 descriptionAr,
                 descriptionEn1,
@@ -172,7 +212,7 @@ const AddBlockPage = () => {
                 descriptionEn2,
                 descriptionAr2,
                 descriptionEn3,
-                descriptionAr3
+                descriptionAr3,
             };
 
             const method = isEditMode ? "PUT" : "POST";
@@ -190,7 +230,7 @@ const AddBlockPage = () => {
             });
 
             if (!response.ok) throw new Error(await response.text());
-            navigate(`/blocks/${formData.categoryId}`);
+            navigate(`/blocks/${formData.category?.id || ""}`);
         } catch (err) {
             setError("حدث خطأ أثناء الحفظ ❌");
         } finally {
@@ -198,21 +238,24 @@ const AddBlockPage = () => {
         }
     };
 
-    // 🔹 TinyMCE configuration
     const editorInit = {
         height: 300,
         menubar: true,
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code help wordcount"
+            "insertdatetime media table paste code help wordcount",
         ],
         toolbar:
             "undo redo | formatselect | bold italic underline strikethrough | \
-            alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | link image media | code | removeformat | help",
-        license_key: "gpl"
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent | link image media | code | removeformat | help",
+        license_key: "gpl",
     };
+
+    if (!formData || categoriesLoading || parentBlocksLoading) {
+        return <Typography>جارٍ التحميل...</Typography>;
+    }
 
     return (
         <Box sx={{ p: 3, mx: "auto", maxWidth: 1200 }}>
@@ -223,7 +266,7 @@ const AddBlockPage = () => {
             <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     {/* الاسم بالإنجليزية والعربية */}
-                    <Stack direction="row"  sx={{ gap: 3 }}>
+                    <Stack direction="row" sx={{ gap: 3 }}>
                         <TextField
                             label={t("nameEn") || "Name (EN)"}
                             name="nameEn"
@@ -243,18 +286,20 @@ const AddBlockPage = () => {
                     </Stack>
 
                     {/* المحررات */}
-                    {[setDescriptionEn, setDescriptionAr, setDescriptionEn1, setDescriptionAr1, setDescriptionEn2, setDescriptionAr2, setDescriptionEn3, setDescriptionAr3].map((setFn, i) => (
-                        <Editor
-                            key={i}
-                            tinymceScriptSrc="/tinymce/tinymce.min.js"
-                            value={[descriptionEn, descriptionAr, descriptionEn1, descriptionAr1, descriptionEn2, descriptionAr2, descriptionEn3, descriptionAr3][i]}
-                            init={editorInit}
-                            onEditorChange={setFn}
-                        />
-                    ))}
+                    {[setDescriptionEn, setDescriptionAr, setDescriptionEn1, setDescriptionAr1,
+                        setDescriptionEn2, setDescriptionAr2, setDescriptionEn3, setDescriptionAr3].map((setFn, i) => (
+                            <Editor
+                                key={i}
+                                tinymceScriptSrc="/tinymce/tinymce.min.js"
+                                value={[descriptionEn, descriptionAr, descriptionEn1, descriptionAr1,
+                                    descriptionEn2, descriptionAr2, descriptionEn3, descriptionAr3][i]}
+                                init={editorInit}
+                                onEditorChange={setFn}
+                            />
+                        ))}
 
                     {/* التاريخ والترتيب */}
-                    <Stack direction="row" spacing={0} sx={{ gap:3 }}>
+                    <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
                         <TextField
                             label={t("createAt") || "CreateAt"}
                             name="CreateAt"
@@ -278,11 +323,10 @@ const AddBlockPage = () => {
                     <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
                         <Autocomplete
                             fullWidth
-                            loading={categoriesLoading}
                             options={categories}
                             getOptionLabel={(o) => `${o.nameAr} (${o.nameEn})`}
-                            value={categories.find((c) => c.id === formData.categoryId) || null}
-                            onChange={(e, val) => handleChangeValue("categoryId", val ? val.id : "")}
+                            value={formData.category || null}
+                            onChange={(e, val) => handleChangeValue("category", val)}
                             renderInput={(params) => <TextField {...params} label={t("selectCategory")} />}
                         />
                         <TextField
@@ -297,12 +341,11 @@ const AddBlockPage = () => {
                     {/* البلوك الأب */}
                     <Autocomplete
                         fullWidth
-                        loading={parentBlocksLoading}
                         options={parentBlocks}
                         getOptionLabel={(o) => `${o.nameAr} (${o.nameEn})`}
-                        value={parentBlocks.find((c) => c.id === formData.parentId) || null}
+                        value={formData.parentId ? parentBlocks.find(p => p.id === formData.parentId) || null : null}
                         onChange={(e, val) => handleChangeValue("parentId", val ? val.id : null)}
-                        renderInput={(params) => <TextField {...params} label={t("selectparentBlock")} />}
+                        renderInput={(params) => <TextField {...params} label={t("selectParentBlock")} />}
                     />
 
                     {/* Switches */}
@@ -317,39 +360,12 @@ const AddBlockPage = () => {
                         />
                     </Stack>
 
-
-                    {/* رفع الصورة Image1 */}
+                    {/* رفع الصور */}
                     <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
-                    <ImageUploader
-                        label="Image 1"
-                        value={formData.image1}
-                        onChange={(val) => setFormData((prev) => ({ ...prev, image1: val }))}
-                        apiBaseUrl={API_BASE_URL}
-                        token={token}
-                        t={t} // لو عندك ترجمة
-                    />
-
-                    <ImageUploader
-                        label="Image 2"
-                        value={formData.image2}
-                        onChange={(val) => setFormData((prev) => ({ ...prev, image2: val }))}
-                        apiBaseUrl={API_BASE_URL}
-                        token={token}
-                        t={t}
-                    />
-
-                    <ImageUploader
-                        label="Image 3"
-                        value={formData.image3}
-                        onChange={(val) => setFormData((prev) => ({ ...prev, image3: val }))}
-                        apiBaseUrl={API_BASE_URL}
-                        token={token}
-                        t={t}
-                    />
+                        <ImageUploader label="Image 1" value={formData.image1} onChange={(val) => setFormData(prev => ({ ...prev, image1: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
+                        <ImageUploader label="Image 2" value={formData.image2} onChange={(val) => setFormData(prev => ({ ...prev, image2: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
+                        <ImageUploader label="Image 3" value={formData.image3} onChange={(val) => setFormData(prev => ({ ...prev, image3: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
                     </Stack>
-
-
-
 
                     {error && <Typography color="error">{error}</Typography>}
 

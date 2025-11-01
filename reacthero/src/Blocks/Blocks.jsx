@@ -15,6 +15,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import CategoryIcon from "@mui/icons-material/Category"; // أيقونة مناسبة
+
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
 import AddBlockCategoryDialog from "../Blocks/AddBlockCategoryDialog";
@@ -29,6 +31,7 @@ const Blocks = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedBlockId, setSelectedBlockId] = useState(null);
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedBlocksId, setSelectedBlocksId] = useState(null);
@@ -50,12 +53,13 @@ const Blocks = () => {
     const token = localStorage.getItem("token");
 
     // 🔹 جلب الدول
-    const fetchBlocks = async (isInitialLoad = false) => {
+    const fetchBlocks = async (isInitialLoad = false, blockId = null) => {
         if (isInitialLoad) setLoading(true);
         try {
-            const response = await fetch(
-                `${API_BASE_URL}api/Blocks/GetMaster?categoryId=${categoryId}`,
-            );
+            let url = `${API_BASE_URL}api/Blocks/GetMaster?categoryId=${categoryId}`;
+            if (blockId) url += `&blockId=${blockId}`; // ✅ إذا فيه بلوك، أضف للطلب
+
+            const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             setBlocks(data.items);
@@ -65,6 +69,10 @@ const Blocks = () => {
             if (isInitialLoad) setLoading(false);
         }
     };
+
+
+
+
     useEffect(() => {
         fetchBlocks(true);
     }, [token, categoryId]);
@@ -74,6 +82,12 @@ const Blocks = () => {
         setFormMode("add");
         setFormData(null);
         setFormDialogOpen(true);
+    };
+
+
+    const handleViewSubcategories = (blockId) => {
+        setSelectedBlockId(blockId); // ✅ خزّن blockId
+        fetchBlocks(false, blockId); // ✅ أعد تحميل البيانات حسب البلوك
     };
 
     const handleEditClick = (block) => {
@@ -148,6 +162,12 @@ const Blocks = () => {
                     label={t("delete") || "Delete"}
                     onClick={() => handleDeleteClick(params.id)}
                 />,
+                <GridActionsCellItem
+                    key="subcategories"
+                    icon={<CategoryIcon sx={{ color: theme.palette.primary.main }} />}
+                    label={t("subCategories") || "Subcategories"}
+                    onClick={() => handleViewSubcategories(params.row.id)}
+                />,
             ],
         },
     ];
@@ -163,18 +183,39 @@ const Blocks = () => {
                     {t("blocks") || "Blocks"}
                 </Typography>
                 <Stack sx={{ gap: 1 }} direction="row" spacing={1}>
+
+
                     <Button
                         variant="contained"
                         color="primary"
                         sx={{ gap: 1 }}
                         endIcon={<AddIcon />}
-                        onClick={() => navigate(`/blocks/${categoryId}/add`)}
+                        onClick={() => {
+                            // مثال: إذا أردت تمرير blockId للنسخ/إضافة فرعية
+                            const blockIdToCopy = selectedBlockId || null; // يمكن أن تختار بلوك محدد للنسخ
+                            navigate(`/blocks/${categoryId}/add${blockIdToCopy ? `?parentId=${blockIdToCopy}` : ""}`);
+                        }}
                     >
                         {t("addBlock") || "Add Block"}
                     </Button>
-                    <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchBlockCategories(false)}>
+
+
+                    <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchBlocks(false)}>
                         {t("refresh") || "Refresh"}
                     </Button>
+
+                    {selectedBlockId && (
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => {
+                                setSelectedBlockId(null);
+                                fetchBlocks(false, null); // ✅ رجع كل البلوكات الأصلية
+                            }}
+                        >
+                            رجوع إلى البلوكات
+                        </Button>
+                    )}
                 </Stack>
             </Stack>
 
