@@ -16,6 +16,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import CategoryIcon from "@mui/icons-material/Category"; // أيقونة مناسبة
+import CollectionsIcon from '@mui/icons-material/Collections';
 
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
@@ -198,9 +199,9 @@ const Blocks = () => {
                 // ✅ زر جديد للانتقال إلى صفحة ألبوم الصور
                 <GridActionsCellItem
                     key="photos"
-                    icon={<CategoryIcon sx={{ color: theme.palette.success.main }} />} // أو استخدم PhotoIcon
+                    icon={<CollectionsIcon sx={{ color: theme.palette.success.main }} />}
                     label="ألبوم الصور"
-                    onClick={() => navigate(`/blocks/${categoryId}/photos/${params.row.id}`)}
+                    onClick={() => navigate(`/blocks/${categoryId}/photos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
                 />,
             ],
         },

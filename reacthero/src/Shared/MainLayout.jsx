@@ -475,7 +475,7 @@ export default function NavbarWithMiniDrawer() {
                     {/* تعديل Block */}
                     <Route path="/blocks/:categoryId/edit/:blockId" element={<AddBlockPage />} />
 
-                    <Route path="/blocks/:categoryId/photos/:blockId" element={<BlockPhotos />} />
+                    <Route path="/blocks/:categoryId/photos/:blockId/:blockName" element={<BlockPhotos />} />
 
 
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />
