@@ -15,6 +15,7 @@
     <PackageJsonDependenciesMuiMaterial Condition="$(PackageJsonDependenciesMuiMaterial) == ''">^7.3.4</PackageJsonDependenciesMuiMaterial>
     <PackageJsonDependenciesMuiXDataGrid Condition="$(PackageJsonDependenciesMuiXDataGrid) == ''">^8.15.0</PackageJsonDependenciesMuiXDataGrid>
     <PackageJsonDependenciesTinymceTinymceReact Condition="$(PackageJsonDependenciesTinymceTinymceReact) == ''">^6.3.0</PackageJsonDependenciesTinymceTinymceReact>
+    <PackageJsonDependenciesAxios Condition="$(PackageJsonDependenciesAxios) == ''">^1.13.1</PackageJsonDependenciesAxios>
     <PackageJsonDependenciesI18next Condition="$(PackageJsonDependenciesI18next) == ''">^25.6.0</PackageJsonDependenciesI18next>
     <PackageJsonDependenciesReact Condition="$(PackageJsonDependenciesReact) == ''">^19.1.1</PackageJsonDependenciesReact>
     <PackageJsonDependenciesReactDom Condition="$(PackageJsonDependenciesReactDom) == ''">^19.1.1</PackageJsonDependenciesReactDom>

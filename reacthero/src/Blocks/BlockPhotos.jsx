@@ -13,6 +13,7 @@ import { API_BASE_URL } from "../../config";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { useParams, useNavigate } from "react-router-dom";
+import ConfirmDialog from "../Shared/ConfirmDialog"; // ✅ استدعاء مكوّن التأكيد
 
 const BlockPhotos = () => {
     const { blockId } = useParams();
@@ -22,12 +23,15 @@ const BlockPhotos = () => {
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
-    const [file, setFile] = useState(null);
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: "",
         type: "success",
     });
+
+    // 🔹 للحذف
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [photoToDelete, setPhotoToDelete] = useState(null);
 
     // 🔹 جلب الصور الحالية
     const fetchPhotos = async () => {
@@ -36,7 +40,7 @@ const BlockPhotos = () => {
             const res = await fetch(`${API_BASE_URL}api/BlockPhoto/GetPhotoByBlockId/?id=${blockId}`);
             const data = await res.json();
             console.log("📸 Block Photos API data:", data);
-            setPhotos(data || []);
+            setPhotos(data.items || data || []);
         } catch (err) {
             console.error(err);
         } finally {
@@ -45,31 +49,26 @@ const BlockPhotos = () => {
     };
 
     // 🔹 رفع الصورة للسيرفر ثم حفظ الرابط
-    const handleUploadPhoto = async () => {
-        if (!file) return alert("الرجاء اختيار صورة أولاً");
-
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
         try {
             setUploading(true);
 
-            // 1️⃣ رفع الصورة للسيرفر
+            // 1️⃣ رفع الصورة إلى السيرفر
             const formData = new FormData();
             formData.append("file", file);
 
-            const uploadRes = await fetch(
-                `${API_BASE_URL}api/FileUpload/1/1`,
-                {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const uploadRes = await fetch(`${API_BASE_URL}api/FileUpload/1/1`, {
+                method: "POST",
+                body: formData,
+                headers: { Authorization: `Bearer ${token}` },
+            });
 
             if (!uploadRes.ok) throw new Error(await uploadRes.text());
-
             const uploadData = await uploadRes.text();
-            const imageUrl = "Files\\UploadFiles\\BlocksFiles\\" + ( uploadData.url || uploadData); // حسب شكل الاستجابة
+            const fileName = uploadData.replace(/"/g, "");
+            const imageUrl = `Files/UploadFiles/BlocksFiles/${fileName}`;
 
             // 2️⃣ حفظ الرابط في BlockPhoto
             const saveRes = await fetch(`${API_BASE_URL}api/BlockPhoto`, {
@@ -85,12 +84,10 @@ const BlockPhotos = () => {
             });
 
             if (!saveRes.ok) throw new Error(await saveRes.text());
-
-            setFile(null);
             fetchPhotos();
             setSnackbar({
                 open: true,
-                message: "تم رفع الصورة وإضافتها للألبوم ✅",
+                message: "تم رفع الصورة بنجاح ✅",
                 type: "success",
             });
         } catch (err) {
@@ -102,15 +99,16 @@ const BlockPhotos = () => {
             });
         } finally {
             setUploading(false);
+            e.target.value = ""; // لإعادة تفعيل input مرة أخرى
         }
     };
 
-    // 🔹 حذف صورة
-    const handleDelete = async (photoId) => {
-        if (!window.confirm("هل أنت متأكد من حذف الصورة؟")) return;
+    // 🔹 حذف صورة (يتم بعد التأكيد)
+    const handleDeleteConfirm = async () => {
+        if (!photoToDelete) return;
         try {
             setLoading(true);
-            const res = await fetch(`${API_BASE_URL}api/BlockPhoto/${photoId}`, {
+            const res = await fetch(`${API_BASE_URL}api/BlockPhoto/${photoToDelete}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -122,6 +120,8 @@ const BlockPhotos = () => {
             setSnackbar({ open: true, message: "فشل في حذف الصورة ❌", type: "error" });
         } finally {
             setLoading(false);
+            setDeleteDialogOpen(false);
+            setPhotoToDelete(null);
         }
     };
 
@@ -139,67 +139,95 @@ const BlockPhotos = () => {
                 </Button>
             </Stack>
 
-            {/* ✅ رفع صورة جديدة */}
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center" mb={3}>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />
+            {/* ✅ زر رفع الصورة */}
+            <Box mb={3}>
                 <Button
                     variant="contained"
-                    color="primary"
+                    component="label"
                     startIcon={<AddPhotoAlternateIcon />}
-                    onClick={handleUploadPhoto}
-                    disabled={uploading || !file}
+                    disabled={uploading}
                 >
-                    {uploading ? "جارٍ الرفع..." : "رفع الصورة"}
+                    {uploading ? (
+                        <>
+                            <CircularProgress size={20} sx={{ mr: 1 }} />
+                            جاري الرفع...
+                        </>
+                    ) : (
+                        "رفع صورة جديدة"
+                    )}
+                    <input type="file" hidden accept="image/*" onChange={handleFileChange} />
                 </Button>
-                {uploading && <CircularProgress size={24} />}
-            </Stack>
+            </Box>
 
             {/* ✅ عرض الصور */}
-            <Grid container spacing={2}>
-                {photos.map((p) => (
-                    <Grid item xs={6} sm={4} md={3} key={p.id}>
-                        <Box
-                            sx={{
-                                position: "relative",
-                                borderRadius: 2,
-                                overflow: "hidden",
-                                border: "1px solid #ccc",
-                            }}
-                        >
-                            <img
-                                src={
-                                    p.image.startsWith("http")
-                                        ? p.image
-                                        : `${API_BASE_URL}${p.image.replace(/\\/g, "/")}`
-                                }
-                                alt=""
-                                style={{ width: "100%", height: 180, objectFit: "cover" }}
-                            />
-                            <Button
-                                size="small"
-                                color="error"
-                                variant="contained"
-                                sx={{
-                                    position: "absolute",
-                                    top: 8,
-                                    right: 8,
-                                    minWidth: 0,
-                                    borderRadius: "50%",
-                                }}
-                                onClick={() => handleDelete(p.id)}
-                            >
-                                ✖
-                            </Button>
-                        </Box>
-                    </Grid>
-                ))}
-            </Grid>
+            {loading ? (
+                <Typography>جارٍ تحميل الصور...</Typography>
+            ) : photos.length === 0 ? (
+                <Typography color="text.secondary">لا توجد صور مرفوعة لهذا البلوك.</Typography>
+            ) : (
+                <Grid container spacing={2}>
+                    {photos.map((p) => {
+                        const imagePath = p.image?.replace(/\\/g, "/");
+                        const fullUrl = imagePath?.startsWith("http")
+                            ? imagePath
+                            : `${API_BASE_URL}${imagePath}`;
+                        return (
+                            <Grid item xs={6} sm={4} md={3} key={p.id}>
+                                <Box
+                                    sx={{
+                                        position: "relative",
+                                        borderRadius: 2,
+                                        overflow: "hidden",
+                                        border: "1px solid #ccc",
+                                    }}
+                                >
+                                    <img
+                                        src={fullUrl}
+                                        alt=""
+                                        style={{ width: "100%", height: 180, objectFit: "cover" }}
+                                        onError={(e) => {
+                                            e.target.src =
+                                                "https://via.placeholder.com/180x180?text=No+Image";
+                                        }}
+                                    />
+                                    <Button
+                                        size="small"
+                                        color="error"
+                                        variant="contained"
+                                        sx={{
+                                            position: "absolute",
+                                            top: 8,
+                                            right: 8,
+                                            minWidth: 0,
+                                            borderRadius: "50%",
+                                        }}
+                                        onClick={() => {
+                                            setPhotoToDelete(p.id);
+                                            setDeleteDialogOpen(true);
+                                        }}
+                                    >
+                                        ✖
+                                    </Button>
+                                </Box>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            )}
 
-            {/* ✅ إشعار */}
+            {/* ✅ تأكيد الحذف */}
+            <ConfirmDialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}
+                onConfirm={handleDeleteConfirm}
+                title="تأكيد الحذف"
+                message="هل أنت متأكد أنك تريد حذف هذه الصورة؟"
+                confirmText="حذف"
+                cancelText="إلغاء"
+                loading={loading}
+            />
+
+            {/* ✅ Snackbar */}
             <Snackbar
                 open={snackbar.open}
                 autoHideDuration={3000}
