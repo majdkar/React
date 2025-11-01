@@ -1,11 +1,12 @@
 ﻿// Logout.jsx
 import React, { useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Logout = () => {
     const [open, setOpen] = useState(true);
     const [loggedOut, setLoggedOut] = useState(false);
+    const navigate = useNavigate(); // ✅ لإدارة التوجيه
 
     const handleConfirm = () => {
         localStorage.removeItem("token");
@@ -14,6 +15,8 @@ const Logout = () => {
 
     const handleCancel = () => {
         setOpen(false);
+        // ✅ نرجع المستخدم للصفحة السابقة أو الرئيسية
+        navigate(-1); // أو navigate("/") لو تفضل العودة للرئيسية
     };
 
     if (loggedOut) return <Navigate to="/login" replace />;

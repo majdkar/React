@@ -451,6 +451,11 @@ export default function NavbarWithMiniDrawer() {
                     boxSizing: 'border-box',
                 }}
             >
+
+
+
+
+
                 <Routes>
                     <Route path="/" element={<Typography>{t("welcome")}</Typography>} />
                     <Route path="/countries" element={<CountriesList />} />
@@ -484,6 +489,9 @@ export default function NavbarWithMiniDrawer() {
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />
                     <Route path="/settings/security" element={<Typography>{t("securityPage")}</Typography>} />
                     <Route path="/logout" element={<Logout />} />
+
+
+
                 </Routes>
             </Box>
         </Box>
