@@ -17,6 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import CategoryIcon from "@mui/icons-material/Category"; // أيقونة مناسبة
 import CollectionsIcon from '@mui/icons-material/Collections';
+import MovieIcon from '@mui/icons-material/Movie';
+import Tooltip from '@mui/material/Tooltip';
 
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
@@ -141,15 +143,15 @@ const Blocks = () => {
 
     // 🔹 الأعمدة
     const columns = [
-        { field: "id", headerName: t("id") || "ID", width: 120, headerAlign: "center", align: "center" },
-        { field: "nameEn", headerName: t("nameEn") || "Name (EN)", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
-        { field: "nameAr", headerName: t("nameAr") || "Name (AR)", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
+        { field: "id", headerName: t("id") || "ID", width: 80, flex: 1, headerAlign: "center", align: "center" },
+        { field: "nameEn", headerName: t("nameEn") || "Name (EN)", flex: 1, Width: 30, headerAlign: "center", align: "center" },
+        { field: "nameAr", headerName: t("nameAr") || "Name (AR)", flex: 1, Width: 30, headerAlign: "center", align: "center" },
 
         // ✅ العمود الجديد: فعال
         {
             field: "isActive",
             headerName: t("isActive") || "Active",
-            width: 120,
+            width: 80, flex: 1,
             headerAlign: "center",
             align: "center",
             renderCell: (params) => params.value ? "✔️" : "❌",
@@ -161,7 +163,8 @@ const Blocks = () => {
         {
             field: "image1",
             headerName: t("image") || "Image",
-            width: 120,
+            flex: 1,
+            width: 90,
             headerAlign: "center",
             align: "center",
             renderCell: (params) => params.value ? (
@@ -174,34 +177,64 @@ const Blocks = () => {
             field: "actions",
             type: "actions",
             headerName: t("actions") || "Actions",
-            width: 150,
+            width: 80,
+            flex: 1,
             headerAlign: "center",
             align: "center",
             getActions: (params) => [
                 <GridActionsCellItem
                     key="edit"
-                    icon={<EditIcon sx={{ color: theme.palette.info.main }} />}
+                    icon={
+                        <Tooltip title={t("edit") || "Edit"}>
+                            <EditIcon sx={{ color: theme.palette.info.main }} />
+                        </Tooltip>
+                    }
                     label={t("edit") || "Edit"}
                     onClick={() => handleEditClick(params.row)}
                 />,
+
                 <GridActionsCellItem
                     key="delete"
-                    icon={<DeleteIcon sx={{ color: theme.palette.error.main }} />}
+                    icon={
+                        <Tooltip title={t("delete") || "Delete"}>
+                            <DeleteIcon sx={{ color: theme.palette.error.main }} />
+                        </Tooltip>
+                    }
                     label={t("delete") || "Delete"}
                     onClick={() => handleDeleteClick(params.id)}
                 />,
+
                 <GridActionsCellItem
                     key="subcategories"
-                    icon={<CategoryIcon sx={{ color: theme.palette.primary.main }} />}
+                    icon={
+                        <Tooltip title={t("subCategories") || "Subcategories"}>
+                            <CategoryIcon sx={{ color: theme.palette.dark }} />
+                        </Tooltip>
+                    }
                     label={t("subCategories") || "Subcategories"}
-                    onClick={() => handleViewSubcategories(params.row.id, `${params.row.nameAr + ' / ' + params.row.nameEn}`)}
+                    onClick={() => handleViewSubcategories(params.row.id, `${params.row.nameAr} / ${params.row.nameEn}`)}
                 />,
-                // ✅ زر جديد للانتقال إلى صفحة ألبوم الصور
+
                 <GridActionsCellItem
                     key="photos"
-                    icon={<CollectionsIcon sx={{ color: theme.palette.success.main }} />}
+                    icon={
+                        <Tooltip title="ألبوم الصور">
+                            <CollectionsIcon sx={{ color: theme.palette.success.main }} />
+                        </Tooltip>
+                    }
                     label="ألبوم الصور"
                     onClick={() => navigate(`/blocks/${categoryId}/photos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
+                />,
+
+                <GridActionsCellItem
+                    key="videos"
+                    icon={
+                        <Tooltip title="ألبوم الفيديو">
+                            <MovieIcon sx={{ color: theme.palette.secondary.main }} />
+                        </Tooltip>
+                    }
+                    label="ألبوم الفيديو"
+                    onClick={() => navigate(`/blocks/${categoryId}/videos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
                 />,
             ],
         },

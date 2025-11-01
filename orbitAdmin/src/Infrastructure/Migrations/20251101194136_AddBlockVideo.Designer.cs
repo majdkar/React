@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolV01.Infrastructure.Contexts;
 
@@ -11,9 +12,11 @@ using SchoolV01.Infrastructure.Contexts;
 namespace SchoolV01.Infrastructure.Migrations
 {
     [DbContext(typeof(BlazorHeroContext))]
-    partial class BlazorHeroContextModelSnapshot : ModelSnapshot
+    [Migration("20251101194136_AddBlockVideo")]
+    partial class AddBlockVideo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -729,28 +732,6 @@ namespace SchoolV01.Infrastructure.Migrations
                     b.HasIndex("PageId");
 
                     b.ToTable("PagePhotos");
-                });
-
-            modelBuilder.Entity("SchoolV01.Domain.Entities.BlockVideo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BlockId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlockId");
-
-                    b.ToTable("BlockVideos");
                 });
 
             modelBuilder.Entity("SchoolV01.Domain.Entities.Blocks.BlockSeo", b =>
@@ -1658,17 +1639,6 @@ namespace SchoolV01.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Page");
-                });
-
-            modelBuilder.Entity("SchoolV01.Domain.Entities.BlockVideo", b =>
-                {
-                    b.HasOne("SchoolV01.Core.Entities.Block", "Block")
-                        .WithMany()
-                        .HasForeignKey("BlockId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Block");
                 });
 
             modelBuilder.Entity("SchoolV01.Domain.Entities.Blocks.BlockSeo", b =>

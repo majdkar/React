@@ -40,6 +40,7 @@ import BlockCatgories from "../Blocks/BlockCatgories";
 import Blocks from "../Blocks/Blocks";
 import AddBlockPage from "../Blocks/AddBlockPage";
 import BlockPhotos from "../Blocks/BlockPhotos";
+import BlockVideos from "../Blocks/BlockVideos";
 import { API_BASE_URL } from "../../config";
 import Logout from "./Logout";
 const drawerWidth = 250;
@@ -476,6 +477,8 @@ export default function NavbarWithMiniDrawer() {
                     <Route path="/blocks/:categoryId/edit/:blockId" element={<AddBlockPage />} />
 
                     <Route path="/blocks/:categoryId/photos/:blockId/:blockName" element={<BlockPhotos />} />
+
+                    <Route path="/blocks/:categoryId/videos/:blockId/:blockName" element={<BlockVideos />} />
 
 
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />

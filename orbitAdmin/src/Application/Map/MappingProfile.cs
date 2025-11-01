@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SchoolV01.Core.Entities;
+using SchoolV01.Domain.Entities;
 using SchoolV01.Domain.Entities.Blocks;
 using SchoolV01.Domain.Entities.Pages;
 using SchoolV01.Shared.ViewModels.Articles;
@@ -34,6 +35,10 @@ namespace SchoolV01.Application.Map
             CreateMap<BlockSeo, BlockSeoViewModel>();
             CreateMap<BlockSeoInsertModel, BlockSeo>();
             CreateMap<BlockSeoUpdateModel, BlockSeo>();
+
+            CreateMap<BlockVideo, BlockVideoViewModel>();
+            CreateMap<BlockVideoInsertModel, BlockVideo>();
+            CreateMap<BlockVideoUpdateModel, BlockVideo>();
 
 
 

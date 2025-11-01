@@ -33,6 +33,7 @@ using SchoolV01.Server.Localization;
 using SchoolV01.Server.Managers.Preferences;
 using SchoolV01.Server.Permission;
 using SchoolV01.Server.Services;
+using SchoolV01.Server.Services.Blocks;
 using SchoolV01.Server.Settings;
 using SchoolV01.Shared.Constants.Localization;
 using SchoolV01.Shared.Constants.Permission;
@@ -243,6 +244,7 @@ namespace SchoolV01.Server.Extensions
             services.AddTransient(typeof(IBlockCategoryService), typeof(BlockCategoryService));
             services.AddTransient(typeof(IBlockPhotoService), typeof(BlockPhotoService));
             services.AddTransient(typeof(IBlockSeoService), typeof(BlockSeoService));
+            services.AddTransient(typeof(IBlockVideoService), typeof(BlockVideoService));
             services.AddTransient(typeof(IBlockAttachementService), typeof(BlockAttachementService));
             services.AddTransient(typeof(IBlockService), typeof(BlockService));
 
