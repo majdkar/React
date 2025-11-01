@@ -33,15 +33,32 @@ const AddBlockPage = () => {
     const [descriptionEn3, setDescriptionEn3] = useState("");
     const [descriptionAr3, setDescriptionAr3] = useState("");
 
-    // form data
-    const [formData, setFormData] = useState(null);
+    const [formData, setFormData] = useState(() => {
+        if (!isEditMode) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const parentIdFromQuery = urlParams.get("parentId");
+            return {
+                nameEn: "",
+                nameAr: "",
+                category: categoryId ? { id: parseInt(categoryId) } : null,
+                CreateAt: "",
+                recordOrder: 0,
+                url: "",
+                parentId: parentIdFromQuery ? parseInt(parentIdFromQuery) : null,
+                isActive: false,
+                isVisible: false,
+                image1: "",
+                image2: "",
+                image3: "",
+            };
+        }
+        return null; // سيتم ملؤه عند جلب البيانات في حالة التعديل
+    });
 
     const [categories, setCategories] = useState([]);
     const [categoriesLoading, setCategoriesLoading] = useState(true);
-
     const [parentBlocks, setParentBlocks] = useState([]);
     const [parentBlocksLoading, setParentBlocksLoading] = useState(true);
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -85,31 +102,10 @@ const AddBlockPage = () => {
         fetchParentBlocks();
     }, [token, t]);
 
-
-
+    // 🔹 fetch block data if editing
     useEffect(() => {
-        if (!isEditMode) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const parentIdFromQuery = urlParams.get("parentId");
-            console.log(parentIdFromQuery)
-            setFormData({
-                nameEn: "",
-                nameAr: "",
-                category: categoryId ? { id: categoryId } : null,
-                CreateAt: "",
-                recordOrder: 0,
-                url: "",
-                parentId: parentIdFromQuery ? parseInt(parentIdFromQuery) : null, // ✅ parentId من query param
-                isActive: false,
-                isVisible: false,
-                image1: "",
-                image2: "",
-                image3: "",
-            });
-            return;
-        }
+        if (!isEditMode) return;
 
-        // حالة التعديل (edit)
         const fetchBlock = async () => {
             try {
                 const response = await fetch(`${API_BASE_URL}api/Blocks/${blockId}`, {
@@ -121,7 +117,7 @@ const AddBlockPage = () => {
                 setFormData({
                     nameEn: data.nameEn || "",
                     nameAr: data.nameAr || "",
-                    category: data.categoryId ? { id: data.categoryId } : { id: categoryId },
+                    category: data.categoryId ? { id: data.categoryId } : (categoryId ? { id: parseInt(categoryId) } : null),
                     CreateAt: data.createAt ? data.createAt.split("T")[0] : "",
                     recordOrder: data.recordOrder || 0,
                     url: data.url || "",
@@ -148,50 +144,15 @@ const AddBlockPage = () => {
         };
 
         fetchBlock();
-    }, [blockId, categoryId, token, t]);
-
-
-
-    // 🔹 ensure category object exists in categories list
-    useEffect(() => {
-        if (!categoriesLoading && formData?.category) {
-            const selected = categories.find((c) => c.id === formData.category.id);
-            if (selected) {
-                setFormData((prev) => ({ ...prev, category: selected }));
-            }
-        }
-    }, [categoriesLoading, categories, formData?.category]);
-
-
-    // 🔹 set category from param if adding a new block
-    useEffect(() => {
-        if (!categoriesLoading && !isEditMode && categoryId && formData) {
-            const selected = categories.find(c => c.id.toString() === categoryId.toString());
-            if (selected) {
-                setFormData(prev => ({ ...prev, category: selected }));
-            }
-        }
-    }, [categoriesLoading, categories, categoryId, isEditMode, formData]);
-
-
-
-    // 🔹 ensure parent block exists in parentBlocks
-    useEffect(() => {
-        if (!parentBlocksLoading && formData?.parentId) {
-            const parent = parentBlocks.find((p) => p.id === formData.parentId);
-            if (parent) {
-                setFormData((prev) => ({ ...prev, parentId: parent.id }));
-            }
-        }
-    }, [parentBlocksLoading, parentBlocks, formData?.parentId]);
+    }, [blockId, categoryId, token, t, isEditMode]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleChangeValue = (name, value) => {
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
@@ -325,7 +286,11 @@ const AddBlockPage = () => {
                             fullWidth
                             options={categories}
                             getOptionLabel={(o) => `${o.nameAr} (${o.nameEn})`}
-                            value={formData.category || null}
+                            value={
+                                formData.category
+                                    ? categories.find(c => c.id === formData.category.id) || null
+                                    : null
+                            }
                             onChange={(e, val) => handleChangeValue("category", val)}
                             renderInput={(params) => <TextField {...params} label={t("selectCategory")} />}
                         />

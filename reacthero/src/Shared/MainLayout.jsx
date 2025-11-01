@@ -39,6 +39,7 @@ import CitiesList from "../GeneralSettings/Cities/CitiesList";
 import BlockCatgories from "../Blocks/BlockCatgories";
 import Blocks from "../Blocks/Blocks";
 import AddBlockPage from "../Blocks/AddBlockPage";
+import BlockPhotos from "../Blocks/BlockPhotos";
 import { API_BASE_URL } from "../../config";
 import Logout from "./Logout";
 const drawerWidth = 250;
@@ -360,7 +361,7 @@ export default function NavbarWithMiniDrawer() {
                                                     <Tooltip key={cat.id} title={cat.nameEn} placement="right">
                                                         <ListItemButton
                                                             component={Link}
-                                                            to={`/Blocks/${cat.id}`}
+                                                            to={`/Blocks/${cat.id}/${encodeURIComponent(`${cat.nameEn + ' / '+ cat.nameAr}`)}`}
                                                             onClick={() => isMobile && setDrawerOpen(false)}
                                                             sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
                                                         >
@@ -461,7 +462,7 @@ export default function NavbarWithMiniDrawer() {
                         />}
                     />
                     <Route
-                        path="/Blocks/:categoryId"
+                        path="/Blocks/:categoryId/:categoryName"
                         element={<Blocks />}
                     />
 
@@ -474,7 +475,8 @@ export default function NavbarWithMiniDrawer() {
                     {/* تعديل Block */}
                     <Route path="/blocks/:categoryId/edit/:blockId" element={<AddBlockPage />} />
 
-                 
+                    <Route path="/blocks/:categoryId/photos/:blockId" element={<BlockPhotos />} />
+
 
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />
                     <Route path="/settings/security" element={<Typography>{t("securityPage")}</Typography>} />

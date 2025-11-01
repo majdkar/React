@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace SchoolV01.Api.Controllers
 {
@@ -34,6 +35,29 @@ namespace SchoolV01.Api.Controllers
                     "Error retrieving data");
             }
         }
+
+
+        [HttpGet("GetPhotoByBlockId")]
+        public async Task<ActionResult<List<BlockPhotoViewModel>>> GetPhotoByBlock(int id)
+        {
+            try
+            {
+                var result = await photoService.GetPhotoByBlockId(id);
+
+                if (result == null)
+                    return NotFound();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data");
+            }
+        }
+
+
+
 
         [HttpPost]
         public async Task<ActionResult<BlockPhotoViewModel>> Create(BlockPhotoInsertModel photoInsertModel)

@@ -32,6 +32,7 @@ const Blocks = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedBlockId, setSelectedBlockId] = useState(null);
+    const [BlockName, setBlockName] = useState(null);
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedBlocksId, setSelectedBlocksId] = useState(null);
@@ -42,13 +43,12 @@ const Blocks = () => {
     const [snackbarType, setSnackbarType] = useState("success");
 
 
-    const { categoryId } = useParams(); // 👈 الحصول على رقم الفئة من الـ URL
+    const { categoryId, categoryName } = useParams(); // 👈 الحصول على رقم الفئة من الـ URL
 
     const [formDialogOpen, setFormDialogOpen] = useState(false);
     const [formMode, setFormMode] = useState("add"); // "add" أو "edit"
     const [formData, setFormData] = useState(null);
     const [formLoading, setFormLoading] = useState(false);
-    const [refreshblocks, setRefreshBlocks] = useState([]);
     const [Blocks, setBlocks] = useState([]);
     const token = localStorage.getItem("token");
 
@@ -77,15 +77,16 @@ const Blocks = () => {
         fetchBlocks(true);
     }, [token, categoryId]);
 
-    // 🔹 أزرار الإضافة والتعديل
-    const handleAddClick = () => {
-        setFormMode("add");
-        setFormData(null);
-        setFormDialogOpen(true);
-    };
+    //// 🔹 أزرار الإضافة والتعديل
+    //const handleAddClick = () => {
+    //    setFormMode("add");
+    //    setFormData(null);
+    //    setFormDialogOpen(true);
+    //};
 
 
-    const handleViewSubcategories = (blockId) => {
+    const handleViewSubcategories = (blockId, nameAr) => {
+        setBlockName(nameAr); // ✅ خزّن BlockName
         setSelectedBlockId(blockId); // ✅ خزّن blockId
         fetchBlocks(false, blockId); // ✅ أعد تحميل البيانات حسب البلوك
     };
@@ -142,6 +143,32 @@ const Blocks = () => {
         { field: "id", headerName: t("id") || "ID", width: 120, headerAlign: "center", align: "center" },
         { field: "nameEn", headerName: t("nameEn") || "Name (EN)", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
         { field: "nameAr", headerName: t("nameAr") || "Name (AR)", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
+
+        // ✅ العمود الجديد: فعال
+        {
+            field: "isActive",
+            headerName: t("isActive") || "Active",
+            width: 120,
+            headerAlign: "center",
+            align: "center",
+            renderCell: (params) => params.value ? "✔️" : "❌",
+        },
+
+     
+
+        // ✅ العمود الجديد: صورة
+        {
+            field: "image1",
+            headerName: t("image") || "Image",
+            width: 120,
+            headerAlign: "center",
+            align: "center",
+            renderCell: (params) => params.value ? (
+                <img src={`${API_BASE_URL}Files/UploadFiles/BlocksFiles/${params.value}`} alt="img" style={{ width: 50, height: 50, objectFit: "cover", borderRadius: 4 }} />
+            ) : "-"
+        },
+
+
         {
             field: "actions",
             type: "actions",
@@ -166,7 +193,14 @@ const Blocks = () => {
                     key="subcategories"
                     icon={<CategoryIcon sx={{ color: theme.palette.primary.main }} />}
                     label={t("subCategories") || "Subcategories"}
-                    onClick={() => handleViewSubcategories(params.row.id)}
+                    onClick={() => handleViewSubcategories(params.row.id, `${params.row.nameAr + ' / ' + params.row.nameEn}`)}
+                />,
+                // ✅ زر جديد للانتقال إلى صفحة ألبوم الصور
+                <GridActionsCellItem
+                    key="photos"
+                    icon={<CategoryIcon sx={{ color: theme.palette.success.main }} />} // أو استخدم PhotoIcon
+                    label="ألبوم الصور"
+                    onClick={() => navigate(`/blocks/${categoryId}/photos/${params.row.id}`)}
                 />,
             ],
         },
@@ -179,9 +213,24 @@ const Blocks = () => {
         <Box sx={{ p: 2 }}>
             {/* أزرار التحكم */}
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
-                <Typography variant="h5" sx={{ color: "#000", fontWeight: "bold" }}>
-                    {t("blocks") || "Blocks"}
-                </Typography>
+                <Box sx={{ color: "#000", fontWeight: "bold" }}>
+                    <Typography variant="h5">
+                        {t("blocks") || "Blocks"}
+                    </Typography>
+
+                    {categoryName && (
+                        <Typography variant="h5">
+                            {categoryName}
+                        </Typography>
+                    )}
+
+                    {BlockName && (
+                        <Typography variant="h5" sx={{ color: "green" }}>
+                            {BlockName}
+                        </Typography>
+                    )}
+                </Box>
+
                 <Stack sx={{ gap: 1 }} direction="row" spacing={1}>
 
 
@@ -193,7 +242,7 @@ const Blocks = () => {
                         onClick={() => {
                             const blockIdToCopy = selectedBlockId || null;
                             // توجه إلى صفحة الإضافة فقط
-                            navigate(`/blocks/${categoryId}/add${blockIdToCopy ? `?parentId=${blockIdToCopy}` : ""}`);
+                            navigate(`/blocks/${categoryId}/add${blockIdToCopy ? `?parentId=${blockIdToCopy}` : ""}/Name${categoryName }`);
                         }}
                     >
                         {t("addBlock") || "Add Block"}
