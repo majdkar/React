@@ -6,13 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
 import { Editor } from "@tinymce/tinymce-react";
 import { useTranslation } from "react-i18next";
+import ImageUploader from "../Shared/ImageUploader";
 
 const AddBlockPage = () => {
-    const { categoryId } = useParams();
+    const { categoryId, blockId } = useParams(); // 👈 إضافة blockId
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language === "ar";
+
+    const isEditMode = !!blockId; // 👈 نعرف إذا تعديل أو إضافة
 
     // TinyMCE states
     const [descriptionEn, setDescriptionEn] = useState("");
@@ -32,9 +35,12 @@ const AddBlockPage = () => {
         CreateAt: "",
         recordOrder: 0,
         url: "",
-        blockId: null,
+        parentId: null,
         isActive: false,
-        isVisible: false
+        isVisible: false,
+        image1: "",
+        image2: "",
+        image3: ""
     });
 
     const [categories, setCategories] = useState([]);
@@ -48,22 +54,23 @@ const AddBlockPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    // fetch categories
+
+
+
+
+
+    // 🔹 fetch categories
     useEffect(() => {
         const fetchCategories = async () => {
             setCategoriesLoading(true);
             try {
-                const response = await fetch(`${API_BASE_URL}/BlockCategories/all`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
+                const response = await fetch(`${API_BASE_URL}api/BlockCategories/all`, {
+                    headers: { Authorization: `Bearer ${token}` },
                 });
                 if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
                 const data = await response.json();
                 setCategories(data || []);
-                setCategoriesError(null);
-            } catch (err) {
+            } catch {
                 setCategoriesError(t("failedToLoadCategories"));
             } finally {
                 setCategoriesLoading(false);
@@ -72,31 +79,73 @@ const AddBlockPage = () => {
         fetchCategories();
     }, [token, t]);
 
-    // fetch parent blocks
+    // 🔹 fetch parent blocks
     useEffect(() => {
-        const fetchParentBlock = async () => {
+        const fetchParentBlocks = async () => {
             setParentBlocksLoading(true);
             try {
-                const response = await fetch(`${API_BASE_URL}/Blocks/NoCategory`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
+                const response = await fetch(`${API_BASE_URL}api/Blocks/NoCategory`, {
+                    headers: { Authorization: `Bearer ${token}` },
                 });
                 if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
                 const data = await response.json();
                 setParentBlocks(data.items || []);
-                setParentBlocksError(null);
-            } catch (err) {
+            } catch {
                 setParentBlocksError(t("failedToLoadParentBlock"));
             } finally {
                 setParentBlocksLoading(false);
             }
         };
-        fetchParentBlock();
+        fetchParentBlocks();
     }, [token, t]);
 
-    // handle form changes
+    // 🔹 fetch block data if editing
+    useEffect(() => {
+        if (!isEditMode) return;
+
+        const fetchBlock = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}api/Blocks/${blockId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                const data = await response.json();
+
+                // تعبئة البيانات
+                setFormData({
+                    nameEn: data.nameEn || "",
+                    nameAr: data.nameAr || "",
+                    categoryId: data.categoryId || categoryId || "",
+                    CreateAt: data.createAt ? data.createAt.split("T")[0] : "",
+                    recordOrder: data.recordOrder || 0,
+                    url: data.url || "",
+                    parentId: data.parentId || null,
+                    isActive: data.isActive || false,
+                    isVisible: data.isVisible || false,
+                    image1: data.image1 || "",
+                    image2: data.image2 || "",
+                    image3: data.image3 || "",
+
+                });
+
+                setDescriptionEn(data.descriptionEn || "");
+                setDescriptionAr(data.descriptionAr || "");
+                setDescriptionEn1(data.descriptionEn1 || "");
+                setDescriptionAr1(data.descriptionAr1 || "");
+                setDescriptionEn2(data.descriptionEn2 || "");
+                setDescriptionAr2(data.descriptionAr2 || "");
+                setDescriptionEn3(data.descriptionEn3 || "");
+                setDescriptionAr3(data.descriptionAr3 || "");
+            } catch (err) {
+                console.error("Failed to load block:", err);
+                setError(t("failedToLoadBlock"));
+            }
+        };
+
+        fetchBlock();
+    }, [isEditMode, blockId, token, t, categoryId]);
+
+    // 🔹 handle form changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -106,7 +155,7 @@ const AddBlockPage = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // submit form
+    // 🔹 submit form (add or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -115,6 +164,7 @@ const AddBlockPage = () => {
         try {
             const payload = {
                 ...formData,
+                id: isEditMode ? blockId : 0, // 👈 إضافة الـ id فقط في حالة التعديل
                 descriptionEn,
                 descriptionAr,
                 descriptionEn1,
@@ -125,18 +175,22 @@ const AddBlockPage = () => {
                 descriptionAr3
             };
 
-            const response = await fetch(`${API_BASE_URL}/Blocks`, {
-                method: "POST",
+            const method = isEditMode ? "PUT" : "POST";
+            const url = isEditMode
+                ? `${API_BASE_URL}api/Blocks/${blockId}`
+                : `${API_BASE_URL}api/Blocks`;
+
+            const response = await fetch(url, {
+                method,
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
             });
 
             if (!response.ok) throw new Error(await response.text());
-
-            navigate(`/blocks/${categoryId}`);
+            navigate(`/blocks/${formData.categoryId}`);
         } catch (err) {
             setError("حدث خطأ أثناء الحفظ ❌");
         } finally {
@@ -144,9 +198,9 @@ const AddBlockPage = () => {
         }
     };
 
-    // editor config
+    // 🔹 TinyMCE configuration
     const editorInit = {
-        height: 400,
+        height: 300,
         menubar: true,
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
@@ -156,30 +210,27 @@ const AddBlockPage = () => {
         toolbar:
             "undo redo | formatselect | bold italic underline strikethrough | \
             alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | \
-            link image media | forecolor backcolor | removeformat | help",
-        automatic_uploads: true,
-        images_upload_url: `${API_BASE_URL}/upload`,
+            bullist numlist outdent indent | link image media | code | removeformat | help",
         license_key: "gpl"
     };
 
     return (
         <Box sx={{ p: 3, mx: "auto", maxWidth: 1200 }}>
             <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-                {t("addBlock") || "إضافة كتلة جديدة"}
+                {isEditMode ? t("editBlock") || "تعديل كتلة" : t("addBlock") || "إضافة كتلة جديدة"}
             </Typography>
 
             <form onSubmit={handleSubmit}>
-                <Stack spacing={1}  >
-                    {/* Name fields side by side */}
-                    <Stack direction="row" spacing={0} sx={{ gap: 2 }}>
+                <Stack spacing={2}>
+                    {/* الاسم بالإنجليزية والعربية */}
+                    <Stack direction="row"  sx={{ gap: 3 }}>
                         <TextField
                             label={t("nameEn") || "Name (EN)"}
                             name="nameEn"
                             value={formData.nameEn}
                             onChange={handleChange}
                             required
-                            sx={{ flex: 1 }}
+                            fullWidth
                         />
                         <TextField
                             label={t("nameAr") || "Name (AR)"}
@@ -187,30 +238,30 @@ const AddBlockPage = () => {
                             value={formData.nameAr}
                             onChange={handleChange}
                             required
-                            sx={{ flex: 1 }}
+                            fullWidth
                         />
                     </Stack>
 
-                    {/* Editors */}
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionEn} init={editorInit} onEditorChange={setDescriptionEn} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionAr} init={editorInit} onEditorChange={setDescriptionAr} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionEn1} init={editorInit} onEditorChange={setDescriptionEn1} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionAr1} init={editorInit} onEditorChange={setDescriptionAr1} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionEn2} init={editorInit} onEditorChange={setDescriptionEn2} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionAr2} init={editorInit} onEditorChange={setDescriptionAr2} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionEn3} init={editorInit} onEditorChange={setDescriptionEn3} />
-                    <Editor tinymceScriptSrc="/tinymce/tinymce.min.js" value={descriptionAr3} init={editorInit} onEditorChange={setDescriptionAr3} />
+                    {/* المحررات */}
+                    {[setDescriptionEn, setDescriptionAr, setDescriptionEn1, setDescriptionAr1, setDescriptionEn2, setDescriptionAr2, setDescriptionEn3, setDescriptionAr3].map((setFn, i) => (
+                        <Editor
+                            key={i}
+                            tinymceScriptSrc="/tinymce/tinymce.min.js"
+                            value={[descriptionEn, descriptionAr, descriptionEn1, descriptionAr1, descriptionEn2, descriptionAr2, descriptionEn3, descriptionAr3][i]}
+                            init={editorInit}
+                            onEditorChange={setFn}
+                        />
+                    ))}
 
-                    {/* Date & numeric side by side */}
-                    <Stack direction="row" spacing={0} sx={{ gap: 2 }}>
+                    {/* التاريخ والترتيب */}
+                    <Stack direction="row" spacing={0} sx={{ gap:3 }}>
                         <TextField
                             label={t("createAt") || "CreateAt"}
                             name="CreateAt"
                             value={formData.CreateAt}
                             onChange={handleChange}
-                            required
                             type="date"
-                            sx={{ flex: 1 }}
+                            fullWidth
                             InputLabelProps={{ shrink: true }}
                         />
                         <TextField
@@ -218,99 +269,94 @@ const AddBlockPage = () => {
                             name="recordOrder"
                             value={formData.recordOrder}
                             onChange={handleChange}
-                            required
                             type="number"
-                            inputProps={{ min: 0, step: 1 }}
-                            sx={{ flex: 1 }}
+                            fullWidth
                         />
                     </Stack>
 
-                    {/* Autocomplete & URL */}
-                    <Stack direction="row" spacing={0} sx={{ gap: 2 }}>
+                    {/* الفئة والرابط */}
+                    <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
                         <Autocomplete
                             fullWidth
                             loading={categoriesLoading}
                             options={categories}
-                            getOptionLabel={(option) => `${option.nameAr} (${option.nameEn})`}
+                            getOptionLabel={(o) => `${o.nameAr} (${o.nameEn})`}
                             value={categories.find((c) => c.id === formData.categoryId) || null}
-                            onChange={(event, newValue) => handleChangeValue("categoryId", newValue ? newValue.id : "")}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={t("selectCategory")}
-                                    required
-                                    error={!!categoriesError}
-                                    helperText={categoriesError || ""}
-                                    InputProps={{
-                                        ...params.InputProps,
-                                        endAdornment: (
-                                            <>
-                                                {categoriesLoading ? <CircularProgress size={20} /> : null}
-                                                {params.InputProps.endAdornment}
-                                            </>
-                                        ),
-                                    }}
-                                />
-                            )}
-                            sx={{ flex: 1 }}
+                            onChange={(e, val) => handleChangeValue("categoryId", val ? val.id : "")}
+                            renderInput={(params) => <TextField {...params} label={t("selectCategory")} />}
                         />
                         <TextField
                             label={t("url") || "Url"}
                             name="url"
                             value={formData.url}
                             onChange={handleChange}
-                            required
-                            sx={{ flex: 1 }}
+                            fullWidth
                         />
                     </Stack>
 
-                    {/* Parent block */}
+                    {/* البلوك الأب */}
                     <Autocomplete
                         fullWidth
                         loading={parentBlocksLoading}
                         options={parentBlocks}
-                        getOptionLabel={(option) => `${option.nameAr} (${option.nameEn})`}
+                        getOptionLabel={(o) => `${o.nameAr} (${o.nameEn})`}
                         value={parentBlocks.find((c) => c.id === formData.parentId) || null}
-                        onChange={(event, newValue) => handleChangeValue("parentId", newValue ? newValue.id : null)}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label={t("selectparentBlock")}
-                                required
-                                error={!!parentBlocksError}
-                                helperText={parentBlocksError || ""}
-                                InputProps={{
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                        <>
-                                            {parentBlocksLoading ? <CircularProgress size={20} /> : null}
-                                            {params.InputProps.endAdornment}
-                                        </>
-                                    ),
-                                }}
-                            />
-                        )}
+                        onChange={(e, val) => handleChangeValue("parentId", val ? val.id : null)}
+                        renderInput={(params) => <TextField {...params} label={t("selectparentBlock")} />}
                     />
 
                     {/* Switches */}
-                    <Stack direction="row" spacing={2}>
+                    <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
                         <FormControlLabel
                             control={<Switch checked={formData.isActive} onChange={(e) => handleChangeValue("isActive", e.target.checked)} />}
                             label={t("isActive")}
-                            sx={{ justifyContent: isArabic ? "flex-end" : "flex-start" }}
                         />
                         <FormControlLabel
                             control={<Switch checked={formData.isVisible} onChange={(e) => handleChangeValue("isVisible", e.target.checked)} />}
                             label={t("isVisible")}
-                            sx={{ justifyContent: isArabic ? "flex-end" : "flex-start" }}
                         />
                     </Stack>
 
+
+                    {/* رفع الصورة Image1 */}
+                    <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
+                    <ImageUploader
+                        label="Image 1"
+                        value={formData.image1}
+                        onChange={(val) => setFormData((prev) => ({ ...prev, image1: val }))}
+                        apiBaseUrl={API_BASE_URL}
+                        token={token}
+                        t={t} // لو عندك ترجمة
+                    />
+
+                    <ImageUploader
+                        label="Image 2"
+                        value={formData.image2}
+                        onChange={(val) => setFormData((prev) => ({ ...prev, image2: val }))}
+                        apiBaseUrl={API_BASE_URL}
+                        token={token}
+                        t={t}
+                    />
+
+                    <ImageUploader
+                        label="Image 3"
+                        value={formData.image3}
+                        onChange={(val) => setFormData((prev) => ({ ...prev, image3: val }))}
+                        apiBaseUrl={API_BASE_URL}
+                        token={token}
+                        t={t}
+                    />
+                    </Stack>
+
+
+
+
                     {error && <Typography color="error">{error}</Typography>}
 
-                    <Stack direction="row" spacing={2} sx={ {gap:2}}>
+                    {/* الأزرار */}
+                    <Stack direction="row" spacing={2}>
                         <Button type="submit" variant="contained" color="primary" disabled={loading}>
-                            {loading ? t("proccesing") : t("save")}
+                            {loading ? t("processing") : isEditMode ? t("update") || "تحديث" : t("save") || "حفظ"}
                         </Button>
                         <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>
                             {t("cancel")}

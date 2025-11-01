@@ -49,7 +49,7 @@ const CitiesList = () => {
         if (isInitialLoad) setLoading(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/v1/Cities/GetAll`,
+                `${API_BASE_URL}api/v1/Cities/GetAll`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ const CitiesList = () => {
         setDeleting(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/v1/Cities/${selectedCityId}`,
+                `${API_BASE_URL}api/v1/Cities/${selectedCityId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -128,7 +128,7 @@ const CitiesList = () => {
         setFormLoading(true);
         try {
             if (formMode === "add") {
-                const response = await fetch(`${API_BASE_URL}/v1/Cities`, {
+                const response = await fetch(`${API_BASE_URL}api/v1/Cities`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -146,7 +146,7 @@ const CitiesList = () => {
 
             else if (formMode === "edit") {
                 const response = await fetch(
-                    `${API_BASE_URL}/v1/Cities`,
+                    `${API_BASE_URL}api/v1/Cities`,
                     {
                         method: "POST",
                         headers: {

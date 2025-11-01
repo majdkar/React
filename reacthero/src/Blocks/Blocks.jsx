@@ -54,7 +54,7 @@ const Blocks = () => {
         if (isInitialLoad) setLoading(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/Blocks/GetMaster?categoryId=${categoryId}`,
+                `${API_BASE_URL}api/Blocks/GetMaster?categoryId=${categoryId}`,
             );
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
@@ -76,10 +76,8 @@ const Blocks = () => {
         setFormDialogOpen(true);
     };
 
-    const handleEditClick = (City) => {
-        setFormMode("edit");
-        setFormData(City);
-        setFormDialogOpen(true);
+    const handleEditClick = (block) => {
+        navigate(`/blocks/${categoryId}/edit/${block.id}`);
     };
 
     // 🔹 حذف دولة
@@ -93,7 +91,7 @@ const Blocks = () => {
         setDeleting(true);
         try {
             const response = await fetch(
-                `${ API_BASE_URL }/Blocks/${selectedBlocksId}`,
+                `${ API_BASE_URL }api/Blocks/${selectedBlocksId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -120,61 +118,6 @@ const Blocks = () => {
         setSnackbarType(type);
         setSnackbarOpen(true);
     };
-
-
-    // 🔹 حفظ البيانات (إضافة أو تعديل)
-    const handleFormSubmit = async (data) => {
-        setFormLoading(true);
-        try {
-            if (formMode === "add") {
-                const response = await fetch(`${API_BASE_URL}/Blocks`, {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                });
-                if (!response.ok) throw new Error(await response.text());
-                const resData = await response.json();
-                setBlocks((prev) => [...prev, resData]); // إضافة العنصر الجديد
-
-                showSnackbar("تمت إضافة المدينة بنجاح ✅", "success");
-            }
-
-
-
-            else if (formMode === "edit") {
-                const response = await fetch(
-                    `${API_BASE_URL}/Blocks/${formData.id}`,
-                    {
-                        method: "Put",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                    }
-                );
-                if (!response.ok) throw new Error(await response.text());
-
-                const resData = await response.json();
-                setBlocks(prev =>
-                    prev.map(c => (c.id === resData.id ? resData : c))
-                );
-                showSnackbar("تم تحديث المدينة بنجاح ✅", "success");
-            }
-
-
-            setFormDialogOpen(false);
-        } catch (err) {
-            showSnackbar("فشل في العملية ❌", err);
-        } finally {
-            setFormLoading(false);
-        }
-    };
-
-
 
 
 
@@ -261,16 +204,7 @@ const Blocks = () => {
                 />
             </Box>
 
-            {/* نافذة الفورم */}
-            <AddBlockCategoryDialog
-                open={formDialogOpen}
-                onClose={() => setFormDialogOpen(false)}
-                onSubmit={handleFormSubmit}
-                mode={formMode}
-                initialData={formData}
-                loading={formLoading}
-            />
-
+  
 
 
 

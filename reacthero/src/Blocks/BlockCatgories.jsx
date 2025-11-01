@@ -50,7 +50,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
         if (isInitialLoad) setLoading(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/BlockCategories/all`,
+                `${API_BASE_URL}api/BlockCategories/all`,
             );
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
@@ -90,7 +90,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
         setDeleting(true);
         try {
             const response = await fetch(
-                `${ API_BASE_URL }/BlockCategories/${selectedBlockCategoriesId}`,
+                `${ API_BASE_URL }api/BlockCategories/${selectedBlockCategoriesId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -124,7 +124,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
         setFormLoading(true);
         try {
             if (formMode === "add") {
-                const response = await fetch(`${API_BASE_URL}/BlockCategories`, {
+                const response = await fetch(`${API_BASE_URL}api/BlockCategories`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
 
             else if (formMode === "edit") {
                 const response = await fetch(
-                    `${API_BASE_URL}/BlockCategories/${formData.id}`,
+                    `${API_BASE_URL}api/BlockCategories/${formData.id}`,
                     {
                         method: "Put",
                         headers: {

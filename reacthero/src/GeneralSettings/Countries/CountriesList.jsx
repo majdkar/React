@@ -50,7 +50,7 @@ const CountriesList = () => {
         setLoading(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/v1/Countries/GetAll`,
+                `${API_BASE_URL}api/v1/Countries/GetAll`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -96,7 +96,7 @@ const CountriesList = () => {
         setDeleting(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}/v1/Countries/${selectedCountryId}`,
+                `${API_BASE_URL}api/v1/Countries/${selectedCountryId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -147,7 +147,7 @@ const CountriesList = () => {
 
             else if (formMode === "edit") {
                 const response = await fetch(
-                    `${API_BASE_URL}/v1/Countries`,
+                    `${API_BASE_URL}api/v1/Countries`,
                     {
                         method: "POST",
                         headers: {

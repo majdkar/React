@@ -529,5 +529,11 @@
             <param name="searchString"></param>
             <returns></returns>
         </member>
+        <member name="M:SchoolV01.Api.Controllers.FileUploadController.CheckFileExtension(Microsoft.AspNetCore.Http.IFormFile,SchoolV01.Shared.Enums.UploadFileTypeEnum)">
+            The file extension must be jpg/bmp/png for images and txt/docx/pdf for files
+        </member>
+        <member name="M:SchoolV01.Api.Controllers.FileUploadController.CheckFileSize(Microsoft.AspNetCore.Http.IFormFile)">
+            Check the file size, it must be less than 10 mb
+        </member>
     </members>
 </doc>

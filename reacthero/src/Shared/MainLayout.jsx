@@ -74,7 +74,7 @@ export default function NavbarWithMiniDrawer() {
     useEffect(() => {
         const fetchBlockCategories = async () => {
             try {
-                const res = await fetch(`${API_BASE_URL}/BlockCategories/all`, {
+                const res = await fetch(`${API_BASE_URL}api/BlockCategories/all`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error("Failed to fetch block categories");
@@ -464,6 +464,7 @@ export default function NavbarWithMiniDrawer() {
                         path="/Blocks/:categoryId"
                         element={<Blocks />}
                     />
+                    <Route path="/blocks/:categoryId/edit/:blockId" element={<AddBlockPage />} />
 
                     <Route path="/blocks/:categoryId/add" element={<AddBlockPage />} />
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />
