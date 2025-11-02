@@ -84,7 +84,6 @@ namespace SchoolV01.Server.Controllers
             }
         }
 
-        [Authorize(Policy = Permissions.WebSiteManagement.Create)]
         [HttpPost]
         public async Task<ActionResult<MenuCategoryViewModel>> Create(MenuCategoryInsertModel menuCategoryInsertModel)
         {
@@ -113,7 +112,6 @@ namespace SchoolV01.Server.Controllers
             }
         }
 
-        [Authorize(Policy = Permissions.WebSiteManagement.Edit)]
         [HttpPut("{id:int}")]
         public async Task<ActionResult<MenuCategoryViewModel>> Update(int id, MenuCategoryUpdateModel menuCategoryUpdateModel)
         {
@@ -147,7 +145,6 @@ namespace SchoolV01.Server.Controllers
             }
         }
 
-        [Authorize(Policy = Permissions.WebSiteManagement.Delete)]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<MenuCategoryViewModel>> Delete(int id)
         {

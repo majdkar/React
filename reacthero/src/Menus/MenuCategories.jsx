@@ -1,60 +1,51 @@
-﻿import React, { useEffect, useState } from "react";
+﻿import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery, useTheme, Box, Snackbar, Alert, Typography,Stack,Button } from "@mui/material";
 import { API_BASE_URL } from "../../config";
-import {
-    Box,
-    useTheme,
-    useMediaQuery,
-    Typography,
-    Button,
-    Stack,
-    Snackbar,
-    Alert,
-} from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmDialog from "../Shared/ConfirmDialog";
 import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { useTranslation } from "react-i18next";
-import ConfirmDialog from "../Shared/ConfirmDialog";
-import AddBlockCategoryDialog from "../Blocks/AddBlockCategoryDialog";
+import AddMenuCategoryDialog from "./AddMenuCategoryDialog";
 
-
-const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
+const MenuCategoriesList = ({ menuCategories, setMenuCategories }) => {
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language === "ar";
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-    //const [BlockCategories, setBlockCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [selectedMenuCategoryId, setSelectedMenuCategoryId] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [selectedBlockCategoriesId, setSelectedBlockCategoriesId] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMsg, setSnackbarMsg] = useState("");
     const [snackbarType, setSnackbarType] = useState("success");
 
+
     const [formDialogOpen, setFormDialogOpen] = useState(false);
     const [formMode, setFormMode] = useState("add"); // "add" أو "edit"
     const [formData, setFormData] = useState(null);
     const [formLoading, setFormLoading] = useState(false);
-    const [refreshblockCategories, setRefreshBlockCategories] = useState([]);
+
+
+    const [localMenuCategories, setLocalMenuCategories] = useState([]);
     const token = localStorage.getItem("token");
 
-    // 🔹 جلب الدول
-    const fetchBlockCategories = async (isInitialLoad = false) => {
+    // 🔹 جلب التصنيفات
+    const fetchMenuCategories = async (isInitialLoad = false) => {
         if (isInitialLoad) setLoading(true);
         try {
-            const response = await fetch(
-                `${API_BASE_URL}api/BlockCategories/all`,
-            );
+            const response = await fetch(`${API_BASE_URL}api/v1/MenuCategories/all`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
-            setBlockCategories(data);
+            setMenuCategories(data);
+            setLocalMenuCategories(data);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -63,34 +54,21 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
     };
 
     useEffect(() => {
-        fetchBlockCategories(true);
+        fetchMenuCategories(true);
     }, [token]);
 
-    // 🔹 أزرار الإضافة والتعديل
-    const handleAddClick = () => {
-        setFormMode("add");
-        setFormData(null);
-        setFormDialogOpen(true);
-    };
-
-    const handleEditClick = (City) => {
-        setFormMode("edit");
-        setFormData(City);
-        setFormDialogOpen(true);
-    };
-
-    // 🔹 حذف دولة
+    // 🔹 حذف تصنيف
     const handleDeleteClick = (id) => {
-        setSelectedBlockCategoriesId(id);
+        setSelectedMenuCategoryId(id);
         setDeleteDialogOpen(true);
     };
 
     const handleDeleteConfirm = async () => {
-        if (!selectedBlockCategoriesId) return;
+        if (!selectedMenuCategoryId) return;
         setDeleting(true);
         try {
             const response = await fetch(
-                `${ API_BASE_URL }api/BlockCategories/${selectedBlockCategoriesId}`,
+                `${API_BASE_URL}api/v1/MenuCategories/${selectedMenuCategoryId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -101,15 +79,36 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
             );
             if (!response.ok) throw new Error(await response.text());
 
-            setBlockCategories((prev) => prev.filter((c) => c.id !== selectedBlockCategoriesId));
+            // تحديث الـ state محليًا وعلى الـ parent
+            setLocalMenuCategories(prev =>
+                prev.filter(c => c.id.toString() !== selectedMenuCategoryId.toString())
+            );
+            setMenuCategories(prev =>
+                prev.filter(c => c.id.toString() !== selectedMenuCategoryId.toString())
+            );
+
             setDeleteDialogOpen(false);
-            showSnackbar("تم حذف المدينة بنجاح ✅", "success");
-        }
-        catch (err) {
-            showSnackbar("فشل في حذف المدينة ❌", "error");
+            showSnackbar("تم حذف التصنيف بنجاح ✅", "success");
+        } catch (err) {
+            showSnackbar("فشل في حذف التصنيف ❌", "error");
         } finally {
             setDeleting(false);
         }
+    };
+
+
+    // 🔹 أزرار الإضافة والتعديل
+    const handleAddClick = () => {
+        setFormMode("add");
+        setFormData(null);
+        setFormDialogOpen(true);
+    };
+
+
+    const handleEditClick = (City) => {
+        setFormMode("edit");
+        setFormData(City);
+        setFormDialogOpen(true);
     };
 
     // 🔹 Snackbar
@@ -125,7 +124,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
         setFormLoading(true);
         try {
             if (formMode === "add") {
-                const response = await fetch(`${API_BASE_URL}api/BlockCategories`, {
+                const response = await fetch(`${API_BASE_URL}api/v1/MenuCategories`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -135,16 +134,16 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 });
                 if (!response.ok) throw new Error(await response.text());
                 const resData = await response.json();
-                setBlockCategories((prev) => [...prev, resData]); // إضافة العنصر الجديد
+                setLocalMenuCategories((prev) => [...prev, resData]); // إضافة العنصر الجديد
 
-                showSnackbar("تمت إضافة المدينة بنجاح ✅", "success");
+                showSnackbar("تمت إضافة صنف القائمة بنجاح ✅", "success");
             }
 
 
 
             else if (formMode === "edit") {
                 const response = await fetch(
-                    `${API_BASE_URL}api/BlockCategories/${formData.id}`,
+                    `${API_BASE_URL}api/v1/MenuCategories/${formData.id}`,
                     {
                         method: "Put",
                         headers: {
@@ -157,7 +156,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 if (!response.ok) throw new Error(await response.text());
 
                 const resData = await response.json();
-                setBlockCategories(prev =>
+                setLocalMenuCategories(prev =>
                     prev.map(c => (c.id === resData.id ? resData : c))
                 );
                 showSnackbar("تم تحديث المدينة بنجاح ✅", "success");
@@ -207,27 +206,28 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
         },
     ];
 
-    if (loading) return <Typography>Loading Cities...</Typography>;
+    if (loading) return <Typography>Loading Menu Categories...</Typography>;
     if (error) return <Typography color="error">Error: {error}</Typography>;
 
     return (
         <Box sx={{ p: 2 }}>
+
             {/* أزرار التحكم */}
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
                 <Typography variant="h5" sx={{ color: "#000", fontWeight: "bold" }}>
-                    {t("blockCategories") || "Block Categories"}
+                    {t("menuCategories") || "Menu Categories"}
                 </Typography>
                 <Stack sx={{ gap: 1 }} direction="row" spacing={1}>
-                    <Button variant="contained" color="primary" sx={{ gap: 1}} endIcon={<AddIcon />} onClick={handleAddClick}>
-                        {t("addBlockCategory") || "Add Block Category"}
+                    <Button variant="contained" color="primary" sx={{ gap: 1 }} endIcon={<AddIcon />} onClick={handleAddClick}>
+                        {t("addMenuCategory") || "Add Menu Category"}
                     </Button>
-                    <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchBlockCategories(false)}>
+                    <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchMenuCategories(false)}>
                         {t("refresh") || "Refresh"}
                     </Button>
                 </Stack>
             </Stack>
 
-            {/* الجدول */}
+
             <Box
                 sx={{
                     width: "100%",
@@ -240,8 +240,8 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 }}
             >
                 <DataGrid
-                    key={i18n.language}
-                    rows={blockCategories}
+                    key={i18n.language + localMenuCategories.length}
+                    rows={localMenuCategories}
                     columns={columns}
                     getRowId={(row) => row.id || row.Id}
                     loading={loading}
@@ -253,8 +253,20 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 />
             </Box>
 
+            <ConfirmDialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}
+                onConfirm={handleDeleteConfirm}
+                title="تأكيد الحذف"
+                message="هل أنت متأكد أنك تريد حذف هذا التصنيف؟"
+                confirmText="حذف"
+                cancelText="إلغاء"
+                loading={deleting}
+            />
+
+
             {/* نافذة الفورم */}
-            <AddBlockCategoryDialog
+            <AddMenuCategoryDialog
                 open={formDialogOpen}
                 onClose={() => setFormDialogOpen(false)}
                 onSubmit={handleFormSubmit}
@@ -263,22 +275,6 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 loading={formLoading}
             />
 
-
-
-
-            {/* نافذة تأكيد الحذف */}
-            <ConfirmDialog
-                open={deleteDialogOpen}
-                onClose={() => setDeleteDialogOpen(false)}
-                onConfirm={handleDeleteConfirm}
-                title="تأكيد الحذف"
-                message="هل أنت متأكد أنك تريد حذف هذه المدينة؟"
-                confirmText="حذف"
-                cancelText="إلغاء"
-                loading={deleting}
-            />
-
-            {/* Snackbar */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}
@@ -293,4 +289,4 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
     );
 };
 
-export default BlockCatgoriesList;
+export default MenuCategoriesList;

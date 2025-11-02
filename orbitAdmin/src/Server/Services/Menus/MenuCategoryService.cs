@@ -116,7 +116,7 @@ namespace SchoolV01.Application.Services
                 if (menuCategoriesEntity != null)
                 {
                     menuCategoriesEntity.IsActive = !menuCategoriesEntity.IsActive;
-                    uow.Update(menuCategoriesEntity);
+                    uow.Remove(menuCategoriesEntity);
                     await SaveAsync();
                     return true;
                 }

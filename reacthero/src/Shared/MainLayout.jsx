@@ -37,6 +37,7 @@ import { Link, Routes, Route } from "react-router-dom";
 import CountriesList from "../GeneralSettings/Countries/CountriesList";
 import CitiesList from "../GeneralSettings/Cities/CitiesList";
 import BlockCatgories from "../Blocks/BlockCatgories";
+import MenuCatgories from "../Menus/MenuCategories";
 import Blocks from "../Blocks/Blocks";
 import AddBlockPage from "../Blocks/AddBlockPage";
 import BlockPhotos from "../Blocks/BlockPhotos";
@@ -58,6 +59,8 @@ export default function NavbarWithMiniDrawer() {
     const [websitemanagmentsOpen, setwebsitemanagmentsOpen] = useState(false);
     const [BlocksOpen, setBlocksOpen] = useState(false);
     const [BlocksListOpen, setBlocksListOpen] = useState(false);
+    const [MenusOpen, setMenusOpen] = useState(false);
+    const [MenusListOpen, setMenusListOpen] = useState(false);
 
     const handleLangMenu = (e) => setAnchorEl(e.currentTarget);
     const handleCloseMenu = () => setAnchorEl(null);
@@ -71,6 +74,7 @@ export default function NavbarWithMiniDrawer() {
 
 
     const [blockCategories, setBlockCategories] = useState([]);
+    const [menuCategories, setMenuCategories] = useState([]);
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -87,6 +91,23 @@ export default function NavbarWithMiniDrawer() {
             }
         };
         fetchBlockCategories();
+    }, [token]);
+
+
+    useEffect(() => {
+        const fetchMenuCategories = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}api/v1/MenuCategories/all`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error("Failed to fetch Menu categories");
+                const data = await res.json();
+                setMenuCategories(data); // أو data.data حسب الاستجابة
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchMenuCategories();
     }, [token]);
 
 
@@ -391,25 +412,117 @@ export default function NavbarWithMiniDrawer() {
 
 
 
-
-
-
-
-
-
-
-
-                                <Tooltip title={t("Menus")} placement="right">
+                                {drawerMini ? (
+                                    <Tooltip title={t("menusManagment")} placement="right">
+                                        <ListItemButton
+                                            onClick={() => setMenusOpen(!MenusOpen)}
+                                            sx={{ justifyContent: "center" }}
+                                        >
+                                            <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}>
+                                                <SettingsIcon />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+                                    </Tooltip>
+                                ) : (
                                     <ListItemButton
-                                        component={Link}
-                                        to="/Menus"
-                                        onClick={() => isMobile && setDrawerOpen(false)}
-                                        sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
+                                            onClick={() => setMenusOpen(!MenusOpen)}
+                                        sx={{ justifyContent: "flex-start" }}
                                     >
-                                        <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><MenuBookIcon /></ListItemIcon>
-                                        {!drawerMini && <ListItemText primary={t("Menus")} sx={{ ml: 2 }} />}
+                                        <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><LanguageIcon /></ListItemIcon>
+                                            <ListItemText primary={t("menusManagment")} sx={{ ml: 2 }} />
+                                            {MenusOpen ? <ExpandLess /> : <ExpandMore />}
                                     </ListItemButton>
-                                </Tooltip>
+                                )}
+
+
+
+                                <Collapse in={MenusOpen} timeout="auto" unmountOnExit>
+                                    <List component="div" disablePadding>
+
+                                        <Tooltip title={t("menuCategories")} placement="right">
+                                            <ListItemButton
+                                                component={Link}
+                                                to="/MenuCategories"
+                                                onClick={() => isMobile && setDrawerOpen(false)}
+                                                sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
+                                            >
+                                                <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><MenuBookIcon /></ListItemIcon>
+                                                {!drawerMini && <ListItemText primary={t("menuCategories")} sx={{ ml: 2 }} />}
+                                            </ListItemButton>
+                                        </Tooltip>
+
+
+
+
+                                        {drawerMini ? (
+                                            <Tooltip title={t("MenusList")} placement="right">
+                                                <ListItemButton
+                                                    onClick={() => setMenusListOpen(!MenusListOpen)}
+                                                    sx={{ justifyContent: "center" }}
+                                                >
+                                                    <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}>
+                                                        <SettingsIcon />
+                                                    </ListItemIcon>
+                                                </ListItemButton>
+                                            </Tooltip>
+                                        ) : (
+                                            <ListItemButton
+                                                    onClick={() => setMenusListOpen(!MenusListOpen)}
+                                                sx={{ justifyContent: "flex-start" }}
+                                            >
+                                                <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><LanguageIcon /></ListItemIcon>
+                                                <ListItemText primary={t("menusList")} sx={{ ml: 2 }} />
+                                                    {MenusListOpen ? <ExpandLess /> : <ExpandMore />}
+                                            </ListItemButton>
+                                        )}
+
+                                        <Collapse in={MenusListOpen} timeout="auto" unmountOnExit>
+                                            <List component="div" disablePadding>
+                                                {menuCategories.map((cat) => (
+                                                    <Tooltip key={cat.id} title={cat.nameEn} placement="right">
+                                                        <ListItemButton
+                                                            component={Link}
+                                                            to={`/Menue/${cat.id}/${encodeURIComponent(`${cat.nameEn + ' / ' + cat.nameAr}`)}`}
+                                                            onClick={() => isMobile && setDrawerOpen(false)}
+                                                            sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
+                                                        >
+                                                            <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><MenuBookIcon /></ListItemIcon>
+                                                            {!drawerMini && <ListItemText primary={cat.nameEn} sx={{ ml: 2 }} />}
+                                                        </ListItemButton>
+                                                    </Tooltip>
+                                                ))}
+                                            </List>
+                                        </Collapse>
+
+
+
+
+                                    </List>
+                                </Collapse>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 <Tooltip title={t("Pages")} placement="right">
                                     <ListItemButton
@@ -465,6 +578,13 @@ export default function NavbarWithMiniDrawer() {
                         element={<BlockCatgories
                             blockCategories={blockCategories}
                             setBlockCategories={setBlockCategories}
+                        />}
+                    />
+                    <Route
+                        path="/MenuCategories"
+                        element={<MenuCatgories
+                            menuCategories={menuCategories}
+                            setMenuCategories={setMenuCategories}
                         />}
                     />
                     <Route
