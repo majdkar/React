@@ -39,7 +39,9 @@ import CitiesList from "../GeneralSettings/Cities/CitiesList";
 import BlockCatgories from "../Blocks/BlockCatgories";
 import MenuCatgories from "../Menus/MenuCategories";
 import Blocks from "../Blocks/Blocks";
+import Menus from "../Menus/Menus";
 import AddBlockPage from "../Blocks/AddBlockPage";
+import AddMenuPage from "../Menus/AddMenuPage";
 import BlockPhotos from "../Blocks/BlockPhotos";
 import BlockVideos from "../Blocks/BlockVideos";
 import { API_BASE_URL } from "../../config";
@@ -482,7 +484,7 @@ export default function NavbarWithMiniDrawer() {
                                                     <Tooltip key={cat.id} title={cat.nameEn} placement="right">
                                                         <ListItemButton
                                                             component={Link}
-                                                            to={`/Menue/${cat.id}/${encodeURIComponent(`${cat.nameEn + ' / ' + cat.nameAr}`)}`}
+                                                            to={`/Menus/${cat.id}/${encodeURIComponent(`${cat.nameEn + ' / ' + cat.nameAr}`)}`}
                                                             onClick={() => isMobile && setDrawerOpen(false)}
                                                             sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
                                                         >
@@ -592,6 +594,7 @@ export default function NavbarWithMiniDrawer() {
                         element={<Blocks />}
                     />
 
+
                     {/* إضافة Block جديد للفئة */}
                     <Route path="/blocks/:categoryId/add" element={<AddBlockPage />} />
 
@@ -604,6 +607,28 @@ export default function NavbarWithMiniDrawer() {
                     <Route path="/blocks/:categoryId/photos/:blockId/:blockName" element={<BlockPhotos />} />
 
                     <Route path="/blocks/:categoryId/videos/:blockId/:blockName" element={<BlockVideos />} />
+
+
+
+
+
+                    <Route
+                        path="/Menus/:categoryId/:categoryName"
+                        element={<Menus />}
+                    />
+
+
+
+                    {/* إضافة Menu جديد للفئة */}
+                    <Route path="/menus/:categoryId/add" element={<AddMenuPage />} />
+
+                    {/* إضافة Menu فرعي (داخل Menu آخر) */}
+                    <Route path="/menus/:categoryId/:menuId/add" element={<AddMenuPage />} />
+
+                    {/* تعديل Menu */}
+                    <Route path="/menus/:categoryId/edit/:MenuId" element={<AddMenuPage />} />
+
+
 
 
                     <Route path="/settings/profile" element={<Typography>{t("profilePage")}</Typography>} />

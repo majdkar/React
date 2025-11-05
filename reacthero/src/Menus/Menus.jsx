@@ -22,11 +22,11 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
-import AddBlockCategoryDialog from "../Blocks/AddBlockCategoryDialog";
+import AddMenuCategoryDialog from "../Menus/AddMenuCategoryDialog";
 import { useParams } from "react-router-dom"; // 👈 استيراد useParams
 import { useNavigate } from "react-router-dom";
 
-const Blocks = () => {
+const Menus = () => {
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language === "ar";
     const theme = useTheme();
@@ -34,11 +34,11 @@ const Blocks = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedBlockId, setSelectedBlockId] = useState(null);
-    const [BlockName, setBlockName] = useState(null);
+    const [selectedMenuId, setSelectedMenuId] = useState(null);
+    const [MenuName, setMenuName] = useState(null);
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [selectedBlocksId, setSelectedBlocksId] = useState(null);
+    const [selectedMenusId, setSelectedMenusId] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -52,20 +52,20 @@ const Blocks = () => {
     const [formMode, setFormMode] = useState("add"); // "add" أو "edit"
     const [formData, setFormData] = useState(null);
     const [formLoading, setFormLoading] = useState(false);
-    const [Blocks, setBlocks] = useState([]);
+    const [Menus, setMenus] = useState([]);
     const token = localStorage.getItem("token");
 
     // 🔹 جلب الدول
-    const fetchBlocks = async (isInitialLoad = false, blockId = null) => {
+    const fetchMenus = async (isInitialLoad = false, MenuId = null) => {
         if (isInitialLoad) setLoading(true);
         try {
-            let url = `${API_BASE_URL}api/Blocks/GetMaster?categoryId=${categoryId}`;
-            if (blockId) url += `&blockId=${blockId}`; // ✅ إذا فيه بلوك، أضف للطلب
+            let url = `${API_BASE_URL}api/v1/Menus/GetMaster?categoryId=${categoryId}`;
+            if (MenuId) url += `&MenuId=${MenuId}`; // ✅ إذا فيه بلوك، أضف للطلب
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
-            setBlocks(data.items);
+            setMenus(data.items);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -77,9 +77,8 @@ const Blocks = () => {
 
 
     useEffect(() => {
-        fetchBlocks(true);
+        fetchMenus(true);
     }, [token, categoryId]);
-
 
     //// 🔹 أزرار الإضافة والتعديل
     //const handleAddClick = () => {
@@ -89,28 +88,28 @@ const Blocks = () => {
     //};
 
 
-    const handleViewSubcategories = (blockId, nameAr) => {
-        setBlockName(nameAr); // ✅ خزّن BlockName
-        setSelectedBlockId(blockId); // ✅ خزّن blockId
-        fetchBlocks(false, blockId); // ✅ أعد تحميل البيانات حسب البلوك
+    const handleViewSubcategories = (MenuId, nameAr) => {
+        setMenuName(nameAr); // ✅ خزّن MenuName
+        setSelectedMenuId(MenuId); // ✅ خزّن MenuId
+        fetchMenus(false, MenuId); // ✅ أعد تحميل البيانات حسب البلوك
     };
 
-    const handleEditClick = (block) => {
-        navigate(`/blocks/${categoryId}/edit/${block.id}`);
+    const handleEditClick = (Menu) => {
+        navigate(`/Menus/${categoryId}/edit/${Menu.id}`);
     };
 
     // 🔹 حذف دولة
     const handleDeleteClick = (id) => {
-        setSelectedBlocksId(id);
+        setSelectedMenusId(id);
         setDeleteDialogOpen(true);
     };
 
     const handleDeleteConfirm = async () => {
-        if (!selectedBlocksId) return;
+        if (!selectedMenusId) return;
         setDeleting(true);
         try {
             const response = await fetch(
-                `${ API_BASE_URL }api/Blocks/${selectedBlocksId}`,
+                `${API_BASE_URL }api/v1/Menus/${selectedMenusId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -121,7 +120,7 @@ const Blocks = () => {
             );
             if (!response.ok) throw new Error(await response.text());
 
-            setBlocks((prev) => prev.filter((c) => c.id !== selectedBlocksId));
+            setMenus((prev) => prev.filter((c) => c.id !== selectedMenusId));
             setDeleteDialogOpen(false);
             showSnackbar("تم حذف المدينة بنجاح ✅", "success");
         } catch (err) {
@@ -169,7 +168,7 @@ const Blocks = () => {
             headerAlign: "center",
             align: "center",
             renderCell: (params) => params.value ? (
-                <img src={`${API_BASE_URL}Files/UploadFiles/BlocksFiles/${params.value}`} alt="img" style={{ width: 50, height: 50, objectFit: "cover", borderRadius: 4 }} />
+                <img src={`${API_BASE_URL}Files/UploadFiles/MenusFiles/${params.value}`} alt="img" style={{ width: 50, height: 50, objectFit: "cover", borderRadius: 4 }} />
             ) : "-"
         },
 
@@ -224,7 +223,7 @@ const Blocks = () => {
                         </Tooltip>
                     }
                     label="ألبوم الصور"
-                    onClick={() => navigate(`/blocks/${categoryId}/photos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
+                    onClick={() => navigate(`/Menus/${categoryId}/photos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
                 />,
 
                 <GridActionsCellItem
@@ -235,7 +234,7 @@ const Blocks = () => {
                         </Tooltip>
                     }
                     label="ألبوم الفيديو"
-                    onClick={() => navigate(`/blocks/${categoryId}/videos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
+                    onClick={() => navigate(`/Menus/${categoryId}/videos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
                 />,
             ],
         },
@@ -250,7 +249,7 @@ const Blocks = () => {
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
                 <Box sx={{ color: "#000", fontWeight: "bold" }}>
                     <Typography variant="h5">
-                        {t("blocks") || "Blocks"}
+                        {t("Menus") || "Menus"}
                     </Typography>
 
                     {categoryName && (
@@ -259,9 +258,9 @@ const Blocks = () => {
                         </Typography>
                     )}
 
-                    {BlockName && (
+                    {MenuName && (
                         <Typography variant="h5" sx={{ color: "green" }}>
-                            {BlockName}
+                            {MenuName}
                         </Typography>
                     )}
                 </Box>
@@ -275,26 +274,26 @@ const Blocks = () => {
                         sx={{ gap: 1 }}
                         endIcon={<AddIcon />}
                         onClick={() => {
-                            const blockIdToCopy = selectedBlockId || null;
+                            const MenuIdToCopy = selectedMenuId || null;
                             // توجه إلى صفحة الإضافة فقط
-                            navigate(`/blocks/${categoryId}/add?categoryName=${encodeURIComponent(categoryName)}${blockIdToCopy ? `&parentId=${MenuIdToCopy}` : ""}`);
+                            navigate(`/menus/${categoryId}/add?categoryName=${encodeURIComponent(categoryName)}${MenuIdToCopy ? `&parentId=${MenuIdToCopy}` : ""}`);
                         }}
                     >
-                        {t("addBlock") || "Add Block"}
+                        {t("addMenu") || "Add Menu"}
                     </Button>
 
 
-                    <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchBlocks(false)}>
+                    <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchMenus(false)}>
                         {t("refresh") || "Refresh"}
                     </Button>
 
-                    {selectedBlockId && (
+                    {selectedMenuId && (
                         <Button
                             variant="outlined"
                             color="secondary"
                             onClick={() => {
-                                setSelectedBlockId(null);
-                                fetchBlocks(false, null); // ✅ رجع كل البلوكات الأصلية
+                                setSelectedMenuId(null);
+                                fetchMenus(false, null); // ✅ رجع كل البلوكات الأصلية
                             }}
                         >
                             رجوع إلى البلوكات
@@ -317,7 +316,7 @@ const Blocks = () => {
             >
                 <DataGrid
                     key={i18n.language}
-                    rows={Blocks}
+                    rows={Menus}
                     columns={columns}
                     getRowId={(row) => row.id || row.Id}
                     loading={loading}
@@ -360,4 +359,4 @@ const Blocks = () => {
     );
 };
 
-export default Blocks;
+export default Menus;
