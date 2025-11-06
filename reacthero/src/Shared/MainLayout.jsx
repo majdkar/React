@@ -46,6 +46,10 @@ import BlockPhotos from "../Blocks/BlockPhotos";
 import BlockVideos from "../Blocks/BlockVideos";
 import { API_BASE_URL } from "../../config";
 import Logout from "./Logout";
+import Pages from "../Pages/Pages";
+import AddPage from "../Pages/AddPage";
+import PagePhotos from "../Pages/PagePhotos";
+import PageAttachments from "../Pages/PageAttachments";
 const drawerWidth = 250;
 const miniDrawerWidth = 60;
 
@@ -80,6 +84,7 @@ export default function NavbarWithMiniDrawer() {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
+        if (!token) return; // لا تشغل عند غياب التوكن
         const fetchBlockCategories = async () => {
             try {
                 const res = await fetch(`${API_BASE_URL}api/BlockCategories/all`, {
@@ -87,7 +92,7 @@ export default function NavbarWithMiniDrawer() {
                 });
                 if (!res.ok) throw new Error("Failed to fetch block categories");
                 const data = await res.json();
-                setBlockCategories(data); // أو data.data حسب الاستجابة
+                setBlockCategories(data);
             } catch (err) {
                 console.error(err);
             }
@@ -96,21 +101,25 @@ export default function NavbarWithMiniDrawer() {
     }, [token]);
 
 
+
     useEffect(() => {
+        if (!token) return; // لا تشغل عند غياب التوكن
         const fetchMenuCategories = async () => {
             try {
                 const res = await fetch(`${API_BASE_URL}api/v1/MenuCategories/all`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                if (!res.ok) throw new Error("Failed to fetch Menu categories");
+                if (!res.ok) throw new Error("Failed to fetch menu categories");
                 const data = await res.json();
-                setMenuCategories(data); // أو data.data حسب الاستجابة
+                setMenuCategories(data);
             } catch (err) {
                 console.error(err);
             }
         };
         fetchMenuCategories();
     }, [token]);
+
+
 
 
 
@@ -589,6 +598,17 @@ export default function NavbarWithMiniDrawer() {
                             setMenuCategories={setMenuCategories}
                         />}
                     />
+
+
+
+                    <Route
+                        path="/Pages"
+                        element={<Pages />}
+                    />
+
+
+
+
                     <Route
                         path="/Blocks/:categoryId/:categoryName"
                         element={<Blocks />}
@@ -628,6 +648,15 @@ export default function NavbarWithMiniDrawer() {
                     {/* تعديل Menu */}
                     <Route path="/menus/:categoryId/edit/:MenuId" element={<AddMenuPage />} />
 
+
+                    {/* إضافة Page فرعي (داخل Page آخر) */}
+                    <Route path="/pages/:blockId/add" element={<AddPage />} />
+
+                    {/* إضافة Page فرعي (داخل Page آخر) */}
+                    <Route path="/pages/:blockId/edit" element={<AddPage />} />
+
+                    <Route path="/pages/photos/:pageId/:pageName" element={<PagePhotos />} />
+                    <Route path="/pages/attachments/:pageId/:pageName" element={<PageAttachments />} />
 
 
 

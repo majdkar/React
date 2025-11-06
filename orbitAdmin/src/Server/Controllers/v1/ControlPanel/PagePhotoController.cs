@@ -1,8 +1,10 @@
-﻿using SchoolV01.Application.Services;
-using SchoolV01.Shared.ViewModels.Pages;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SchoolV01.Application.Services;
+using SchoolV01.Shared.ViewModels.Blocks;
+using SchoolV01.Shared.ViewModels.Pages;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SchoolV01.Api.Controllers
@@ -95,6 +97,28 @@ namespace SchoolV01.Api.Controllers
                     "Error updating data");
             }
         }
+
+
+
+        [HttpGet("GetPhotoByPageId")]
+        public async Task<ActionResult<List<PagePhotoViewModel>>> GetPhotoByPage(int id)
+        {
+            try
+            {
+                var result = await photoService.GetPhotoByPageId(id);
+
+                if (result == null)
+                    return NotFound();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data");
+            }
+        }
+
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<PagePhotoViewModel>> Delete(int id)

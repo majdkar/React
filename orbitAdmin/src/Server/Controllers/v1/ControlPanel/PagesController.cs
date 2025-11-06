@@ -28,11 +28,15 @@ namespace SchoolV01.Api.Controllers
             try
             {
                 var filteredData = await pageService.GetPagedPages(searchString, orderBy);
+              
+                
+                var pagedData = (pageSize > 0)
+                    ? filteredData
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList()
+                    : filteredData.ToList();
 
-                var pagedData = filteredData
-                .Skip((pageNumber) * pageSize)
-               .Take(pageSize)
-               .ToList();
 
                 var response = new PagedResponse<PageViewModel>(pagedData, pageNumber, pageSize, filteredData.Count());
                 return Ok(response);
