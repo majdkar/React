@@ -4,6 +4,7 @@ using SchoolV01.Shared.Constants.Permission;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using SchoolV01.Domain.Entities.Identity;
 
 namespace SchoolV01.Server.Controllers.Identity
 {
@@ -82,6 +83,8 @@ namespace SchoolV01.Server.Controllers.Identity
             return Ok(await _userService.UpdateRolesAsync(request));
         }
 
+
+
         /// <summary>
         /// Register a User
         /// </summary>
@@ -93,6 +96,35 @@ namespace SchoolV01.Server.Controllers.Identity
         {
             var origin = Request.Headers["origin"];
             return Ok(await _userService.RegisterAsync(request, origin));
+        }
+
+
+
+
+        /// <summary>
+        /// Update a User
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        /// <returns>Status 200 OK</returns>
+        [AllowAnonymous]
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserAsync(string id, RegisterRequest request)
+        {
+            return Ok(await _userService.UpdateUserAsync(id, request));
+        }
+
+
+        /// <summary>
+        /// Delete a User
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Status 200 OK</returns>
+        [AllowAnonymous]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(string userId)
+        {
+            return Ok(await _userService.DeleteAsync(userId));
         }
 
         /// <summary>
@@ -118,6 +150,8 @@ namespace SchoolV01.Server.Controllers.Identity
         {
             return Ok(await _userService.ToggleUserStatusAsync(request));
         }
+
+
 
         /// <summary>
         /// Forgot Password

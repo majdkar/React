@@ -136,6 +136,21 @@
             <param name="request"></param>
             <returns>Status 200 OK</returns>
         </member>
+        <member name="M:SchoolV01.Server.Controllers.Identity.UserController.UpdateUserAsync(System.String,SchoolV01.Application.Requests.Identity.RegisterRequest)">
+            <summary>
+            Update a User
+            </summary>
+            <param name="request"></param>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:SchoolV01.Server.Controllers.Identity.UserController.DeleteAsync(System.String)">
+            <summary>
+            Delete a User
+            </summary>
+            <param name="userId"></param>
+            <returns>Status 200 OK</returns>
+        </member>
         <member name="M:SchoolV01.Server.Controllers.Identity.UserController.ConfirmEmailAsync(System.String,System.String)">
             <summary>
             Confirm Email

@@ -20,7 +20,10 @@ namespace SchoolV01.Application.Interfaces.Services.Identity
         Task<IResult<UserResponse>> GetByEmailAsync(string userEmail);
 
         Task<Result<BlazorHeroUser>> RegisterAsync(RegisterRequest request, string origin);
-        Task<IResult> DeleteAsync(BlazorHeroUser user);
+        Task<Result<BlazorHeroUser>> UpdateUserAsync(string id, RegisterRequest request);
+
+
+        Task<IResult> DeleteAsync(string userId);
 
         Task<IResult> ToggleUserStatusAsync(ToggleUserStatusRequest request);
 

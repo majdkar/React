@@ -50,6 +50,8 @@ import Pages from "../Pages/Pages";
 import AddPage from "../Pages/AddPage";
 import PagePhotos from "../Pages/PagePhotos";
 import PageAttachments from "../Pages/PageAttachments";
+import Users from "../Identity/Users";
+import Roles from "../Identity/Roles";
 const drawerWidth = 250;
 const miniDrawerWidth = 60;
 
@@ -63,6 +65,7 @@ export default function NavbarWithMiniDrawer() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [websitemanagmentsOpen, setwebsitemanagmentsOpen] = useState(false);
+    const [accountsOpen, setaccountsOpen] = useState(false);
     const [BlocksOpen, setBlocksOpen] = useState(false);
     const [BlocksListOpen, setBlocksListOpen] = useState(false);
     const [MenusOpen, setMenusOpen] = useState(false);
@@ -81,7 +84,8 @@ export default function NavbarWithMiniDrawer() {
 
     const [blockCategories, setBlockCategories] = useState([]);
     const [menuCategories, setMenuCategories] = useState([]);
-    const token = localStorage.getItem("token");
+    //const token = localStorage.getItem("token");
+    const [token] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
         if (!token) return; // لا تشغل عند غياب التوكن
@@ -100,7 +104,10 @@ export default function NavbarWithMiniDrawer() {
         fetchBlockCategories();
     }, [token]);
 
-
+    useEffect(() => {
+        // عند التبديل بين موبايل / ديسكتوب غيّر حالة القائمة مرة واحدة فقط
+        setDrawerOpen(!isMobile);
+    }, [isMobile]);
 
     useEffect(() => {
         if (!token) return; // لا تشغل عند غياب التوكن
@@ -291,6 +298,60 @@ export default function NavbarWithMiniDrawer() {
 
                             </List>
                         </Collapse>
+
+                        {/* ===== WebsiteManagment ===== */}
+                        {drawerMini ? (
+                            <Tooltip title={t("Accounts")} placement="right">
+                                <ListItemButton
+                                    onClick={() => setaccountsOpen(!accountsOpen)}
+                                    sx={{ justifyContent: "center" }}
+                                >
+                                    <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}>
+                                        <SettingsIcon />
+                                    </ListItemIcon>
+                                </ListItemButton>
+                            </Tooltip>
+                        ) : (
+                            <ListItemButton
+                                    onClick={() => setaccountsOpen(!accountsOpen)}
+                                sx={{ justifyContent: "flex-start" }}
+                            >
+                                <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><LanguageIcon /></ListItemIcon>
+                                    <ListItemText primary={t("Accounts")} sx={{ ml: 2 }} />
+                                    {accountsOpen ? <ExpandLess /> : <ExpandMore />}
+                            </ListItemButton>
+                        )}
+
+
+                        <Collapse in={accountsOpen} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+
+                                <Tooltip title={t("Users")} placement="right">
+                                    <ListItemButton
+                                        component={Link}
+                                        to="/Users"
+                                        onClick={() => isMobile && setDrawerOpen(false)}
+                                        sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
+                                    >
+                                        <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><DescriptionIcon /></ListItemIcon>
+                                        {!drawerMini && <ListItemText primary={t("Users")} sx={{ ml: 2 }} />}
+                                    </ListItemButton>
+                                </Tooltip>
+
+                                <Tooltip title={t("Roles")} placement="right">
+                                    <ListItemButton
+                                        component={Link}
+                                        to="/Roles"
+                                        onClick={() => isMobile && setDrawerOpen(false)}
+                                        sx={{ justifyContent: drawerMini ? "center" : "flex-start" }}
+                                    >
+                                        <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><DescriptionIcon /></ListItemIcon>
+                                        {!drawerMini && <ListItemText primary={t("Roles")} sx={{ ml: 2 }} />}
+                                    </ListItemButton>
+                                </Tooltip>
+                            </List>
+                        </Collapse>
+
 
 
 
@@ -604,6 +665,18 @@ export default function NavbarWithMiniDrawer() {
                     <Route
                         path="/Pages"
                         element={<Pages />}
+                    />
+
+
+                    <Route
+                        path="/Users"
+                        element={<Users />}
+                    />
+
+
+                    <Route
+                        path="/Roles"
+                        element={<Roles />}
                     />
 
 

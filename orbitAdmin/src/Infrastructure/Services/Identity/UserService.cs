@@ -48,14 +48,20 @@ namespace SchoolV01.Infrastructure.Services.Identity
             return await Result<List<UserResponse>>.SuccessAsync(result);
         }
 
-        public async Task<IResult> DeleteAsync(BlazorHeroUser user)
+        public async Task<IResult> DeleteAsync(string userId)
         {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return await Result.FailAsync($"User with ID {userId} was not found.");
+
             var result = await _userManager.DeleteAsync(user);
             if (!result.Succeeded)
-                return await Result.FailAsync(result.Errors.Select(x => x.Description).ToList());
+                return await Result.FailAsync(result.Errors.Select(e => e.Description).ToList());
 
-            return await Result.SuccessAsync();
+            return await Result.SuccessAsync("User has been successfully deleted ✅");
         }
+
+
         public async Task<Result<BlazorHeroUser>> RegisterAsync(RegisterRequest request, string origin)
         {
 
@@ -136,6 +142,67 @@ namespace SchoolV01.Infrastructure.Services.Identity
                     return await Result<BlazorHeroUser>.FailAsync(string.Format(_localizer["Email {0} is already registered."], request.Email));
             }
         }
+
+
+        public async Task<Result<BlazorHeroUser>> UpdateUserAsync(string id, RegisterRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return await Result<BlazorHeroUser>.FailAsync($"User with ID {id} was not found.");
+
+            // 🔹 Check for duplicate email
+            if (!string.Equals(user.Email, request.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                var emailExists = await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id);
+                if (emailExists)
+                    return await Result<BlazorHeroUser>.FailAsync($"The email '{request.Email}' is already registered.");
+            }
+
+            // 🔹 Check for duplicate phone number
+            if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+            {
+                var phoneExists = await _userManager.Users.AnyAsync(x => x.PhoneNumber == request.PhoneNumber && x.Id != id);
+                if (phoneExists)
+                    return await Result<BlazorHeroUser>.FailAsync($"The phone number '{request.PhoneNumber}' is already registered.");
+            }
+
+            // 🔹 If a new picture was uploaded
+            if (request.UploadRequest != null)
+            {
+                request.UploadRequest.FileName = $"U-{Guid.NewGuid()}{request.UploadRequest.Extension}";
+                request.PictureUrl = _uploadService.UploadAsync(request.UploadRequest);
+                user.PictureUrl = request.PictureUrl;
+            }
+
+            // 🔹 Update user data
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Email = request.Email;
+            user.UserName = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+            user.HomePhoneNumber = request.HomePhoneNumber;
+            user.Address = request.Address;
+            user.ClientType = request.ClientType ?? user.ClientType;
+            user.IsActive = request.IsActive;
+            user.EmailConfirmed = request.AutoConfirmEmail;
+            // 🔹 Update role if changed
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var newRole = request.ClientType ?? RoleConstants.BasicRole;
+            if (!currentRoles.Contains(newRole))
+            {
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                await _userManager.AddToRoleAsync(user, newRole);
+            }
+
+            // 🔹 Save changes
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+                return await Result<BlazorHeroUser>.SuccessAsync(user, "User information has been successfully updated ✅");
+            else
+                return await Result<BlazorHeroUser>.FailAsync(result.Errors.Select(e => e.Description).ToList());
+        }
+
+
 
         //Register Team Advance User
 
