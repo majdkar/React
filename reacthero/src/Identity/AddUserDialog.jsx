@@ -99,9 +99,11 @@ const AddUserDialog = ({
     };
 
     const handleSubmit = () => {
-        if (!formData.password.trim() || !formData.email.trim()) {
-            alert(t("pleaseFillAllFields"));
-            return;
+        if (mode === "add") {
+            if(!formData.password.trim() || !formData.email.trim()) {
+                alert(t("pleaseFillAllFields"));
+                return;
+            }
         }
         onSubmit(formData);
     };
@@ -136,27 +138,34 @@ const AddUserDialog = ({
                             fullWidth
                             required
                         />
-                        <TextField
-                            label={t("email")}
-                            value={formData.email}
-                            onChange={(e) => handleChange("email", e.target.value)}
-                            fullWidth
-                            required
-                        />
-                        <TextField
+
+                        {mode === "add" ?
+                            <TextField
+                                label={t("email")}
+                                value={formData.email}
+                                onChange={(e) => handleChange("email", e.target.value)}
+                                fullWidth
+                                required
+                            /> : ""}
+
+
+                        {mode === "add" ?  <TextField
                             label={t("password")}
                             value={formData.password}
                             onChange={(e) => handleChange("password", e.target.value)}
                             fullWidth
                             required
-                        />
-                        <TextField
+                        /> : ""}
+
+                        {mode === "add" ? <TextField
                             label={t("confirmPassword")}
                             value={formData.confirmPassword}
                             onChange={(e) => handleChange("confirmPassword", e.target.value)}
                             fullWidth
                             required
-                        />
+                        /> : "" }
+
+
 
                         <FormControlLabel
                             control={

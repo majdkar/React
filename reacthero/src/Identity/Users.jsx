@@ -18,6 +18,8 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
 import AddUserDialog from "../Identity/AddUserDialog";
+import CategoryIcon from "@mui/icons-material/Category"; // أيقونة مناسبة
+import { useNavigate } from "react-router-dom";
 
 
 const Users = () => {
@@ -25,6 +27,7 @@ const Users = () => {
     const isArabic = i18n.language === "ar";
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const navigate = useNavigate();
 
     const [Users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -184,6 +187,11 @@ const Users = () => {
 
 
 
+    const handleUserRoleClick = (userId) => {
+        navigate(`/UserRoles/${userId}`);
+    };
+
+
 
 
 
@@ -214,6 +222,13 @@ const Users = () => {
                     icon={<DeleteIcon sx={{ color: theme.palette.error.main }} />}
                     label={t("delete") || "Delete"}
                     onClick={() => handleDeleteClick(params.id)}
+                />,
+
+                <GridActionsCellItem
+                    key="userRole"
+                    icon={<CategoryIcon sx={{ color: theme.palette.success.main }} />}
+                    label={t("userRole") || "User Role"}
+                    onClick={() => handleUserRoleClick(params.id)}
                 />,
             ],
         },

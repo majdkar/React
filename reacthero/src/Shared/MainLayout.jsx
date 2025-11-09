@@ -53,6 +53,7 @@ import PageAttachments from "../Pages/PageAttachments";
 import Users from "../Identity/Users";
 import Roles from "../Identity/Roles";
 import RolePermissions from "../Identity/RolePermissions";
+import UserRoles from "../Identity/UserRoles";
 const drawerWidth = 250;
 const miniDrawerWidth = 60;
 
@@ -684,6 +685,11 @@ export default function NavbarWithMiniDrawer() {
                     <Route
                         path="/RolePermissions/:roleId"
                         element={<RolePermissions />}
+                    />
+
+                    <Route
+                        path="/UserRoles/:userId"
+                        element={<UserRoles />}
                     />
 
 
