@@ -119,9 +119,9 @@ const Pages = () => {
 
             setPages((prev) => prev.filter((c) => c.id !== selectedPagesId));
             setDeleteDialogOpen(false);
-            showSnackbar("تم حذف المدينة بنجاح ✅", "success");
+            showSnackbar(t("page has been successfully deleted") , "success");
         } catch (err) {
-            showSnackbar("فشل في حذف المدينة ❌", "error");
+            showSnackbar(t("Failed to delete page"), "error");
         } finally {
             setDeleting(false);
         }
@@ -204,22 +204,22 @@ const Pages = () => {
                 <GridActionsCellItem
                     key="photos"
                     icon={
-                        <Tooltip title="ألبوم الصور">
+                        <Tooltip title={t("imageAlbum")}>
                             <CollectionsIcon sx={{ color: theme.palette.success.main }} />
                         </Tooltip>
                     }
-                    label="ألبوم الصور"
+                    label={t("imageAlbum")}
                     onClick={() => navigate(`/pages/photos/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
                 />,
 
                 <GridActionsCellItem
                     key="attachments"
                     icon={
-                        <Tooltip title="المرفقات">
+                        <Tooltip title={t("attachments")}>
                             <MovieIcon sx={{ color: theme.palette.secondary.main }} />
                         </Tooltip>
                     }
-                    label="ألبوم الفيديو"
+                    label="attachments"
                     onClick={() => navigate(`/pages/attachments/${params.row.id}/${encodeURIComponent(params.row.nameAr + ' / ' + params.row.nameEn)}`)}
                 />,
             ],
@@ -317,10 +317,10 @@ const Pages = () => {
                 open={deleteDialogOpen}
                 onClose={() => setDeleteDialogOpen(false)}
                 onConfirm={handleDeleteConfirm}
-                title="تأكيد الحذف"
-                message="هل أنت متأكد أنك تريد حذف هذه المدينة؟"
-                confirmText="حذف"
-                cancelText="إلغاء"
+                title={t("confirmDeletion")}
+                message={t("Are you sure you want to delete this page?")}
+                confirmText={t("delete")}
+                cancelText={t("cancel")}
                 loading={deleting}
             />
 

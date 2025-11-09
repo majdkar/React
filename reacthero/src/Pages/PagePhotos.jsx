@@ -18,9 +18,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams, useNavigate } from "react-router-dom";
 import ConfirmDialog from "../Shared/ConfirmDialog";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const PagePhotos = () => {
-    const { pageId,pageName } = useParams();
+    const { pageId, pageName } = useParams();
+
+    const { t } = useTranslation();
+
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [photos, setPhotos] = useState([]);
@@ -88,13 +92,14 @@ const PagePhotos = () => {
                 });
 
             } catch (err) {
-                console.error("❌ فشل رفع:", file.name, err);
+                console.error(t("Upload failed") + "❌", file.name, err);
             }
         }
 
         setUploadingFiles([]);
         fetchPhotos();
-        setSnackbar({ open: true, message: `تم رفع ${files.length} صورة بنجاح ✅`, type: "success" });
+        setSnackbar({
+            open: true, message: t("has been uploaded") + `${files.length}` +  t("image successfully"), type: "success" });
         e.target.value = "";
     };
 
@@ -112,10 +117,10 @@ const PagePhotos = () => {
                 if (!res.ok) console.error(await res.text());
             }
             fetchPhotos();
-            setSnackbar({ open: true, message: "تم حذف الصور المحددة ✅", type: "success" });
+            setSnackbar({ open: true, message: t("The selected photos have been deleted") + "✅", type: "success" });
         } catch (err) {
             console.error(err);
-            setSnackbar({ open: true, message: "فشل في حذف الصور ❌", type: "error" });
+            setSnackbar({ open: true, message: t("Failed to delete photos") + "❌", type: "error" });
         } finally {
             setLoading(false);
             setDeleteDialogOpen(false);
@@ -135,14 +140,14 @@ const PagePhotos = () => {
     return (
         <Box sx={{ p: 3 }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
-                <Typography variant="h5">📸 ألبوم صور البلوك  {pageName}</Typography>
-                <Button variant="outlined" startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}>رجوع</Button>
+                <Typography variant="h5">📸 {t("Page photo album")}  {pageName}</Typography>
+                <Button variant="outlined" startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}>{t("back")}</Button>
             </Stack>
 
             {/* رفع صور */}
             <Box mb={3}>
                 <Button variant="contained" component="label" startIcon={<AddPhotoAlternateIcon />}>
-                    رفع صور
+                    {t("upload Photos")} 
                     <input type="file" hidden multiple accept="image/*" onChange={handleFileChange} />
                 </Button>
 
@@ -163,16 +168,16 @@ const PagePhotos = () => {
                         startIcon={<DeleteIcon />}
                         onClick={() => setDeleteDialogOpen(true)}
                     >
-                        حذف {selectedPhotos.length} صورة
+                        {t("delete") + ' ' + `${selectedPhotos.length}` + ' ' + t("image")}
                     </Button>
                 </Box>
             )}
 
             {/* عرض الصور */}
             {loading ? (
-                <Typography>جارٍ تحميل الصور...</Typography>
+                <Typography>{t("Loading images...") }</Typography>
             ) : photos.length === 0 ? (
-                <Typography color="text.secondary">لا توجد صور مرفوعة لهذا البلوك.</Typography>
+                    <Typography color="text.secondary">{t("No images have been uploaded for this page")}</Typography>
             ) : (
                         <Grid container spacing={2}>
                             {photos.map(p => {
@@ -246,10 +251,10 @@ const PagePhotos = () => {
                 open={deleteDialogOpen}
                 onClose={() => setDeleteDialogOpen(false)}
                 onConfirm={handleDeleteConfirm}
-                title="تأكيد الحذف"
-                message={`هل أنت متأكد أنك تريد حذف ${selectedPhotos.length} صورة؟`}
-                confirmText="حذف"
-                cancelText="إلغاء"
+                title={t("confirmDeletion")}
+                message={t("Are you sure you deleted the image?")}
+                confirmText={t("delete")}
+                cancelText={t("cancel")}
                 loading={loading}
             />
 

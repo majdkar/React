@@ -17,11 +17,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams, useNavigate } from "react-router-dom";
 import ConfirmDialog from "../Shared/ConfirmDialog";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const PageAttachments = () => {
     const { pageId, pageName } = useParams();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const { t } = useTranslation();
 
     const [attachments, setAttachments] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -97,7 +99,7 @@ const PageAttachments = () => {
                     body: JSON.stringify({ file: fileUrl, name: fileUrl, pageId: Number(pageId) }),
                 });
             } catch (err) {
-                console.error("❌ فشل رفع:", file.name, err);
+                console.error(t("Upload failed") + "❌", file.name, err);
             }
         }
 
@@ -105,7 +107,7 @@ const PageAttachments = () => {
         fetchAttachments();
         setSnackbar({
             open: true,
-            message: `تم رفع ${files.length} ملف بنجاح ✅`,
+            message: t("has been uploaded") + ` ${files.length}` + t("file successfully"),
             type: "success",
         });
         e.target.value = "";
@@ -130,14 +132,14 @@ const PageAttachments = () => {
             fetchAttachments();
             setSnackbar({
                 open: true,
-                message: "تم حذف الملفات المحددة ✅",
+                message: t("The selected files have been deleted") + "✅",
                 type: "success",
             });
         } catch (err) {
             console.error(err);
             setSnackbar({
                 open: true,
-                message: "فشل في حذف الملفات ❌",
+                message: t("Failed to delete files") + "❌",
                 type: "error",
             });
         } finally {
@@ -161,13 +163,13 @@ const PageAttachments = () => {
     return (
         <Box sx={{ p: 3 }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
-                <Typography variant="h5">📎 مرفقات البلوك {pageName}</Typography>
+                <Typography variant="h5">📎 {t("page Attachments")} {pageName}</Typography>
                 <Button
                     variant="outlined"
                     startIcon={<ArrowBackIcon />}
                     onClick={() => navigate(-1)}
                 >
-                    رجوع
+                    {t("back")}
                 </Button>
             </Stack>
 
@@ -178,7 +180,7 @@ const PageAttachments = () => {
                     component="label"
                     startIcon={<AttachFileIcon />}
                 >
-                    رفع ملفات
+                    {t("upload Files")}
                     <input
                         type="file"
                         hidden
@@ -205,17 +207,17 @@ const PageAttachments = () => {
                         startIcon={<DeleteIcon />}
                         onClick={() => setDeleteDialogOpen(true)}
                     >
-                        حذف {selectedAttachments.length} ملف
+                        {t("delete") + '  ' + `${selectedAttachments.length}` + '  '  + t("file")} 
                     </Button>
                 </Box>
             )}
 
             {/* عرض الملفات */}
             {loading ? (
-                <Typography>جارٍ تحميل الملفات...</Typography>
+                <Typography>{t("Loading files...")}</Typography>
             ) : attachments.length === 0 ? (
                 <Typography color="text.secondary">
-                    لا توجد ملفات مرفوعة لهذا البلوك.
+                        {t("No attachments have been uploaded for this page")}
                 </Typography>
             ) : (
                 <Grid container spacing={2}>
@@ -253,7 +255,7 @@ const PageAttachments = () => {
                                             href={fullUrl}
                                             target="_blank"
                                         >
-                                            عرض / تحميل
+                                            {t("View/Download")}
                                         </Button>
                                         <Checkbox
                                             checked={selectedAttachments.includes(p.id)}
@@ -283,10 +285,10 @@ const PageAttachments = () => {
                 open={deleteDialogOpen}
                 onClose={() => setDeleteDialogOpen(false)}
                 onConfirm={handleDeleteConfirm}
-                title="تأكيد الحذف"
-                message={`هل أنت متأكد أنك تريد حذف ${selectedAttachments.length} ملف؟`}
-                confirmText="حذف"
-                cancelText="إلغاء"
+                title={t("confirmDeletion") }
+                message={t("Are you sure you deleted the file?")}
+                confirmText={t("delete")}
+                cancelText={t("cancel")}
                 loading={loading}
             />
 

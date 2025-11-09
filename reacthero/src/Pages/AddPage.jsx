@@ -200,7 +200,7 @@ const AddPage = () => {
     return (
         <Box sx={{ p: 3, mx: "auto", maxWidth: 1200 }}>
             <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-                {blockId >0 ? t("editBlock") || "تعديل كتلة" : t("addBlock") || "إضافة كتلة جديدة"}
+                {blockId > 0 ? t("editPage") || "تعديل صفحة" : t("addPage") || "إضافة صفحة "}
             </Typography>
 
             <form onSubmit={handleSubmit}>
@@ -305,10 +305,10 @@ const AddPage = () => {
 
                     {/* رفع الصور */}
                     <Stack direction="row" spacing={0} sx={{ gap: 3 }}>
-                        <ImageUploader label="Image" value={formData.image} onChange={(val) => setFormData(prev => ({ ...prev, image: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
-                        <ImageUploader label="Image 1" value={formData.image1} onChange={(val) => setFormData(prev => ({ ...prev, image1: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
-                        <ImageUploader label="Image 2" value={formData.image2} onChange={(val) => setFormData(prev => ({ ...prev, image2: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
-                        <ImageUploader label="Image 3" value={formData.image3} onChange={(val) => setFormData(prev => ({ ...prev, image3: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
+                        <ImageUploader label={t("image")} value={formData.image} onChange={(val) => setFormData(prev => ({ ...prev, image: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
+                        <ImageUploader label={t("image2")} value={formData.image1} onChange={(val) => setFormData(prev => ({ ...prev, image1: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
+                        <ImageUploader label={t("image3")} value={formData.image2} onChange={(val) => setFormData(prev => ({ ...prev, image2: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
+                        <ImageUploader label={t("image4")} value={formData.image3} onChange={(val) => setFormData(prev => ({ ...prev, image3: val }))} apiBaseUrl={API_BASE_URL} token={token} t={t} />
                     </Stack>
 
                     {error && <Typography color="error">{error}</Typography>}
@@ -316,7 +316,7 @@ const AddPage = () => {
                     {/* الأزرار */}
                     <Stack direction="row" spacing={2}>
                         <Button type="submit" variant="contained" color="primary" disabled={loading}>
-                            {loading ? t("processing") : blockId > 0 ? t("update") || "تحديث" : t("save") || "حفظ"}
+                            {loading ? t("processing") : blockId > 0 ? t("update") : t("save") }
                         </Button>
                         <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>
                             {t("cancel")}

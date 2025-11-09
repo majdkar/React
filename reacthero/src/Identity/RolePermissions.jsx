@@ -179,7 +179,10 @@ const RolePermissions = () => {
                                         <Stack direction="row" spacing={1} alignItems="center">
                                             <Typography>{group}</Typography>
                                             <Badge badgeContent={selectedCount} color={badgeColor}
-                                                sx={{ "& .MuiBadge-badge": { fontSize: "0.75rem", fontWeight: "bold", minWidth: 22, height: 22, borderRadius: "50%" } }} />
+                                                sx={{
+                                                    "& .MuiBadge-badge": {
+                                                        top: -8,
+                                                        right: 10, fontSize: "0.75rem", fontWeight: "bold", minWidth: 22, height: 22, borderRadius: "50%" } }} />
                                         </Stack>
                                     }
                                 />

@@ -18,8 +18,10 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
 import AddUserDialog from "../Identity/AddUserDialog";
+import ResetPasswordAndEmail from "../Identity/ResetPasswordAndEmail";
 import CategoryIcon from "@mui/icons-material/Category"; // أيقونة مناسبة
 import { useNavigate } from "react-router-dom";
+import LockResetIcon from "@mui/icons-material/LockReset";
 
 
 const Users = () => {
@@ -42,8 +44,10 @@ const Users = () => {
     const [snackbarType, setSnackbarType] = useState("success");
 
     const [formDialogOpen, setFormDialogOpen] = useState(false);
+    const [formDialogPassowrdOpen, setFormDialogPassowrdOpen] = useState(false);
     const [formMode, setFormMode] = useState("add"); // "add" أو "edit"
     const [formData, setFormData] = useState(null);
+    const [formPasswordData, setFormPasswordData] = useState(null);
     const [formLoading, setFormLoading] = useState(false);
     const [refreshblockCategories, setRefreshBlockCategories] = useState([]);
     const token = localStorage.getItem("token");
@@ -185,6 +189,41 @@ const Users = () => {
     };
 
 
+    const handleFormPasswordSubmit = async (data) => {
+        console.log("data");
+        try {
+            const response = await fetch(`${API_BASE_URL}api/identity/account/ResetPasswordAndEmail`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            if (!response.ok) throw new Error(await response.text());
+            const resData = await response.json();
+
+
+            showSnackbar("تمت تحديث كلمة المرور بنجاح ✅", "success");
+
+            await fetchBlockCategories();
+            
+        } catch (err) {
+            console.error(err);
+            showSnackbar("فشل في العملية ❌", "error");
+        } finally {
+            setFormLoading(false);
+        }
+
+    };
+
+
+    const handleResetPasswordClick = (City) => {
+        //setFormMode("add");
+        setFormPasswordData(City);
+        setFormDialogPassowrdOpen(true);
+    };
+
 
 
     const handleUserRoleClick = (userId) => {
@@ -229,6 +268,13 @@ const Users = () => {
                     icon={<CategoryIcon sx={{ color: theme.palette.success.main }} />}
                     label={t("userRole") || "User Role"}
                     onClick={() => handleUserRoleClick(params.id)}
+                />,
+
+                <GridActionsCellItem
+                    key="userRole"
+                    icon={<LockResetIcon sx={{ color: theme.palette.warning.main }} />}
+                    label={t("userRole") || "User Role"}
+                    onClick={() => handleResetPasswordClick(params.row)}
                 />,
             ],
         },
@@ -287,6 +333,15 @@ const Users = () => {
                 onSubmit={handleFormSubmit}
                 mode={formMode}
                 initialData={formData}
+                loading={formLoading}
+            />
+
+            {/* نافذة تعديل الباسورد */}
+            <ResetPasswordAndEmail
+                open={formDialogPassowrdOpen}
+                onClose={() => setFormDialogPassowrdOpen(false)}
+                onSubmit={handleFormPasswordSubmit}
+                initialData={formPasswordData}
                 loading={formLoading}
             />
 

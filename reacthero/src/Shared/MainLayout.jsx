@@ -303,7 +303,7 @@ export default function NavbarWithMiniDrawer() {
 
                         {/* ===== WebsiteManagment ===== */}
                         {drawerMini ? (
-                            <Tooltip title={t("Accounts")} placement="right">
+                            <Tooltip title={t("accountsManagment")} placement="right">
                                 <ListItemButton
                                     onClick={() => setaccountsOpen(!accountsOpen)}
                                     sx={{ justifyContent: "center" }}
@@ -319,7 +319,7 @@ export default function NavbarWithMiniDrawer() {
                                 sx={{ justifyContent: "flex-start" }}
                             >
                                 <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><LanguageIcon /></ListItemIcon>
-                                    <ListItemText primary={t("Accounts")} sx={{ ml: 2 }} />
+                                    <ListItemText primary={t("accounts")} sx={{ ml: 2 }} />
                                     {accountsOpen ? <ExpandLess /> : <ExpandMore />}
                             </ListItemButton>
                         )}
@@ -340,7 +340,7 @@ export default function NavbarWithMiniDrawer() {
                                     </ListItemButton>
                                 </Tooltip>
 
-                                <Tooltip title={t("Roles")} placement="right">
+                                <Tooltip title={t("roles")} placement="right">
                                     <ListItemButton
                                         component={Link}
                                         to="/Roles"
@@ -360,7 +360,7 @@ export default function NavbarWithMiniDrawer() {
 
                         {/* ===== WebsiteManagment ===== */}
                         {drawerMini ? (
-                            <Tooltip title={t("WebsiteManagment")} placement="right">
+                            <Tooltip title={t("websiteManagment")} placement="right">
                                 <ListItemButton
                                     onClick={() => setwebsitemanagmentsOpen(!websitemanagmentsOpen)}
                                     sx={{ justifyContent: "center" }}
@@ -376,7 +376,7 @@ export default function NavbarWithMiniDrawer() {
                                 sx={{ justifyContent: "flex-start" }}
                             >
                                     <ListItemIcon sx={{ minWidth: 0, justifyContent: "center", color: "#1976d2" }}><LanguageIcon /></ListItemIcon>
-                                    <ListItemText primary={t("WebsiteManagment")} sx={{ ml: 2 }} />
+                                    <ListItemText primary={t("websiteManagment")} sx={{ ml: 2 }} />
                                     {websitemanagmentsOpen ? <ExpandLess /> : <ExpandMore />}
                             </ListItemButton>
                         )}

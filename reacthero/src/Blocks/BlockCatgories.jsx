@@ -7,6 +7,7 @@ import {
     Typography,
     Button,
     Stack,
+    Tooltip,
     Snackbar,
     Alert,
 } from "@mui/material";
@@ -103,10 +104,10 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
 
             setBlockCategories((prev) => prev.filter((c) => c.id !== selectedBlockCategoriesId));
             setDeleteDialogOpen(false);
-            showSnackbar("تم حذف المدينة بنجاح ✅", "success");
+            showSnackbar(t("The item was successfully deleted")+"✅", "success");
         }
         catch (err) {
-            showSnackbar("فشل في حذف المدينة ❌", "error");
+            showSnackbar(t("Failed to delete Category") + "❌", "error");
         } finally {
             setDeleting(false);
         }
@@ -137,7 +138,7 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 const resData = await response.json();
                 setBlockCategories((prev) => [...prev, resData]); // إضافة العنصر الجديد
 
-                showSnackbar("تمت إضافة المدينة بنجاح ✅", "success");
+                showSnackbar(t("The Category has been successfully added.") + "✅", "success");
             }
 
 
@@ -160,13 +161,13 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 setBlockCategories(prev =>
                     prev.map(c => (c.id === resData.id ? resData : c))
                 );
-                showSnackbar("تم تحديث المدينة بنجاح ✅", "success");
+                showSnackbar(t("The Category has been successfully updated.") + "✅", "success");
             }
 
 
             setFormDialogOpen(false);
         } catch (err) {
-            showSnackbar("فشل في العملية ❌", err);
+            showSnackbar(t("Operation failed") + "❌", err);
         } finally {
             setFormLoading(false);
         }
@@ -193,19 +194,22 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
             getActions: (params) => [
                 <GridActionsCellItem
                     key="edit"
-                    icon={<EditIcon sx={{ color: theme.palette.info.main }} />}
+                    icon={< Tooltip title={t("edit")} >
+                        <EditIcon sx={{ color: theme.palette.info.main }} /></Tooltip >}
                     label={t("edit") || "Edit"}
                     onClick={() => handleEditClick(params.row)}
                 />,
                 <GridActionsCellItem
                     key="delete"
-                    icon={<DeleteIcon sx={{ color: theme.palette.error.main }} />}
+                    icon={< Tooltip title={t("delete")} ><DeleteIcon sx={{ color: theme.palette.error.main }} /></Tooltip >}
                     label={t("delete") || "Delete"}
                     onClick={() => handleDeleteClick(params.id)}
                 />,
             ],
         },
     ];
+
+
 
     if (loading) return <Typography>Loading Cities...</Typography>;
     if (error) return <Typography color="error">Error: {error}</Typography>;
@@ -271,10 +275,10 @@ const BlockCatgoriesList = ({ blockCategories, setBlockCategories }) => {
                 open={deleteDialogOpen}
                 onClose={() => setDeleteDialogOpen(false)}
                 onConfirm={handleDeleteConfirm}
-                title="تأكيد الحذف"
-                message="هل أنت متأكد أنك تريد حذف هذه المدينة؟"
-                confirmText="حذف"
-                cancelText="إلغاء"
+                title={t("confirmDeletion") }
+                message={t("Are you sure you want to delete this item?")}
+                confirmText={t("delete")}
+                cancelText={t("cancel")}
                 loading={deleting}
             />
 
