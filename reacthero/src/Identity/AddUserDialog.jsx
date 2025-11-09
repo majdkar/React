@@ -184,41 +184,70 @@ const AddUserDialog = ({
                             sx={{ justifyContent: isArabic ? "flex-end" : "flex-start" }}
                         />
 
-                        <TextField
-                            type="file"
-                            label={t("profilePicture")}
-                            onChange={async (e) => {
-                                const file = e.target.files[0];
-                                if (!file) return;
+                        <Box mt={2} textAlign="center">
+                            <input
+                                accept="image/*"
+                                id="upload-image"
+                                type="file"
+                                style={{ display: "none" }}
+                                onChange={async (e) => {
+                                    const file = e.target.files[0];
+                                    if (!file) return;
 
-                                const base64 = await convertToBase64(file);
+                                    const base64 = await convertToBase64(file);
 
-                                handleChange("uploadRequest", {
-                                    fileName: file.name,
-                                    extension: "." + file.name.split(".").pop(),
-                                    uploadType: 0,
-                                    data: base64,
-                                });
+                                    handleChange("uploadRequest", {
+                                        fileName: file.name,
+                                        extension: "." + file.name.split(".").pop(),
+                                        uploadType: 0,
+                                        data: base64,
+                                    });
 
-                                setPreviewImage(`data:image/${file.name.split(".").pop()};base64,${base64}`);
-                            }}
-                            fullWidth
-                        />
-
-                        {previewImage && (
-                            <Box mt={2} textAlign="center">
-                                <img
-                                    src={previewImage}
-                                    alt="Preview"
-                                    style={{
-                                        maxWidth: "150px",
-                                        maxHeight: "150px",
-                                        borderRadius: "8px",
-                                        objectFit: "cover",
+                                    setPreviewImage(`data:image/${file.name.split(".").pop()};base64,${base64}`);
+                                }}
+                            />
+                            <label htmlFor="upload-image">
+                                <Box
+                                    sx={{
+                                        width: 150,
+                                        height: 150,
+                                        border: "2px dashed #1976d2",
+                                        borderRadius: 2,
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        overflow: "hidden",
+                                        mx: "auto",
+                                        position: "relative",
                                     }}
-                                />
-                            </Box>
-                        )}
+                                >
+                                    {previewImage ? (
+                                        <img
+                                            src={previewImage}
+                                            alt="Preview"
+                                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                        />
+                                    ) : (
+                                        <span style={{ color: "#1976d2" }}>{t("uploadProfilePicture")}</span>
+                                    )}
+                                </Box>
+                            </label>
+                            {previewImage && (
+                                <Button
+                                    color="error"
+                                    size="small"
+                                    sx={{ mt: 1 }}
+                                    onClick={() => {
+                                        setPreviewImage(null);
+                                        handleChange("pictureUrl", null);
+                                    }}
+                                >
+                                    {t("remove")}
+                                </Button>
+                            )}
+                        </Box>
+
                     </Stack>
                 </Box>
             </DialogContent>

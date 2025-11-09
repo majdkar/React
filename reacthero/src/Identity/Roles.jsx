@@ -12,21 +12,24 @@ import {
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
+import CategoryIcon from "@mui/icons-material/Category"; // أيقونة مناسبة
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../Shared/ConfirmDialog";
-import AddBlockCategoryDialog from "../Blocks/AddBlockCategoryDialog";
+import AddRoleDialog from "../Identity/AddRoleDialog";
+import { useNavigate } from "react-router-dom";
 
 
-const Roles = ({ blockCategories, setBlockCategories }) => {
+const Roles = () => {
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language === "ar";
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const navigate = useNavigate();
 
-    //const [BlockCategories, setBlockCategories] = useState([]);
+    const [BlockCategories, setBlockCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -50,11 +53,17 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
         if (isInitialLoad) setLoading(true);
         try {
             const response = await fetch(
-                `${API_BASE_URL}api/BlockCategories/all`,
+                `${API_BASE_URL}api/identity/role`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
             );
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
-            setBlockCategories(data);
+            setBlockCategories(data.data);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -90,7 +99,7 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
         setDeleting(true);
         try {
             const response = await fetch(
-                `${ API_BASE_URL }api/BlockCategories/${selectedBlockCategoriesId}`,
+                `${API_BASE_URL }api/identity/role/${selectedBlockCategoriesId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -103,10 +112,10 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
 
             setBlockCategories((prev) => prev.filter((c) => c.id !== selectedBlockCategoriesId));
             setDeleteDialogOpen(false);
-            showSnackbar("تم حذف المدينة بنجاح ✅", "success");
+            showSnackbar("تم حذف الرول بنجاح ✅", "success");
         }
         catch (err) {
-            showSnackbar("فشل في حذف المدينة ❌", "error");
+            showSnackbar("فشل في حذف الرول ❌", "error");
         } finally {
             setDeleting(false);
         }
@@ -125,7 +134,7 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
         setFormLoading(true);
         try {
             if (formMode === "add") {
-                const response = await fetch(`${API_BASE_URL}api/BlockCategories`, {
+                const response = await fetch(`${API_BASE_URL}api/identity/role`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -135,18 +144,20 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
                 });
                 if (!response.ok) throw new Error(await response.text());
                 const resData = await response.json();
-                setBlockCategories((prev) => [...prev, resData]); // إضافة العنصر الجديد
+                //setBlockCategories((prev) => [...prev, resData]); // إضافة العنصر الجديد
 
-                showSnackbar("تمت إضافة المدينة بنجاح ✅", "success");
+                showSnackbar("تمت إضافة الرول بنجاح ✅", "success");
+
+                await fetchBlockCategories();
             }
 
 
 
             else if (formMode === "edit") {
                 const response = await fetch(
-                    `${API_BASE_URL}api/BlockCategories/${formData.id}`,
+                    `${API_BASE_URL}api/identity/role`,
                     {
-                        method: "Put",
+                        method: "Post",
                         headers: {
                             Authorization: `Bearer ${token}`,
                             "Content-Type": "application/json",
@@ -157,10 +168,11 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
                 if (!response.ok) throw new Error(await response.text());
 
                 const resData = await response.json();
-                setBlockCategories(prev =>
-                    prev.map(c => (c.id === resData.id ? resData : c))
-                );
-                showSnackbar("تم تحديث المدينة بنجاح ✅", "success");
+                //setBlockCategories(prev =>
+                //    prev.map(c => (c.id === resData.id ? resData : c))
+               /* );*/
+                showSnackbar("تم تحديث الرول بنجاح ✅", "success");
+                await fetchBlockCategories();
             }
 
 
@@ -174,15 +186,17 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
 
 
 
+    const handleManagePermissionClick = (roleId) => {
+        navigate(`/RolePermissions/${roleId}`);
+    };
 
 
 
 
     // 🔹 الأعمدة
     const columns = [
-        { field: "id", headerName: t("id") || "ID", width: 120, headerAlign: "center", align: "center" },
-        { field: "nameEn", headerName: t("nameEn") || "Name (EN)", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
-        { field: "nameAr", headerName: t("nameAr") || "Name (AR)", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
+        { field: "name", headerName: t("name") || "Name", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
+        { field: "description", headerName: t("description") || "Description", flex: 1, minWidth: 80, headerAlign: "center", align: "center" },
         {
             field: "actions",
             type: "actions",
@@ -203,6 +217,12 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
                     label={t("delete") || "Delete"}
                     onClick={() => handleDeleteClick(params.id)}
                 />,
+                <GridActionsCellItem
+                    key="managePermission"
+                    icon={<CategoryIcon sx={{ color: theme.palette.success.main }} />}
+                    label={t("managePermission") || "Manage Permission"}
+                    onClick={() => handleManagePermissionClick(params.id)}
+                />,
             ],
         },
     ];
@@ -215,11 +235,11 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
             {/* أزرار التحكم */}
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
                 <Typography variant="h5" sx={{ color: "#000", fontWeight: "bold" }}>
-                    {t("blockCategories") || "Block Categories"}
+                    {t("role") || "Role"}
                 </Typography>
                 <Stack sx={{ gap: 1 }} direction="row" spacing={1}>
                     <Button variant="contained" color="primary" sx={{ gap: 1}} endIcon={<AddIcon />} onClick={handleAddClick}>
-                        {t("addBlockCategory") || "Add Block Category"}
+                        {t("addrole") || "Add Role"}
                     </Button>
                     <Button variant="outlined" color="secondary" sx={{ gap: 1 }} endIcon={<RefreshIcon />} onClick={() => fetchBlockCategories(false)}>
                         {t("refresh") || "Refresh"}
@@ -241,7 +261,7 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
             >
                 <DataGrid
                     key={i18n.language}
-                    rows={blockCategories}
+                    rows={BlockCategories}
                     columns={columns}
                     getRowId={(row) => row.id || row.Id}
                     loading={loading}
@@ -254,7 +274,7 @@ const Roles = ({ blockCategories, setBlockCategories }) => {
             </Box>
 
             {/* نافذة الفورم */}
-            <AddBlockCategoryDialog
+            <AddRoleDialog
                 open={formDialogOpen}
                 onClose={() => setFormDialogOpen(false)}
                 onSubmit={handleFormSubmit}
